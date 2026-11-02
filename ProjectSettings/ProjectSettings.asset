@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: KitaLab
   productName: GameOff2026
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -144,8 +144,9 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 0.1.0
-  preloadedAssets: []
+  bundleVersion: 0.1
+  preloadedAssets:
+  - {fileID: 11400000, guid: cc23894efdbba4d0f9c062e9295f3c52, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -561,6 +562,9 @@ PlayerSettings:
   - serializedVersion: 3
     m_BuildTarget: Android
     m_Formats: 03000000
+  - serializedVersion: 3
+    m_BuildTarget: WebGL
+    m_Formats: 05000000
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
   actionOnDotNetUnhandledException: 1
@@ -826,7 +830,26 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: DOTWEEN;DOTWEEN_TEXTMESHPRO;DOTWEENPRO;ES3_TMPRO;ES3_UGUI
+    EmbeddedLinux: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
+    GameCoreScarlett: DOTWEEN;DOTWEENPRO;DOTWEEN_TEXTMESHPRO
+    GameCoreXboxOne: DOTWEEN;DOTWEENPRO;DOTWEEN_TEXTMESHPRO
+    Kepler: DOTWEEN;DOTWEENPRO;DOTWEEN_TEXTMESHPRO
+    LinuxHeadlessSimulation: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
+    Nintendo Switch: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
+    Nintendo Switch 2: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
+    PS4: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
+    PS5: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
+    QNX: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
+    Server: ES3_TMPRO;ES3_UGUI
+    Standalone: DOTWEEN;DOTWEEN_TEXTMESHPRO;DOTWEENPRO;ES3_TMPRO;ES3_UGUI
+    VisionOS: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
+    WebGL: DOTWEEN;DOTWEEN_TEXTMESHPRO;DOTWEENPRO;ES3_TMPRO;ES3_UGUI
+    Windows Store Apps: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
+    XboxOne: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
+    iPhone: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
+    tvOS: DOTWEEN;DOTWEENPRO;ES3_TMPRO;ES3_UGUI;DOTWEEN_TEXTMESHPRO
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

@@ -1,11 +1,89 @@
 {
   "dependencies": {
+    "com.annulusgames.alchemy": {
+      "version": "https://github.com/AnnulusGames/Alchemy.git?path=/Alchemy/Assets/Alchemy",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "164f9d485d34efc99cda3e99cbf557b1baa810bf"
+    },
+    "com.coffee.ui-effect": {
+      "version": "5.11.7",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://package.openupm.com"
+    },
+    "com.cysharp.messagepipe": {
+      "version": "1.8.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
+    "com.cysharp.messagepipe.vcontainer": {
+      "version": "1.8.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
+    "com.cysharp.r3": {
+      "version": "1.3.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.imgui": "1.0.0"
+      },
+      "url": "https://package.openupm.com"
+    },
+    "com.harumak.upalette": {
+      "version": "https://github.com/Haruma-K/uPalette.git?path=/Assets/uPalette",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "0e491c1c9b4db1e1266829c8827d1f9b51e90678"
+    },
+    "com.kitatas.uniex": {
+      "version": "https://github.com/kitatas/UniEx.git?path=/Assets/UniEx",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4b1b9203be7cec1a0b1d4ed2ecb5e26f81bebc8c"
+    },
+    "com.unity.addressables": {
+      "version": "2.9.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.profiling.core": "1.0.2",
+        "com.unity.test-framework": "1.4.5",
+        "com.unity.modules.assetbundle": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.scriptablebuildpipeline": "2.6.1",
+        "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.16",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.modules.ai": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.bindings.openimageio": {
+      "version": "1.0.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.collections": "1.2.4"
       },
       "url": "https://packages.unity.com"
     },
@@ -19,16 +97,9 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.collab-proxy": {
-      "version": "2.12.4",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.collections": {
       "version": "2.6.6",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.8.28",
@@ -37,6 +108,13 @@
         "com.unity.nuget.mono-cecil": "1.11.6",
         "com.unity.test-framework.performance": "3.0.3"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.device-simulator.devices": {
+      "version": "1.0.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
@@ -63,6 +141,16 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.localization": {
+      "version": "1.5.13",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.addressables": "1.25.0",
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.mathematics": {
       "version": "1.3.3",
       "depth": 2,
@@ -80,9 +168,34 @@
     },
     "com.unity.nuget.mono-cecil": {
       "version": "1.11.6",
-      "depth": 3,
+      "depth": 2,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.profiling.core": {
+      "version": "1.0.3",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.recorder": {
+      "version": "5.1.7",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.timeline": "1.8.7",
+        "com.unity.collections": "1.2.4",
+        "com.unity.bindings.openimageio": "1.0.2"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
@@ -117,6 +230,16 @@
         "com.unity.render-pipelines.core": "17.0.3"
       }
     },
+    "com.unity.scriptablebuildpipeline": {
+      "version": "2.6.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.4.5",
+        "com.unity.modules.assetbundle": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.searcher": {
       "version": "4.9.4",
       "depth": 2,
@@ -145,7 +268,7 @@
     },
     "com.unity.test-framework.performance": {
       "version": "3.5.0",
-      "depth": 3,
+      "depth": 2,
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.1.33",
@@ -173,6 +296,275 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "jp.hadashikick.vcontainer": {
+      "version": "1.19.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
+    "org.nuget.fastenum": {
+      "version": "1.8.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.runtime.compilerservices.unsafe": "4.5.0"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.mastermemory": {
+      "version": "3.0.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.mastermemory.annotations": "3.0.4",
+        "org.nuget.messagepack": "3.1.3"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.mastermemory.annotations": {
+      "version": "3.0.4",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.messagepack": {
+      "version": "3.1.3",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.messagepackanalyzer": "3.1.3",
+        "org.nuget.messagepack.annotations": "3.1.3",
+        "org.nuget.microsoft.bcl.asyncinterfaces": "8.0.0",
+        "org.nuget.system.collections.immutable": "8.0.0",
+        "org.nuget.system.reflection.emit": "4.7.0",
+        "org.nuget.system.reflection.emit.lightweight": "4.7.0",
+        "org.nuget.system.threading.tasks.extensions": "4.5.4",
+        "org.nuget.system.memory": "4.5.5",
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.0.0"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.messagepack.annotations": {
+      "version": "3.1.3",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.messagepackanalyzer": {
+      "version": "3.1.3",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.microsoft.bcl.asyncinterfaces": {
+      "version": "8.0.0",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.threading.tasks.extensions": "4.5.4"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.microsoft.bcl.memory": {
+      "version": "10.0.5",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.memory": "4.6.3",
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.1.2"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.microsoft.bcl.timeprovider": {
+      "version": "8.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.microsoft.bcl.asyncinterfaces": "6.0.0"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.microsoft.net.stringtools": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.memory": "4.5.4",
+        "org.nuget.system.runtime.compilerservices.unsafe": "5.0.0"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.observablecollections": {
+      "version": "3.3.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.memory": "4.5.4",
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.0.0"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.observablecollections.r3": {
+      "version": "3.3.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.observablecollections": "3.3.4",
+        "org.nuget.r3": "1.0.0"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.r3": {
+      "version": "1.3.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.microsoft.bcl.timeprovider": "8.0.0",
+        "org.nuget.system.buffers": "4.5.1",
+        "org.nuget.system.componentmodel.annotations": "5.0.0",
+        "org.nuget.system.memory": "4.5.5",
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.0.0",
+        "org.nuget.system.threading.channels": "8.0.0"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.system.buffers": {
+      "version": "4.6.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.system.collections.immutable": {
+      "version": "8.0.0",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.memory": "4.5.5",
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.0.0"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.system.componentmodel.annotations": {
+      "version": "5.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.system.memory": {
+      "version": "4.6.3",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.buffers": "4.6.1",
+        "org.nuget.system.numerics.vectors": "4.6.1",
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.1.2"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.system.numerics.vectors": {
+      "version": "4.6.1",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.system.reflection.emit": {
+      "version": "4.7.0",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.reflection.emit.ilgeneration": "4.7.0"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.system.reflection.emit.ilgeneration": {
+      "version": "4.7.0",
+      "depth": 3,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.system.reflection.emit.lightweight": {
+      "version": "4.7.0",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.reflection.emit.ilgeneration": "4.7.0"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.system.runtime.compilerservices.unsafe": {
+      "version": "6.1.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.system.threading.channels": {
+      "version": "8.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.threading.tasks.extensions": "4.5.4"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.system.threading.tasks.extensions": {
+      "version": "4.5.4",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.runtime.compilerservices.unsafe": "4.5.3"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.ulid": {
+      "version": "1.4.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.memory": "4.5.2",
+        "org.nuget.system.runtime.compilerservices.unsafe": "4.5.2"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.unitask": {
+      "version": "2.5.11",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.threading.tasks.extensions": "4.5.4"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.zlinq": {
+      "version": "1.6.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.microsoft.bcl.memory": "10.0.5",
+        "org.nuget.system.buffers": "4.6.1",
+        "org.nuget.system.memory": "4.6.3",
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.1.2"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
+    },
+    "org.nuget.zstring": {
+      "version": "2.6.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.memory": "4.5.3",
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.0.0"
+      },
+      "url": "https://unitynuget-registry.openupm.com"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
