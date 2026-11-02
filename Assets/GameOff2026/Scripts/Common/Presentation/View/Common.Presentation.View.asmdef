@@ -1,3 +1,19 @@
 {
-  "name": "Common.Presentation.View"
+    "name": "Common.Presentation.View",
+    "rootNamespace": "",
+    "references": [
+        "GUID:671b35fac570649e2afb0048ad22bca6",
+        "GUID:77221876cc6b8244180b96e320b1bcd4",
+        "GUID:827f47054e407413e9663c748e13f0a6",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

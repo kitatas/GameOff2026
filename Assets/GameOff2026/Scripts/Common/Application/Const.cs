@@ -7,4 +7,16 @@ namespace GameOff2026.Common.Application
         public const float STABILITY_FRAME = 3;
         public const float STABILITY_TIME = 0.5f;
     }
+
+    public sealed class ExceptionConfig
+    {
+        public const float FADE_DURATION = 0.5f;
+
+        public const string REBOOT_MESSAGE = "Return to title.";
+        public const string RETRY_MESSAGE = "Retry.";
+        public const string QUIT_MESSAGE = "Exit this app.";
+
+        public const string UNKNOWN_ERROR = "UNKNOWN_ERROR";
+        public const string INVALID_FADE = "INVALID_FADE";
+    }
 }
