@@ -2,6 +2,7 @@
     "name": "Common.Domain.UseCase",
     "rootNamespace": "",
     "references": [
+        "GUID:5866b7176a79446e997d71e22dc6d4bf",
         "GUID:71b7b8216b1d4703afa772f6709d64cb",
         "GUID:e9777ebc7fc54db5a857c134c5676e9c",
         "GUID:08b38f39e2d9e594389b7a4cf4c2c338",

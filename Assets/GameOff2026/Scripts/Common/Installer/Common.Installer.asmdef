@@ -1,0 +1,21 @@
+{
+    "name": "Common.Installer",
+    "rootNamespace": "",
+    "references": [
+        "GUID:75f7802d5bff415c971103152305ff01",
+        "GUID:4a01bdd771fb4fa185cf903293105dd5",
+        "GUID:971a1a12b7ee4e98af6b744cf0b29310",
+        "GUID:9d5c32becfe142b6a76da134d5e2bca2",
+        "GUID:bfcb18f2f4554e3788a8938740d29254",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
