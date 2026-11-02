@@ -8,6 +8,7 @@
     "com.cysharp.unitask": "2.5.11",
     "com.harumak.upalette": "https://github.com/Haruma-K/uPalette.git?path=/Assets/uPalette",
     "com.kitatas.uniex": "https://github.com/kitatas/UniEx.git?path=/Assets/UniEx",
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.addressables": "2.9.1",
     "com.unity.ai.navigation": "2.0.16",
     "com.unity.device-simulator.devices": "1.0.1",
