@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using GameOff2026.Common.Application;
 using GameOff2026.Common.Domain.UseCase;
 using GameOff2026.Common.Presentation.State;
+using GameOff2026.Common.Utility;
 using MessagePipe;
 using R3;
 using VContainer.Unity;
@@ -17,6 +18,7 @@ namespace GameOff2026.Common.Presentation.Presenter
         private readonly ExceptionUseCase _exceptionUseCase;
         private readonly BaseStateUseCase<T> _stateUseCase;
         private readonly Dictionary<T, BaseState<T>> _stateMap;
+        private readonly AsyncLockLite _locker;
         private readonly CompositeDisposable _disposable;
         private CancellationTokenSource _tokenSource;
 
@@ -26,6 +28,7 @@ namespace GameOff2026.Common.Presentation.Presenter
             _exceptionUseCase = exceptionUseCase;
             _stateUseCase = stateUseCase;
             _stateMap = states.ToDictionary(x => x.state, x => x);
+            _locker = new AsyncLockLite();
             _disposable = new CompositeDisposable();
             _tokenSource = new CancellationTokenSource();
         }
@@ -38,7 +41,12 @@ namespace GameOff2026.Common.Presentation.Presenter
             _stateUseCase.subscriber
                 .Subscribe(async (s, ct) =>
                 {
-                    var nextState = await RunAsync(s, ct);
+                    T nextState;
+                    {
+                        using var _ = await _locker.LockAsync(ct);
+                        nextState = await RunAsync(s, ct);
+                    }
+
                     await _stateUseCase.PublishAsync(nextState, ct);
                 })
                 .AddTo(_disposable);
