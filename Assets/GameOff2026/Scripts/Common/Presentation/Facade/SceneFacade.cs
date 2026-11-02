@@ -24,8 +24,7 @@ namespace GameOff2026.Common.Presentation.Facade
             {
                 Fade.In => _transitionView.FadeIn(load.transition.duration),
                 Fade.Out => _transitionView.FadeOut(load.transition.duration),
-                // TODO: Exception
-                _ => throw new Exception(),
+                _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_FADE),
             };
 
             return tween
@@ -35,8 +34,7 @@ namespace GameOff2026.Common.Presentation.Facade
         public async UniTask LoadSceneAsync(SceneName sceneName, CancellationToken token)
         {
             var asyncOperation = SceneManager.LoadSceneAsync(sceneName.FastToString());
-            // TODO: Exception
-            if (asyncOperation == null) throw new Exception();
+            if (asyncOperation == null) throw new QuitExceptionVO(ExceptionConfig.FAILED_TO_LOAD_SCENE);
 
             asyncOperation.allowSceneActivation = false;
             await UniTask.WaitUntil(() => asyncOperation.progress >= SceneConfig.LOAD_PROGRESS_THRESHOLD,

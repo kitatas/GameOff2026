@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using GameOff2026.Common.Application;
 using GameOff2026.Common.Domain.UseCase;
 using GameOff2026.Common.Presentation.State;
 using MessagePipe;
@@ -13,13 +14,16 @@ namespace GameOff2026.Common.Presentation.Presenter
 {
     public abstract class BaseStatePresenter<T> : IAsyncStartable, IDisposable where T : Enum
     {
+        private readonly ExceptionUseCase _exceptionUseCase;
         private readonly BaseStateUseCase<T> _stateUseCase;
         private readonly Dictionary<T, BaseState<T>> _stateMap;
         private readonly CompositeDisposable _disposable;
         private CancellationTokenSource _tokenSource;
 
-        public BaseStatePresenter(BaseStateUseCase<T> stateUseCase, IEnumerable<BaseState<T>> states)
+        public BaseStatePresenter(ExceptionUseCase exceptionUseCase, BaseStateUseCase<T> stateUseCase,
+            IEnumerable<BaseState<T>> states)
         {
+            _exceptionUseCase = exceptionUseCase;
             _stateUseCase = stateUseCase;
             _stateMap = states.ToDictionary(x => x.state, x => x);
             _disposable = new CompositeDisposable();
@@ -57,7 +61,7 @@ namespace GameOff2026.Common.Presentation.Presenter
             {
                 if (!_stateMap.TryGetValue(state, out var currentState))
                 {
-                    // TODO:
+                    throw new QuitExceptionVO(ExceptionConfig.NOT_FOUND_STATE);
                 }
 
                 var nextState = state;
@@ -80,7 +84,7 @@ namespace GameOff2026.Common.Presentation.Presenter
             {
                 if (!_stateMap.TryGetValue(state, out var currentState))
                 {
-                    // TODO:
+                    await _exceptionUseCase.ThrowQuitAsync(ExceptionConfig.NOT_FOUND_STATE, token);
                     throw;
                 }
 
@@ -89,18 +93,23 @@ namespace GameOff2026.Common.Presentation.Presenter
                 // Stateの強制変更
                 return _stateUseCase.forceChangeState;
             }
+            catch (ExceptionVO e)
+            {
+                await _exceptionUseCase.ThrowAsync(e, token);
+                throw;
+            }
             catch (Exception)
             {
-                // TODO:
+                await _exceptionUseCase.ThrowQuitAsync(ExceptionConfig.UNKNOWN_ERROR, token);
                 throw;
             }
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
-            _stateUseCase.Dispose();
-            _disposable.Dispose();
-            _tokenSource.Dispose();
+            _disposable?.Dispose();
+            _tokenSource?.Cancel();
+            _tokenSource?.Dispose();
         }
     }
 }

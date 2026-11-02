@@ -10,9 +10,8 @@ namespace GameOff2026.Common.Application
 
         public TransitionVO(Fade fade, float duration = 0.0f)
         {
-            // TODO: Exception
-            if (fade is Fade.None) throw new Exception();
-            if (duration < 0.0f) throw new Exception();
+            if (fade is Fade.None) throw new QuitExceptionVO(ExceptionConfig.INVALID_FADE);
+            if (duration < 0.0f) throw new QuitExceptionVO(ExceptionConfig.INVALID_DURATION);
 
             this.fade = fade;
             this.duration = duration;
@@ -27,9 +26,8 @@ namespace GameOff2026.Common.Application
 
         public LoadVO(SceneName sceneName, LoadType loadType, TransitionVO transition)
         {
-            // TODO: Exception
-            if (sceneName is SceneName.None) throw new Exception();
-            if (loadType is LoadType.None) throw new Exception();
+            if (sceneName is SceneName.None) throw new QuitExceptionVO(ExceptionConfig.NOT_FOUND_SCENE);
+            if (loadType is LoadType.None) throw new QuitExceptionVO(ExceptionConfig.NOT_FOUND_LOAD);
 
             this.sceneName = sceneName;
             this.loadType = loadType;
