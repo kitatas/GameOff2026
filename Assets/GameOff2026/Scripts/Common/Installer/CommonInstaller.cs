@@ -1,3 +1,4 @@
+using GameOff2026.Common.Data.Entity;
 using GameOff2026.Common.Domain.Ports;
 using GameOff2026.Common.Domain.UseCase;
 using GameOff2026.Common.Presentation.Facade;
@@ -15,6 +16,9 @@ namespace GameOff2026.Common.Installer
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterMessagePipe();
+
+            // Entity
+            builder.Register<RetryCountEntity>(Lifetime.Singleton);
 
             // Ports
             builder.Register<ExceptionPorts>(Lifetime.Singleton);

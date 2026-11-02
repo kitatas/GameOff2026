@@ -95,7 +95,16 @@ namespace GameOff2026.Common.Presentation.Presenter
             }
             catch (ExceptionVO e)
             {
+                var isRetry = e is RetryExceptionVO;
+                if (isRetry && _stateUseCase.IsMaxRetry(state))
+                {
+                    await _exceptionUseCase.ThrowRebootAsync(ExceptionConfig.MAX_RETRY, token);
+                    throw;
+                }
+
                 await _exceptionUseCase.ThrowAsync(e, token);
+                if (isRetry) return state;
+
                 throw;
             }
             catch (Exception)

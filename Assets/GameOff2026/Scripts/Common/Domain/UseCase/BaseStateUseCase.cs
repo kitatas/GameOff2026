@@ -9,10 +9,13 @@ namespace GameOff2026.Common.Domain.UseCase
 {
     public abstract class BaseStateUseCase<T> : BasePubSubUseCase<T> where T : Enum
     {
+        private readonly RetryCountEntity _retryCountEntity;
         private readonly BehaviorSubject<T> _forceChange;
 
-        protected BaseStateUseCase(BaseEntity<T> entity, BaseStatePorts<T> ports) : base(entity, ports)
+        protected BaseStateUseCase(BaseEntity<T> entity, RetryCountEntity retryCountEntity, BaseStatePorts<T> ports) :
+            base(entity, ports)
         {
+            _retryCountEntity = retryCountEntity;
             _forceChange = new BehaviorSubject<T>(default);
         }
 
@@ -26,6 +29,12 @@ namespace GameOff2026.Common.Domain.UseCase
         }
 
         public abstract UniTask InitAsync(CancellationToken token);
+
+        public bool IsMaxRetry(T state)
+        {
+            _retryCountEntity.Update(_entity.IsEqual(state));
+            return _retryCountEntity.IsMaxRetry();
+        }
 
         public override void Dispose()
         {
