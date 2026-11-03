@@ -1,0 +1,17 @@
+{
+    "name": "Game.Presentation.View",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9d5c32becfe142b6a76da134d5e2bca2",
+        "GUID:3a341b1324b94c719dd09bea852020b6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

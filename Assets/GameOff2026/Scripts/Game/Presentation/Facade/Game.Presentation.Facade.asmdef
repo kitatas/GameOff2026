@@ -1,0 +1,17 @@
+{
+    "name": "Game.Presentation.Facade",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3a341b1324b94c719dd09bea852020b6",
+        "GUID:185c991fa5264edbb4d43b4787a30ec1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
