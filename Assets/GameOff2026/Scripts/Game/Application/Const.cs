@@ -5,4 +5,9 @@ namespace GameOff2026.Game.Application
         public const int MIN_FILE = 0;
         public const int MIN_RANK = 0;
     }
+
+    public sealed class PlayerConfig
+    {
+        public const float MOVE_DURATION = 0.25f;
+    }
 }

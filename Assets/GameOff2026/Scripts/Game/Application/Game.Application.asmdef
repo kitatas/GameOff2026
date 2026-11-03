@@ -1,3 +1,16 @@
 {
-  "name": "Game.Application"
+    "name": "Game.Application",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5866b7176a79446e997d71e22dc6d4bf"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

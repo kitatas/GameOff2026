@@ -16,6 +16,7 @@ namespace GameOff2026.Game.Installer
         {
             // Entity
             builder.Register<GameStateEntity>(Lifetime.Scoped);
+            builder.Register<PlayerEntity>(Lifetime.Scoped);
 
             // Ports
             builder.Register<GameStatePorts>(Lifetime.Scoped);
