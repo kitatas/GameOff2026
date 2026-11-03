@@ -19,9 +19,11 @@ namespace GameOff2026.Game.Installer
 
             // Ports
             builder.Register<GameStatePorts>(Lifetime.Scoped);
+            builder.Register<MovementPorts>(Lifetime.Scoped);
 
             // UseCase
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
+            builder.Register<MovementUseCase>(Lifetime.Scoped);
 
             // State
             builder.Register<BaseGameState, GameInitState>(Lifetime.Scoped);
@@ -31,13 +33,16 @@ namespace GameOff2026.Game.Installer
             {
                 entryPoints.Add<GameStatePresenter>();
                 entryPoints.Add<MovementPresenter>();
+                entryPoints.Add<PlayerPresenter>();
             });
 
             // Facade
             builder.Register<MovementFacade>(Lifetime.Scoped);
+            builder.Register<PlayerFacade>(Lifetime.Scoped);
 
             // View
             builder.RegisterComponentInHierarchy<MovementView>();
+            builder.RegisterComponentInHierarchy<PlayerView>();
         }
     }
 }
