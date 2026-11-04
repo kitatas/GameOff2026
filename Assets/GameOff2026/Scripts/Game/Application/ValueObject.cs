@@ -36,14 +36,43 @@ namespace GameOff2026.Game.Application
     public sealed class FieldVO
     {
         public readonly FieldType type;
-        public readonly GameObject fieldObject;
+        public readonly Sprite sprite;
 
-        public FieldVO(FieldType type, GameObject fieldObject)
+        public FieldVO(FieldType type, Sprite sprite)
         {
             if (type is FieldType.None) throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD);
 
             this.type = type;
-            this.fieldObject = fieldObject;
+            this.sprite = sprite;
+        }
+    }
+
+    public sealed class FieldSquareVO
+    {
+        public readonly SquareVO square;
+        public readonly FieldVO field;
+
+        public FieldSquareVO(SquareVO square, FieldVO field)
+        {
+            this.square = square;
+            this.field = field;
+        }
+
+        public static FieldSquareVO Create(int file, int rank, FieldVO field)
+        {
+            return new FieldSquareVO(new SquareVO(file, rank), field);
+        }
+    }
+
+    public class RenderFieldSquareVO
+    {
+        public readonly RenderType type;
+        public readonly FieldSquareVO[] squares;
+
+        public RenderFieldSquareVO(RenderType type, FieldSquareVO[] squares)
+        {
+            this.type = type;
+            this.squares = squares;
         }
     }
 }

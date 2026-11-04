@@ -21,4 +21,10 @@ namespace GameOff2026.Game.Application
         None = 0,
         Ground = 1,
     }
+
+    public enum RenderType
+    {
+        None = 0,
+        Refresh = 1,
+    }
 }

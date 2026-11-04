@@ -7,9 +7,9 @@ namespace GameOff2026.Game.Data.DataStore
     public sealed class FieldData : ScriptableObject
     {
         [SerializeField] private FieldType fieldType = default;
-        [SerializeField] private GameObject fieldObject = default;
+        [SerializeField] private Sprite sprite = default;
 
         public FieldType type => fieldType;
-        public FieldVO ToVO() => new(type, fieldObject);
+        public FieldVO ToVO() => new(type, sprite);
     }
 }

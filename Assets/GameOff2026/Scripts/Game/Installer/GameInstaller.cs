@@ -23,10 +23,12 @@ namespace GameOff2026.Game.Installer
             builder.RegisterInstance<FieldTable>(fieldTable);
 
             // Entity
+            builder.Register<FieldEntity>(Lifetime.Scoped);
             builder.Register<GameStateEntity>(Lifetime.Scoped);
             builder.Register<PlayerEntity>(Lifetime.Scoped);
 
             // Ports
+            builder.Register<FieldPorts>(Lifetime.Scoped);
             builder.Register<GameStatePorts>(Lifetime.Scoped);
             builder.Register<MovementPorts>(Lifetime.Scoped);
 
@@ -34,6 +36,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<FieldRepository>(Lifetime.Scoped);
 
             // UseCase
+            builder.Register<FieldUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
             builder.Register<MovementUseCase>(Lifetime.Scoped);
 
