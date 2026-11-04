@@ -37,13 +37,16 @@ namespace GameOff2026.Game.Application
     {
         public readonly FieldType type;
         public readonly Sprite sprite;
+        public readonly float weight;
 
-        public FieldVO(FieldType type, Sprite sprite)
+        public FieldVO(FieldType type, Sprite sprite, float weight)
         {
             if (type is FieldType.None) throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD);
+            if (weight <= 0.0f) throw new QuitExceptionVO(ExceptionConfig.INVALID_WEIGHT);
 
             this.type = type;
             this.sprite = sprite;
+            this.weight = weight;
         }
     }
 

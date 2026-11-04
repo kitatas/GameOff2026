@@ -8,8 +8,9 @@ namespace GameOff2026.Game.Data.DataStore
     {
         [SerializeField] private FieldType fieldType = default;
         [SerializeField] private Sprite sprite = default;
+        [SerializeField] private float weight = 0.0f;
 
         public FieldType type => fieldType;
-        public FieldVO ToVO() => new(type, sprite);
+        public FieldVO ToVO() => new(type, sprite, weight);
     }
 }
