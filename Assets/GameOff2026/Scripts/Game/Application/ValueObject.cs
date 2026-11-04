@@ -1,3 +1,4 @@
+using GameOff2026.Common.Application;
 using UnityEngine;
 
 namespace GameOff2026.Game.Application
@@ -29,6 +30,20 @@ namespace GameOff2026.Game.Application
         {
             this.square = square;
             this.duration = duration;
+        }
+    }
+
+    public sealed class FieldVO
+    {
+        public readonly FieldType type;
+        public readonly GameObject fieldObject;
+
+        public FieldVO(FieldType type, GameObject fieldObject)
+        {
+            if (type is FieldType.None) throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD);
+
+            this.type = type;
+            this.fieldObject = fieldObject;
         }
     }
 }

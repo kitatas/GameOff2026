@@ -1,0 +1,19 @@
+{
+    "name": "Game.Domain.Repository",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5866b7176a79446e997d71e22dc6d4bf",
+        "GUID:65a223af7ee346e0ad630329101c86a9",
+        "GUID:3a341b1324b94c719dd09bea852020b6",
+        "GUID:79d87a38da704129a56a4876c9061d56"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

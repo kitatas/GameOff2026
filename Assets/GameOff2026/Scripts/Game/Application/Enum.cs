@@ -6,7 +6,7 @@ namespace GameOff2026.Game.Application
         Init = 1,
         Input = 2,
     }
-    
+
     public enum Direction
     {
         None = 0,
@@ -14,5 +14,11 @@ namespace GameOff2026.Game.Application
         Down = 2,
         Left = 3,
         Right = 4,
+    }
+
+    public enum FieldType
+    {
+        None = 0,
+        Ground = 1,
     }
 }

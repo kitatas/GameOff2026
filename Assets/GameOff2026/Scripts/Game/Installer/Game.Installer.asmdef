@@ -2,8 +2,10 @@
     "name": "Game.Installer",
     "rootNamespace": "",
     "references": [
+        "GUID:79d87a38da704129a56a4876c9061d56",
         "GUID:103184066d994759b5cfd87063b48f6f",
         "GUID:73426e01b1bd43e4bf30e174f36cbc0e",
+        "GUID:2c81c50f22874eb7960702ea41d30b69",
         "GUID:56dee27e897440868fff41e91e3c9a97",
         "GUID:6d959c48aec9498588ed9341766d0888",
         "GUID:f6833c830eff4fc29a11e3b111ffa06b",

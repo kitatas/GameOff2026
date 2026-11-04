@@ -1,0 +1,17 @@
+{
+    "name": "Game.Data.DataStore",
+    "rootNamespace": "",
+    "references": [
+        "GUID:65a223af7ee346e0ad630329101c86a9",
+        "GUID:3a341b1324b94c719dd09bea852020b6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

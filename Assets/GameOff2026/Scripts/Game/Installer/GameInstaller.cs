@@ -1,10 +1,13 @@
+using GameOff2026.Game.Data.DataStore;
 using GameOff2026.Game.Data.Entity;
 using GameOff2026.Game.Domain.Ports;
+using GameOff2026.Game.Domain.Repository;
 using GameOff2026.Game.Domain.UseCase;
 using GameOff2026.Game.Presentation.Facade;
 using GameOff2026.Game.Presentation.Presenter;
 using GameOff2026.Game.Presentation.State;
 using GameOff2026.Game.Presentation.View;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -12,8 +15,13 @@ namespace GameOff2026.Game.Installer
 {
     public sealed class GameInstaller : LifetimeScope
     {
+        [SerializeField] private FieldTable fieldTable = default;
+
         protected override void Configure(IContainerBuilder builder)
         {
+            // DataStore
+            builder.RegisterInstance<FieldTable>(fieldTable);
+
             // Entity
             builder.Register<GameStateEntity>(Lifetime.Scoped);
             builder.Register<PlayerEntity>(Lifetime.Scoped);
@@ -21,6 +29,9 @@ namespace GameOff2026.Game.Installer
             // Ports
             builder.Register<GameStatePorts>(Lifetime.Scoped);
             builder.Register<MovementPorts>(Lifetime.Scoped);
+
+            // Repository
+            builder.Register<FieldRepository>(Lifetime.Scoped);
 
             // UseCase
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
