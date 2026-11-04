@@ -47,16 +47,19 @@ namespace GameOff2026.Game.Installer
             // Presenter
             builder.UseEntryPoints(Lifetime.Scoped, entryPoints =>
             {
+                entryPoints.Add<FieldPresenter>();
                 entryPoints.Add<GameStatePresenter>();
                 entryPoints.Add<MovementPresenter>();
                 entryPoints.Add<PlayerPresenter>();
             });
 
             // Facade
+            builder.Register<FieldFacade>(Lifetime.Scoped);
             builder.Register<MovementFacade>(Lifetime.Scoped);
             builder.Register<PlayerFacade>(Lifetime.Scoped);
 
             // View
+            builder.RegisterComponentInHierarchy<FieldView>();
             builder.RegisterComponentInHierarchy<MovementView>();
             builder.RegisterComponentInHierarchy<PlayerView>();
         }

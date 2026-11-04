@@ -4,6 +4,7 @@ using GameOff2026.Game.Application;
 using GameOff2026.Game.Data.Entity;
 using GameOff2026.Game.Domain.Ports;
 using GameOff2026.Game.Domain.Repository;
+using MessagePipe;
 
 namespace GameOff2026.Game.Domain.UseCase
 {
@@ -19,6 +20,8 @@ namespace GameOff2026.Game.Domain.UseCase
             _fieldPorts = fieldPorts;
             _fieldRepository = fieldRepository;
         }
+
+        public IAsyncSubscriber<RenderFieldSquareVO> renderField => _fieldPorts.renderFieldSquareSubscriber;
 
         public UniTask BuildFieldAsync(CancellationToken token)
         {
