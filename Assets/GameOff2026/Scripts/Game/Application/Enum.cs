@@ -4,7 +4,8 @@ namespace GameOff2026.Game.Application
     {
         None = 0,
         Init = 1,
-        Input = 2,
+        SetUp = 2,
+        Input = 3,
     }
 
     public enum Direction

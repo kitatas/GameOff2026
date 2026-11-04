@@ -43,6 +43,7 @@ namespace GameOff2026.Game.Installer
             // State
             builder.Register<BaseGameState, GameInitState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameInputState>(Lifetime.Scoped);
+            builder.Register<BaseGameState, GameSetUpState>(Lifetime.Scoped);
 
             // Presenter
             builder.UseEntryPoints(Lifetime.Scoped, entryPoints =>
