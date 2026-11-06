@@ -16,17 +16,27 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
     public sealed class MovementUseCaseTests
     {
         private PlayerEntity _playerEntity;
-        private FakeAsyncPublisher<MovementVO> _publisher;
-        private FakeAsyncSubscriber<MovementVO> _subscriber;
+        private FakeAsyncPublisher<MovementVO> _movementPublisher;
+        private FakeAsyncPublisher<MovableDirectionVO[]> _movableDirectionsPublisher;
+        private FakeAsyncSubscriber<MovementVO> _movementSubscriber;
+        private FakeAsyncSubscriber<MovableDirectionVO[]> _movableDirectionsSubscriber;
         private MovementUseCase _useCase;
 
         [SetUp]
         public void SetUp()
         {
+            var fieldEntity = new FieldEntity();
             _playerEntity = new PlayerEntity();
-            _publisher = new FakeAsyncPublisher<MovementVO>();
-            _subscriber = new FakeAsyncSubscriber<MovementVO>();
-            _useCase = new MovementUseCase(_playerEntity, new MovementPorts(_publisher, _subscriber));
+            _movementPublisher = new FakeAsyncPublisher<MovementVO>();
+            _movableDirectionsPublisher = new FakeAsyncPublisher<MovableDirectionVO[]>();
+            _movementSubscriber = new FakeAsyncSubscriber<MovementVO>();
+            _movableDirectionsSubscriber = new FakeAsyncSubscriber<MovableDirectionVO[]>();
+            var ports = new MovementPorts(
+                _movementSubscriber,
+                _movableDirectionsSubscriber,
+                _movementPublisher,
+                _movableDirectionsPublisher);
+            _useCase = new MovementUseCase(fieldEntity, _playerEntity, ports);
         }
 
         [TearDown]
@@ -60,8 +70,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
 
             Assert.ThrowsAsync<QuitExceptionVO>(async () => await inputTask);
 
-            Assert.AreEqual(0, _playerEntity.square.file);
-            Assert.AreEqual(0, _playerEntity.square.rank);
+            Assert.AreEqual(1, _playerEntity.square.file);
+            Assert.AreEqual(1, _playerEntity.square.rank);
         }
 
         [Test]
@@ -73,16 +83,36 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
 
             await _useCase.MoveAsync(source.Token).AsTask();
 
-            Assert.AreEqual(1, _publisher.PublishCount);
-            Assert.AreSame(square, _publisher.LastPublished.square);
-            Assert.AreEqual(PlayerConfig.MOVE_DURATION, _publisher.LastPublished.duration);
-            Assert.AreEqual(source.Token, _publisher.tokens[0]);
+            Assert.AreEqual(1, _movementPublisher.PublishCount);
+            Assert.AreSame(square, _movementPublisher.LastPublished.square);
+            Assert.AreEqual(PlayerConfig.MOVE_DURATION, _movementPublisher.LastPublished.duration);
+            Assert.AreEqual(source.Token, _movementPublisher.tokens[0]);
         }
 
         [Test]
-        public void Movement_AfterConstruction_ExposesPortsSubscriber()
+        public async Task PublishMovableDirectionsAsync_Directions_PublishesAllAsNotMovable()
         {
-            Assert.AreSame(_subscriber, _useCase.movement);
+            using var source = new CancellationTokenSource();
+
+            await _useCase.PublishMovableDirectionsAsync(source.Token).AsTask();
+
+            var directions = _movableDirectionsPublisher.LastPublished;
+            Assert.AreEqual(PlayerConfig.DIRECTIONS.Length, directions.Length);
+            Assert.AreEqual(1, _movableDirectionsPublisher.PublishCount);
+            Assert.AreEqual(source.Token, _movableDirectionsPublisher.tokens[0]);
+
+            for (int i = 0; i < PlayerConfig.DIRECTIONS.Length; i++)
+            {
+                Assert.AreEqual(PlayerConfig.DIRECTIONS[i], directions[i].direction);
+                Assert.IsFalse(directions[i].isMovable);
+            }
+        }
+
+        [Test]
+        public void Subscribers_AfterConstruction_ExposePortsSubscribers()
+        {
+            Assert.AreSame(_movementSubscriber, _useCase.movement);
+            Assert.AreSame(_movableDirectionsSubscriber, _useCase.movableDirections);
         }
     }
 }

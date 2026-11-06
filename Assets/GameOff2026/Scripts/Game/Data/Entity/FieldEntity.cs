@@ -23,5 +23,17 @@ namespace GameOff2026.Game.Data.Entity
         }
 
         public FieldSquareVO[] fieldSquares => _fieldSquares.ToArray();
+
+        public bool IsMovable(SquareVO square)
+        {
+            var fieldSquare = _fieldSquares.Find(x => x.square.IsEqual(square));
+            if (fieldSquare == null) return false;
+
+            return fieldSquare.field.type switch
+            {
+                // TODO: 移動不可の field type
+                _ => true,
+            };
+        }
     }
 }

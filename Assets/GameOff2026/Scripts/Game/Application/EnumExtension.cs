@@ -16,5 +16,17 @@ namespace GameOff2026.Game.Application
                 _ => throw new QuitExceptionVO(ExceptionConfig.NOT_FOUND_DIRECTION),
             };
         }
+
+        public static SquareVO ToSquareVO(this Direction self)
+        {
+            return self switch
+            {
+                Direction.Up => new SquareVO(0, 1),
+                Direction.Down => new SquareVO(0, -1),
+                Direction.Left => new SquareVO(-1, 0),
+                Direction.Right => new SquareVO(1, 0),
+                _ => throw new QuitExceptionVO(ExceptionConfig.NOT_FOUND_DIRECTION),
+            };
+        }
     }
 }

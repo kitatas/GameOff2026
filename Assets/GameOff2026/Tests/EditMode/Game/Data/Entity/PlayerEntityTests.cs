@@ -12,8 +12,8 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
         {
             var entity = new PlayerEntity();
 
-            Assert.AreEqual(0, entity.square.file);
-            Assert.AreEqual(0, entity.square.rank);
+            Assert.AreEqual(1, entity.square.file);
+            Assert.AreEqual(1, entity.square.rank);
         }
 
         [Test]

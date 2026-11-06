@@ -78,4 +78,16 @@ namespace GameOff2026.Game.Application
             this.squares = squares;
         }
     }
+
+    public sealed class MovableDirectionVO
+    {
+        public readonly Direction direction;
+        public readonly bool isMovable;
+
+        public MovableDirectionVO(Direction direction, bool isMovable)
+        {
+            this.direction = direction;
+            this.isMovable = isMovable;
+        }
+    }
 }
