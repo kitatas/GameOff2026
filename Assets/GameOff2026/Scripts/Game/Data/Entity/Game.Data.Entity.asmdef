@@ -2,8 +2,10 @@
     "name": "Game.Data.Entity",
     "rootNamespace": "",
     "references": [
+        "GUID:5866b7176a79446e997d71e22dc6d4bf",
         "GUID:71b7b8216b1d4703afa772f6709d64cb",
-        "GUID:3a341b1324b94c719dd09bea852020b6"
+        "GUID:3a341b1324b94c719dd09bea852020b6",
+        "GUID:827f47054e407413e9663c748e13f0a6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

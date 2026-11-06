@@ -21,6 +21,7 @@ namespace GameOff2026.Game.Application
     {
         None = 0,
         Ground = 1,
+        Treasure = 2,
     }
 
     public enum RenderType
