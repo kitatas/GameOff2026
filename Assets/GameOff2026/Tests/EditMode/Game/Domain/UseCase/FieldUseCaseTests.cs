@@ -23,6 +23,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         private FieldEntity _fieldEntity;
         private FieldTable _fieldTable;
         private FieldData _fieldData;
+        private FieldData _treasureFieldData;
         private FakeAsyncSubscriber<RenderFieldSquareVO> _subscriber;
         private FakeAsyncPublisher<RenderFieldSquareVO> _publisher;
         private FieldUseCase _useCase;
@@ -33,9 +34,13 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _fieldEntity = new FieldEntity();
             _fieldTable = ScriptableObject.CreateInstance<FieldTable>();
             _fieldData = ScriptableObject.CreateInstance<FieldData>();
+            _treasureFieldData = ScriptableObject.CreateInstance<FieldData>();
             SetField(_fieldData, "fieldType", FieldType.Ground);
             SetField(_fieldData, "weight", 1.0f);
-            SetField(typeof(BaseTable<FieldData>), _fieldTable, "list", new List<FieldData> { _fieldData });
+            SetField(_treasureFieldData, "fieldType", FieldType.Treasure);
+            SetField(_treasureFieldData, "weight", 1.0f);
+            SetField(typeof(BaseTable<FieldData>), _fieldTable, "list",
+                new List<FieldData> { _fieldData, _treasureFieldData });
             _subscriber = new FakeAsyncSubscriber<RenderFieldSquareVO>();
             _publisher = new FakeAsyncPublisher<RenderFieldSquareVO>();
             var ports = new FieldPorts(_subscriber, _publisher);
@@ -47,6 +52,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         public void TearDown()
         {
             UnityEngine.Object.DestroyImmediate(_fieldData);
+            UnityEngine.Object.DestroyImmediate(_treasureFieldData);
             UnityEngine.Object.DestroyImmediate(_fieldTable);
         }
 
@@ -69,8 +75,27 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             {
                 Assert.AreEqual(i % FieldConfig.MAX_FILE + 1, renderMessage.squares[i].square.file);
                 Assert.AreEqual(i / FieldConfig.MAX_FILE + 1, renderMessage.squares[i].square.rank);
-                Assert.AreEqual(FieldType.Ground, renderMessage.squares[i].field.type);
             }
+        }
+
+        [Test]
+        public async Task PublishRenderAsync_FieldSquaresExist_PublishesRefreshWithSquaresAndToken()
+        {
+            var first = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, null, 1.0f));
+            var second = FieldSquareVO.Create(4, 5, new FieldVO(FieldType.Treasure, null, 2.0f));
+            _fieldEntity.Add(first);
+            _fieldEntity.Add(second);
+            using var source = new CancellationTokenSource();
+
+            await _useCase.PublishRenderAsync(source.Token).AsTask();
+
+            var renderMessage = _publisher.LastPublished;
+            Assert.AreEqual(1, _publisher.PublishCount);
+            Assert.AreEqual(source.Token, _publisher.tokens[0]);
+            Assert.AreEqual(RenderType.Refresh, renderMessage.type);
+            Assert.AreEqual(2, renderMessage.squares.Length);
+            Assert.AreSame(first, renderMessage.squares[0]);
+            Assert.AreSame(second, renderMessage.squares[1]);
         }
 
         [Test]
