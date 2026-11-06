@@ -1,6 +1,7 @@
 using System;
 using GameOff2026.Game.Domain.UseCase;
 using GameOff2026.Game.Presentation.Facade;
+using MessagePipe;
 using R3;
 using VContainer.Unity;
 
@@ -21,6 +22,10 @@ namespace GameOff2026.Game.Presentation.Presenter
 
         void IStartable.Start()
         {
+            _movementUseCase.movableDirections
+                .Subscribe(_movementFacade.RenderButtonsAsync)
+                .AddTo(_disposable);
+
             _movementFacade.OnClickAnyDirectionAsObservable()
                 .Subscribe(_movementUseCase.HandleClickDirection)
                 .AddTo(_disposable);

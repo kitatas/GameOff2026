@@ -18,6 +18,7 @@ namespace GameOff2026.Game.Presentation.State
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
+            await _movementUseCase.PublishMovableDirectionsAsync(token);
             await _movementUseCase.InputAsync(token);
 
             await _movementUseCase.MoveAsync(token);

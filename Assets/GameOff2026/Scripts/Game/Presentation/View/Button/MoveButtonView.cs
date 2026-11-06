@@ -8,10 +8,11 @@ namespace GameOff2026.Game.Presentation.View.Button
     public sealed class MoveButtonView : BaseButtonView
     {
         [SerializeField] private Direction direction = default;
+        public Direction dir => direction;
 
         public Observable<Direction> OnClickDirectionAsObservable()
         {
-            return click.Select(_ => direction);
+            return click.Select(_ => dir);
         }
     }
 }
