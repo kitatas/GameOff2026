@@ -36,11 +36,13 @@ namespace GameOff2026.Game.Installer
             builder.Register<FieldRepository>(Lifetime.Scoped);
 
             // UseCase
+            builder.Register<EventUseCase>(Lifetime.Scoped);
             builder.Register<FieldUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
             builder.Register<MovementUseCase>(Lifetime.Scoped);
 
             // State
+            builder.Register<BaseGameState, GameEventState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameInitState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameInputState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameSetUpState>(Lifetime.Scoped);

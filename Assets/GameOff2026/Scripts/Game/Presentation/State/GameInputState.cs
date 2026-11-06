@@ -23,8 +23,7 @@ namespace GameOff2026.Game.Presentation.State
 
             await _movementUseCase.MoveAsync(token);
 
-            // TODO
-            return GameState.Input;
+            return GameState.Event;
         }
     }
 }

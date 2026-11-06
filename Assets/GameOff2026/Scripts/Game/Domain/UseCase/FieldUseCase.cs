@@ -30,12 +30,18 @@ namespace GameOff2026.Game.Domain.UseCase
             // TODO
             for (int i = 0; i < FieldConfig.MAX_FILE * FieldConfig.MAX_RANK; i++)
             {
-                var field = _fieldRepository.Find(FieldType.Ground);
+                var type = i < 6 ? FieldType.Treasure : FieldType.Ground;
+                var field = _fieldRepository.Find(type);
                 var eventSquare =
                     FieldSquareVO.Create(i % FieldConfig.MAX_FILE + 1, i / FieldConfig.MAX_FILE + 1, field);
                 _fieldEntity.Add(eventSquare);
             }
 
+            return PublishRenderAsync(token);
+        }
+
+        public UniTask PublishRenderAsync(CancellationToken token)
+        {
             var renderFieldSquare = new RenderFieldSquareVO(RenderType.Refresh, _fieldEntity.fieldSquares);
             return _fieldPorts.PublishRenderFieldSquareAsync(renderFieldSquare, token);
         }
