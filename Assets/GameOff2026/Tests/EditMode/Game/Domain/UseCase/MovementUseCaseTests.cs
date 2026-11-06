@@ -15,6 +15,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
     [TestFixture]
     public sealed class MovementUseCaseTests
     {
+        private FieldEntity _fieldEntity;
         private PlayerEntity _playerEntity;
         private FakeAsyncPublisher<MovementVO> _movementPublisher;
         private FakeAsyncPublisher<MovableDirectionVO[]> _movableDirectionsPublisher;
@@ -25,7 +26,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         [SetUp]
         public void SetUp()
         {
-            var fieldEntity = new FieldEntity();
+            _fieldEntity = new FieldEntity();
             _playerEntity = new PlayerEntity();
             _movementPublisher = new FakeAsyncPublisher<MovementVO>();
             _movableDirectionsPublisher = new FakeAsyncPublisher<MovableDirectionVO[]>();
@@ -36,7 +37,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 _movableDirectionsSubscriber,
                 _movementPublisher,
                 _movableDirectionsPublisher);
-            _useCase = new MovementUseCase(fieldEntity, _playerEntity, ports);
+            _useCase = new MovementUseCase(_fieldEntity, _playerEntity, ports);
         }
 
         [TearDown]
@@ -106,6 +107,26 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 Assert.AreEqual(PlayerConfig.DIRECTIONS[i], directions[i].direction);
                 Assert.IsFalse(directions[i].isMovable);
             }
+        }
+
+        [Test]
+        public async Task PublishMovableDirectionsAsync_AdjacentSquaresExist_ReportsMovableDirections()
+        {
+            _fieldEntity.Add(FieldSquareVO.Create(1, 2, new FieldVO(FieldType.Ground, null, 1.0f)));
+            _fieldEntity.Add(FieldSquareVO.Create(2, 1, new FieldVO(FieldType.Ground, null, 1.0f)));
+
+            await _useCase.PublishMovableDirectionsAsync(CancellationToken.None).AsTask();
+
+            var directions = _movableDirectionsPublisher.LastPublished;
+            Assert.AreEqual(PlayerConfig.DIRECTIONS.Length, directions.Length);
+            Assert.AreEqual(Direction.Up, directions[0].direction);
+            Assert.IsTrue(directions[0].isMovable);
+            Assert.AreEqual(Direction.Down, directions[1].direction);
+            Assert.IsFalse(directions[1].isMovable);
+            Assert.AreEqual(Direction.Left, directions[2].direction);
+            Assert.IsFalse(directions[2].isMovable);
+            Assert.AreEqual(Direction.Right, directions[3].direction);
+            Assert.IsTrue(directions[3].isMovable);
         }
 
         [Test]
