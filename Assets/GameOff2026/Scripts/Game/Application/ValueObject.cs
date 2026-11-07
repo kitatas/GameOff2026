@@ -90,4 +90,16 @@ namespace GameOff2026.Game.Application
             this.isMovable = isMovable;
         }
     }
+
+    public sealed class EventResultVO
+    {
+        public readonly FieldType type;
+        public readonly int treasureNum;
+
+        public EventResultVO(FieldType type, int treasureNum)
+        {
+            this.type = type;
+            this.treasureNum = treasureNum;
+        }
+    }
 }
