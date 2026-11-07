@@ -33,6 +33,8 @@ namespace GameOff2026.Game.Domain.UseCase
             await (fieldSquare.field.type switch
             {
                 FieldType.Ground => UniTask.Yield(token),
+                FieldType.GroundDoor => UniTask.Yield(token),
+                FieldType.GroundWall => UniTask.Yield(token),
                 FieldType.Treasure => OverrideFieldSquareAsync(index, FieldType.Ground, token),
                 _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD),
             });
