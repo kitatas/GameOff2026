@@ -13,21 +13,23 @@ namespace GameOff2026.Game.Domain.UseCase
     {
         private readonly FieldEntity _fieldEntity;
         private readonly PlayerEntity _playerEntity;
+        private readonly TreasureEntity _treasureEntity;
         private readonly EventPorts _eventPorts;
         private readonly FieldRepository _fieldRepository;
 
-        public EventUseCase(FieldEntity fieldEntity, PlayerEntity playerEntity, EventPorts eventPorts,
-            FieldRepository fieldRepository)
+        public EventUseCase(FieldEntity fieldEntity, PlayerEntity playerEntity, TreasureEntity treasureEntity,
+            EventPorts eventPorts, FieldRepository fieldRepository)
         {
             _fieldEntity = fieldEntity;
             _playerEntity = playerEntity;
+            _treasureEntity = treasureEntity;
             _eventPorts = eventPorts;
             _fieldRepository = fieldRepository;
         }
 
         public IAsyncSubscriber<EventResultVO> eventResult => _eventPorts.eventResultSubscriber;
 
-        public async UniTask ApplyAsync(CancellationToken token)
+        public async UniTask<EventResultVO> ApplyAsync(CancellationToken token)
         {
             var (fieldSquare, index) = _fieldEntity.Find(_playerEntity.square);
             await (fieldSquare.field.type switch
@@ -41,6 +43,7 @@ namespace GameOff2026.Game.Domain.UseCase
 
             var result = BuildEventResult(fieldSquare.field.type);
             await _eventPorts.PublishEventResultAsync(result, token);
+            return result;
         }
 
         private UniTask OverrideFieldSquareAsync(int index, FieldType type, CancellationToken token)
@@ -53,7 +56,8 @@ namespace GameOff2026.Game.Domain.UseCase
         {
             return new EventResultVO(
                 type,
-                type is FieldType.Treasure ? 1 : 0
+                type is FieldType.Treasure ? 1 : 0,
+                type is FieldType.GroundDoor && _treasureEntity.value > 0
             );
         }
     }

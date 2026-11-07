@@ -95,11 +95,13 @@ namespace GameOff2026.Game.Application
     {
         public readonly FieldType type;
         public readonly int treasureNum;
+        public readonly bool isGoal;
 
-        public EventResultVO(FieldType type, int treasureNum)
+        public EventResultVO(FieldType type, int treasureNum, bool isGoal)
         {
             this.type = type;
             this.treasureNum = treasureNum;
+            this.isGoal = isGoal;
         }
     }
 }
