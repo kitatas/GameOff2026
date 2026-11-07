@@ -68,6 +68,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<TreasureFacade>(Lifetime.Scoped);
 
             // View
+            builder.RegisterComponentInHierarchy<DoorView>();
             builder.RegisterComponentInHierarchy<FieldView>();
             builder.RegisterComponentInHierarchy<MovementView>();
             builder.RegisterComponentInHierarchy<PlayerView>();

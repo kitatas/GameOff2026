@@ -40,6 +40,16 @@ namespace GameOff2026.Game.Domain.UseCase
                     FieldSquareVO.Create(i % FieldConfig.MAX_FILE + 1, i / FieldConfig.MAX_FILE + 1, field);
                 _fieldEntity.Add(eventSquare);
             }
+            // TODO
+            for (int i = length; i < length + FieldConfig.MAX_FILE; i++)
+            {
+                var fieldSquare = _fieldEntity.fieldSquares[i - FieldConfig.MAX_FILE];
+                var fieldType = fieldSquare.field.type is FieldType.GroundDoor ? FieldType.WallDoor : FieldType.Wall;
+                var field = _fieldRepository.Find(fieldType);
+                var eventSquare =
+                    FieldSquareVO.Create(i % FieldConfig.MAX_FILE + 1, i / FieldConfig.MAX_FILE + 1, field);
+                _fieldEntity.Add(eventSquare);
+            }
 
             return PublishRenderAsync(token);
         }

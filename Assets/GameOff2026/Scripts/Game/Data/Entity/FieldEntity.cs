@@ -54,6 +54,8 @@ namespace GameOff2026.Game.Data.Entity
             return fieldSquare.field.type switch
             {
                 // TODO: 移動不可の field type
+                FieldType.Wall => false,
+                FieldType.WallDoor => false,
                 _ => true,
             };
         }
