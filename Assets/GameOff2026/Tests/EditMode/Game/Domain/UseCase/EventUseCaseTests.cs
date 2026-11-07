@@ -22,6 +22,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
     {
         private FieldEntity _fieldEntity;
         private PlayerEntity _playerEntity;
+        private TreasureEntity _treasureEntity;
         private FieldTable _fieldTable;
         private FieldData _groundFieldData;
         private FakeAsyncSubscriber<EventResultVO> _eventResultSubscriber;
@@ -33,6 +34,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         {
             _fieldEntity = new FieldEntity();
             _playerEntity = new PlayerEntity();
+            _treasureEntity = new TreasureEntity();
             _fieldTable = ScriptableObject.CreateInstance<FieldTable>();
             _groundFieldData = ScriptableObject.CreateInstance<FieldData>();
             SetField(_groundFieldData, "fieldType", FieldType.Ground);
@@ -42,7 +44,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _eventResultSubscriber = new FakeAsyncSubscriber<EventResultVO>();
             _eventResultPublisher = new FakeAsyncPublisher<EventResultVO>();
             var eventPorts = new EventPorts(_eventResultSubscriber, _eventResultPublisher);
-            _useCase = new EventUseCase(_fieldEntity, _playerEntity, eventPorts, repository);
+            _useCase = new EventUseCase(_fieldEntity, _playerEntity, _treasureEntity, eventPorts, repository);
         }
 
         [TearDown]
@@ -66,6 +68,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             Assert.AreEqual(1, _eventResultPublisher.PublishCount);
             Assert.AreEqual(FieldType.Ground, _eventResultPublisher.LastPublished.type);
             Assert.AreEqual(0, _eventResultPublisher.LastPublished.treasureNum);
+            Assert.IsFalse(_eventResultPublisher.LastPublished.isGoal);
             Assert.AreEqual(source.Token, _eventResultPublisher.tokens[0]);
         }
 
@@ -85,7 +88,24 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             Assert.AreEqual(1, _eventResultPublisher.PublishCount);
             Assert.AreEqual(FieldType.Treasure, _eventResultPublisher.LastPublished.type);
             Assert.AreEqual(1, _eventResultPublisher.LastPublished.treasureNum);
+            Assert.IsFalse(_eventResultPublisher.LastPublished.isGoal);
             Assert.AreEqual(source.Token, _eventResultPublisher.tokens[0]);
+        }
+
+        [Test]
+        public async Task ApplyAsync_GroundDoorWithTreasure_ReturnsGoalResult()
+        {
+            var square = new SquareVO(2, 3);
+            _fieldEntity.Add(new FieldSquareVO(square, new FieldVO(FieldType.GroundDoor, null, 1.0f)));
+            _playerEntity.SetSquare(square);
+            _treasureEntity.Add(1);
+            using var source = new CancellationTokenSource();
+
+            var result = await _useCase.ApplyAsync(source.Token).AsTask();
+
+            Assert.AreEqual(FieldType.GroundDoor, result.type);
+            Assert.IsTrue(result.isGoal);
+            Assert.AreSame(result, _eventResultPublisher.LastPublished);
         }
 
         [Test]

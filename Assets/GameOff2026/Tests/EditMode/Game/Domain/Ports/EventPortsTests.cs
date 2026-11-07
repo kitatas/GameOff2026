@@ -16,7 +16,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.Ports
         {
             var publisher = new FakeAsyncPublisher<EventResultVO>();
             var ports = new EventPorts(new FakeAsyncSubscriber<EventResultVO>(), publisher);
-            var result = new EventResultVO(FieldType.Treasure, 2);
+            var result = new EventResultVO(FieldType.Treasure, 2, false);
             using var source = new CancellationTokenSource();
 
             await ports.PublishEventResultAsync(result, source.Token).AsTask();
