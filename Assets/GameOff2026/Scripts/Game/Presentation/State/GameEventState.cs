@@ -9,26 +9,19 @@ namespace GameOff2026.Game.Presentation.State
     {
         private readonly EventUseCase _eventUseCase;
         private readonly FieldUseCase _fieldUseCase;
-        private readonly TreasureUseCase _treasureUseCase;
 
-        public GameEventState(EventUseCase eventUseCase, FieldUseCase fieldUseCase, TreasureUseCase treasureUseCase)
+        public GameEventState(EventUseCase eventUseCase, FieldUseCase fieldUseCase)
         {
             _eventUseCase = eventUseCase;
             _fieldUseCase = fieldUseCase;
-            _treasureUseCase = treasureUseCase;
         }
 
         public override GameState state => GameState.Event;
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
-            var result = await _eventUseCase.ApplyAsync(token);
+            await _eventUseCase.ApplyAsync(token);
             await _fieldUseCase.PublishRenderAsync(token);
-
-            if (result.treasureNum > 0)
-            {
-                _treasureUseCase.Add(result.treasureNum);
-            }
 
             return GameState.Input;
         }

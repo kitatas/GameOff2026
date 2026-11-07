@@ -29,6 +29,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<TreasureEntity>(Lifetime.Scoped);
 
             // Ports
+            builder.Register<EventPorts>(Lifetime.Scoped);
             builder.Register<FieldPorts>(Lifetime.Scoped);
             builder.Register<GameStatePorts>(Lifetime.Scoped);
             builder.Register<MovementPorts>(Lifetime.Scoped);
@@ -52,6 +53,7 @@ namespace GameOff2026.Game.Installer
             // Presenter
             builder.UseEntryPoints(Lifetime.Scoped, entryPoints =>
             {
+                entryPoints.Add<EventPresenter>();
                 entryPoints.Add<FieldPresenter>();
                 entryPoints.Add<GameStatePresenter>();
                 entryPoints.Add<MovementPresenter>();
