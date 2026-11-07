@@ -20,4 +20,9 @@ namespace GameOff2026.Game.Application
             Direction.Right,
         };
     }
+
+    public sealed class TreasureConfig
+    {
+        public const float TWEEN_DURATION = 0.25f;
+    }
 }

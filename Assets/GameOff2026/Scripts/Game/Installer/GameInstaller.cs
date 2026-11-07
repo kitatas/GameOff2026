@@ -26,6 +26,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<FieldEntity>(Lifetime.Scoped);
             builder.Register<GameStateEntity>(Lifetime.Scoped);
             builder.Register<PlayerEntity>(Lifetime.Scoped);
+            builder.Register<TreasureEntity>(Lifetime.Scoped);
 
             // Ports
             builder.Register<FieldPorts>(Lifetime.Scoped);
@@ -40,6 +41,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<FieldUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
             builder.Register<MovementUseCase>(Lifetime.Scoped);
+            builder.Register<TreasureUseCase>(Lifetime.Scoped);
 
             // State
             builder.Register<BaseGameState, GameEventState>(Lifetime.Scoped);
@@ -54,17 +56,20 @@ namespace GameOff2026.Game.Installer
                 entryPoints.Add<GameStatePresenter>();
                 entryPoints.Add<MovementPresenter>();
                 entryPoints.Add<PlayerPresenter>();
+                entryPoints.Add<TreasurePresenter>();
             });
 
             // Facade
             builder.Register<FieldFacade>(Lifetime.Scoped);
             builder.Register<MovementFacade>(Lifetime.Scoped);
             builder.Register<PlayerFacade>(Lifetime.Scoped);
+            builder.Register<TreasureFacade>(Lifetime.Scoped);
 
             // View
             builder.RegisterComponentInHierarchy<FieldView>();
             builder.RegisterComponentInHierarchy<MovementView>();
             builder.RegisterComponentInHierarchy<PlayerView>();
+            builder.RegisterComponentInHierarchy<TreasureView>();
         }
     }
 }
