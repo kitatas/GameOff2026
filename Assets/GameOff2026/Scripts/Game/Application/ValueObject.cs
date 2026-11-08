@@ -1,4 +1,5 @@
 using GameOff2026.Common.Application;
+using UniEx;
 using UnityEngine;
 
 namespace GameOff2026.Game.Application
@@ -109,6 +110,34 @@ namespace GameOff2026.Game.Application
             this.type = type;
             this.treasureNum = treasureNum;
             this.isGoal = isGoal;
+        }
+    }
+
+    public sealed class FieldPatternVO
+    {
+        public readonly int id;
+        public readonly FieldType[] types;
+        public readonly Rotation rotation;
+
+        public FieldPatternVO(int id, int[] types)
+        {
+            const int length = FieldConfig.HALF_FILE * FieldConfig.HALF_RANK;
+            if (types.Length != length) throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD_LENGTH);
+
+            this.id = id;
+            this.types = new FieldType[length];
+            this.rotation = FieldConfig.ROTATIONS.GetRandom();
+
+            for (int file = 0; file < FieldConfig.HALF_FILE; file++)
+            {
+                for (int rank = 0; rank < FieldConfig.HALF_RANK; rank++)
+                {
+                    var (nx, ny) = rotation.Rotate(file, rank);
+                    var srcIndex = file * FieldConfig.HALF_FILE + rank;
+                    var dstIndex = ny * FieldConfig.HALF_RANK + nx;
+                    this.types[dstIndex] = types[srcIndex].ToFieldType();
+                }
+            }
         }
     }
 }

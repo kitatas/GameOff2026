@@ -2,7 +2,8 @@
     "name": "Game.Application",
     "rootNamespace": "",
     "references": [
-        "GUID:5866b7176a79446e997d71e22dc6d4bf"
+        "GUID:5866b7176a79446e997d71e22dc6d4bf",
+        "GUID:827f47054e407413e9663c748e13f0a6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

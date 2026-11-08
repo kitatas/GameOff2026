@@ -29,6 +29,15 @@ namespace GameOff2026.Game.Application
         WallDoor = 6,
     }
 
+    public enum Rotation
+    {
+        None = 0,
+        Angle0 = 1,
+        Angle90 = 2,
+        Angle180 = 3,
+        Angle270 = 4,
+    }
+
     public enum RenderType
     {
         None = 0,
