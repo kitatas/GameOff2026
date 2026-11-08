@@ -133,8 +133,8 @@ namespace GameOff2026.Game.Application
                 for (int rank = 0; rank < FieldConfig.HALF_RANK; rank++)
                 {
                     var (nx, ny) = rotation.Rotate(file, rank);
-                    var srcIndex = file * FieldConfig.HALF_FILE + rank;
-                    var dstIndex = ny * FieldConfig.HALF_RANK + nx;
+                    var srcIndex = file * FieldConfig.HALF_RANK + rank;
+                    var dstIndex = nx * FieldConfig.HALF_RANK + ny;
                     this.types[dstIndex] = types[srcIndex].ToFieldType();
                 }
             }

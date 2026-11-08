@@ -15,11 +15,13 @@ namespace GameOff2026.Game.Installer
 {
     public sealed class GameInstaller : LifetimeScope
     {
+        [SerializeField] private TextAsset memoryFile = default;
         [SerializeField] private FieldTable fieldTable = default;
 
         protected override void Configure(IContainerBuilder builder)
         {
             // DataStore
+            builder.RegisterInstance<MemoryDatabase>(new MemoryDatabase(memoryFile.bytes));
             builder.RegisterInstance<FieldTable>(fieldTable);
 
             // Entity
@@ -35,6 +37,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<MovementPorts>(Lifetime.Scoped);
 
             // Repository
+            builder.Register<FieldPatternRepository>(Lifetime.Scoped);
             builder.Register<FieldRepository>(Lifetime.Scoped);
 
             // UseCase

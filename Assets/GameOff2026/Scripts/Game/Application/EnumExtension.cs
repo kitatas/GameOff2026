@@ -39,12 +39,13 @@ namespace GameOff2026.Game.Application
 
         public static (int file, int rank) Rotate(this Rotation self, int file, int rank)
         {
+            const int max = FieldConfig.HALF_FILE - 1;
             return self switch
             {
-                Rotation.Angle0 => (rank, file),
-                Rotation.Angle90 => (FieldConfig.HALF_FILE - 1 - file, rank),
-                Rotation.Angle180 => (FieldConfig.HALF_RANK - 1 - rank, FieldConfig.HALF_FILE - 1 - file),
-                Rotation.Angle270 => (file, FieldConfig.HALF_RANK - 1 - rank),
+                Rotation.Angle0 => (file, rank),
+                Rotation.Angle90 => (max - rank, file),
+                Rotation.Angle180 => (max - file, max - rank),
+                Rotation.Angle270 => (rank, max - file),
                 _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_ROTATION),
             };
         }
