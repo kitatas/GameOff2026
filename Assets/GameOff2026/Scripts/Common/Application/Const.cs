@@ -24,6 +24,8 @@ namespace GameOff2026.Common.Application
         public const string INVALID_FADE = "INVALID_FADE";
         public const string INVALID_FIELD = "INVALID_FIELD";
         public const string INVALID_FIELD_INDEX = "INVALID_FIELD_INDEX";
+        public const string INVALID_FIELD_SPRITE = "INVALID_FIELD_SPRITE";
+        public const string INVALID_RENDER = "INVALID_RENDER";
         public const string INVALID_WEIGHT = "INVALID_WEIGHT";
         public const string NOT_FOUND_DIRECTION = "NOT_FOUND_DIRECTION";
         public const string NOT_FOUND_LOAD = "NOT_FOUND_LOAD";

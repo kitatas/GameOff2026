@@ -42,6 +42,7 @@ namespace GameOff2026.Game.Application
         public FieldVO(FieldType type, Sprite sprite, float weight)
         {
             if (type is FieldType.None) throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD);
+            if (sprite == null) throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD_SPRITE);
             if (weight <= 0.0f) throw new QuitExceptionVO(ExceptionConfig.INVALID_WEIGHT);
 
             this.type = type;
@@ -67,13 +68,15 @@ namespace GameOff2026.Game.Application
         }
     }
 
-    public class RenderFieldSquareVO
+    public sealed class RenderFieldSquareVO
     {
         public readonly RenderType type;
         public readonly FieldSquareVO[] squares;
 
         public RenderFieldSquareVO(RenderType type, FieldSquareVO[] squares)
         {
+            if (type is RenderType.None) throw new QuitExceptionVO(ExceptionConfig.INVALID_RENDER);
+
             this.type = type;
             this.squares = squares;
         }
@@ -86,6 +89,8 @@ namespace GameOff2026.Game.Application
 
         public MovableDirectionVO(Direction direction, bool isMovable)
         {
+            if (direction is Direction.None) throw new QuitExceptionVO(ExceptionConfig.NOT_FOUND_DIRECTION);
+
             this.direction = direction;
             this.isMovable = isMovable;
         }
@@ -99,6 +104,8 @@ namespace GameOff2026.Game.Application
 
         public EventResultVO(FieldType type, int treasureNum, bool isGoal)
         {
+            if (type is FieldType.None) throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD);
+
             this.type = type;
             this.treasureNum = treasureNum;
             this.isGoal = isGoal;
