@@ -1,6 +1,7 @@
 using GameOff2026.Common.Application;
 using GameOff2026.Game.Application;
 using GameOff2026.Game.Data.Entity;
+using GameOff2026.Tests.EditMode.TestHelpers;
 using NUnit.Framework;
 
 namespace GameOff2026.Tests.EditMode.Game.Data.Entity
@@ -20,7 +21,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
         public void Add_FieldSquare_StoresSquareAndAllowsMovementOnIt()
         {
             var entity = new FieldEntity();
-            var fieldSquare = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, null, 1.0f));
+            var fieldSquare = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f));
 
             entity.Add(fieldSquare);
 
@@ -34,7 +35,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
         public void Clear_AfterAddingFieldSquares_RemovesAllSquaresAndMovability()
         {
             var entity = new FieldEntity();
-            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, null, 1.0f)));
+            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
 
             entity.Clear();
 
@@ -46,8 +47,8 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
         public void SetField_ExistingIndex_ReplacesFieldAndPreservesSquare()
         {
             var entity = new FieldEntity();
-            var originalFieldSquare = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, null, 1.0f));
-            var replacementField = new FieldVO(FieldType.Treasure, null, 1.0f);
+            var originalFieldSquare = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f));
+            var replacementField = new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f);
             entity.Add(originalFieldSquare);
 
             entity.SetField(0, replacementField);
@@ -63,15 +64,15 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             var entity = new FieldEntity();
 
             Assert.Throws<QuitExceptionVO>(() =>
-                entity.SetField(0, new FieldVO(FieldType.Ground, null, 1.0f)));
+                entity.SetField(0, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
         }
 
         [Test]
         public void Find_ExistingSquare_ReturnsFieldSquareAndIndex()
         {
             var entity = new FieldEntity();
-            var expected = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, null, 1.0f));
-            entity.Add(FieldSquareVO.Create(1, 3, new FieldVO(FieldType.Ground, null, 1.0f)));
+            var expected = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f));
+            entity.Add(FieldSquareVO.Create(1, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
             entity.Add(expected);
 
             var (fieldSquare, index) = entity.Find(new SquareVO(2, 3));
@@ -84,7 +85,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
         public void Find_MissingSquare_ReturnsNullAndMinusOne()
         {
             var entity = new FieldEntity();
-            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, null, 1.0f)));
+            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
 
             var (fieldSquare, index) = entity.Find(new SquareVO(3, 3));
 

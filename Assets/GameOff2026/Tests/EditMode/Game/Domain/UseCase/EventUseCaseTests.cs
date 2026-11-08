@@ -38,6 +38,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _fieldTable = ScriptableObject.CreateInstance<FieldTable>();
             _groundFieldData = ScriptableObject.CreateInstance<FieldData>();
             SetField(_groundFieldData, "fieldType", FieldType.Ground);
+            SetField(_groundFieldData, "sprite", TestSpriteFactory.Valid);
             SetField(_groundFieldData, "weight", 1.0f);
             SetField(typeof(BaseTable<FieldData>), _fieldTable, "list", new List<FieldData> { _groundFieldData });
             var repository = new FieldRepository(_fieldTable);
@@ -57,7 +58,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         [Test]
         public async Task ApplyAsync_GroundSquare_LeavesFieldUnchanged()
         {
-            var fieldSquare = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, null, 1.0f));
+            var fieldSquare = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f));
             _fieldEntity.Add(fieldSquare);
             _playerEntity.SetSquare(new SquareVO(2, 3));
             using var source = new CancellationTokenSource();
@@ -76,7 +77,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         public async Task ApplyAsync_TreasureSquare_ReplacesFieldWithGround()
         {
             var square = new SquareVO(2, 3);
-            _fieldEntity.Add(new FieldSquareVO(square, new FieldVO(FieldType.Treasure, null, 1.0f)));
+            _fieldEntity.Add(new FieldSquareVO(square, new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f)));
             _playerEntity.SetSquare(square);
             using var source = new CancellationTokenSource();
 
@@ -96,7 +97,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         public async Task ApplyAsync_GroundDoorWithTreasure_ReturnsGoalResult()
         {
             var square = new SquareVO(2, 3);
-            _fieldEntity.Add(new FieldSquareVO(square, new FieldVO(FieldType.GroundDoor, null, 1.0f)));
+            _fieldEntity.Add(new FieldSquareVO(square, new FieldVO(FieldType.GroundDoor, TestSpriteFactory.Valid, 1.0f)));
             _playerEntity.SetSquare(square);
             _treasureEntity.Add(1);
             using var source = new CancellationTokenSource();

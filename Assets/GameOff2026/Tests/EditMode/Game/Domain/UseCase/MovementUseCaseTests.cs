@@ -113,8 +113,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         public async Task PublishMovableDirectionsAsync_AdjacentSquaresExist_ReportsMovableDirections()
         {
             _playerEntity.SetSquare(new SquareVO(1, 1));
-            _fieldEntity.Add(FieldSquareVO.Create(1, 2, new FieldVO(FieldType.Ground, null, 1.0f)));
-            _fieldEntity.Add(FieldSquareVO.Create(2, 1, new FieldVO(FieldType.Ground, null, 1.0f)));
+            _fieldEntity.Add(FieldSquareVO.Create(1, 2, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
+            _fieldEntity.Add(FieldSquareVO.Create(2, 1, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
 
             await _useCase.PublishMovableDirectionsAsync(CancellationToken.None).AsTask();
 

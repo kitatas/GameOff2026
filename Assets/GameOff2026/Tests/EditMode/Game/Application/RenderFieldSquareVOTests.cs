@@ -1,4 +1,5 @@
 using GameOff2026.Game.Application;
+using GameOff2026.Tests.EditMode.TestHelpers;
 using NUnit.Framework;
 
 namespace GameOff2026.Tests.EditMode.Game.Application
@@ -11,7 +12,7 @@ namespace GameOff2026.Tests.EditMode.Game.Application
         {
             var squares = new[]
             {
-                FieldSquareVO.Create(1, 1, new FieldVO(FieldType.Ground, null, 1.0f)),
+                FieldSquareVO.Create(1, 1, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)),
             };
 
             var renderFieldSquare = new RenderFieldSquareVO(RenderType.Refresh, squares);
