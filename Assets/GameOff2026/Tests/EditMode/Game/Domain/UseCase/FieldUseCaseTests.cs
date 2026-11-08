@@ -47,7 +47,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _publisher = new FakeAsyncPublisher<RenderFieldSquareVO>();
             var ports = new FieldPorts(_subscriber, _publisher);
             var repository = new FieldRepository(_fieldTable);
-            _useCase = new FieldUseCase(_fieldEntity, ports, repository);
+            _useCase = new FieldUseCase(_fieldEntity, ports, repository, null);
         }
 
         [TearDown]
@@ -57,29 +57,6 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             UnityEngine.Object.DestroyImmediate(_treasureFieldData);
             UnityEngine.Object.DestroyImmediate(_fieldTable);
         }
-
-        // NOTE: 仮fieldのためテスト対象外
-        // [Test]
-        // public async Task BuildFieldAsync_ExistingSquares_RebuildsAndPublishesWholeField()
-        // {
-        //     _fieldEntity.Add(FieldSquareVO.Create(99, 99, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
-        //     using var source = new CancellationTokenSource();
-        //
-        //     await _useCase.BuildFieldAsync(source.Token).AsTask();
-        //
-        //     var renderMessage = _publisher.LastPublished;
-        //     Assert.AreEqual(1, _publisher.PublishCount);
-        //     Assert.AreEqual(source.Token, _publisher.tokens[0]);
-        //     Assert.AreEqual(RenderType.Refresh, renderMessage.type);
-        //     Assert.AreEqual(FieldConfig.MAX_FILE * FieldConfig.MAX_RANK, renderMessage.squares.Length);
-        //     Assert.AreEqual(renderMessage.squares.Length, _fieldEntity.fieldSquares.Length);
-        //
-        //     for (int i = 0; i < renderMessage.squares.Length; i++)
-        //     {
-        //         Assert.AreEqual(i % FieldConfig.MAX_FILE + 1, renderMessage.squares[i].square.file);
-        //         Assert.AreEqual(i / FieldConfig.MAX_FILE + 1, renderMessage.squares[i].square.rank);
-        //     }
-        // }
 
         [Test]
         public async Task PublishRenderAsync_FieldSquaresExist_PublishesRefreshWithSquaresAndToken()

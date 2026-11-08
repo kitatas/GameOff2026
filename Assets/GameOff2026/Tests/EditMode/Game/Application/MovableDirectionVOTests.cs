@@ -1,3 +1,4 @@
+using GameOff2026.Common.Application;
 using GameOff2026.Game.Application;
 using NUnit.Framework;
 
@@ -14,6 +15,12 @@ namespace GameOff2026.Tests.EditMode.Game.Application
 
             Assert.AreEqual(direction, movableDirection.direction);
             Assert.AreEqual(isMovable, movableDirection.isMovable);
+        }
+
+        [Test]
+        public void Constructor_NoneDirection_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() => new MovableDirectionVO(Direction.None, true));
         }
     }
 }
