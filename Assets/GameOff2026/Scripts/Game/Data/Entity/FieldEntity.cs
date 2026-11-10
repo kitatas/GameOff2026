@@ -56,6 +56,7 @@ namespace GameOff2026.Game.Data.Entity
                 // TODO: 移動不可の field type
                 FieldType.Wall => false,
                 FieldType.WallDoor => false,
+                FieldType.Block => false,
                 _ => true,
             };
         }

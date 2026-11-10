@@ -27,6 +27,7 @@ namespace GameOff2026.Game.Application
         Treasure = 4,
         Wall = 5,
         WallDoor = 6,
+        Block = 7,
     }
 
     public enum Rotation
