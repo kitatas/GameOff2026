@@ -25,6 +25,13 @@ namespace GameOff2026.Game.Domain.UseCase
 
         public IAsyncSubscriber<DateTransitionVO> dateTransition => _datePorts.dateTransitionSubscriber;
 
+        public UniTask InitAsync(CancellationToken token)
+        {
+            _dateEntity.Set(DateType.Day);
+            var transition = DateTransitionVO.Create(_dateEntity.value, Fade.InOut, 0.0f);
+            return _datePorts.PublishDateTransitionAsync(transition, token);
+        }
+
         public UniTask SetUpAsync(CancellationToken token)
         {
             _dateEntity.Reset();
