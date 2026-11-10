@@ -25,12 +25,14 @@ namespace GameOff2026.Game.Installer
             builder.RegisterInstance<FieldTable>(fieldTable);
 
             // Entity
+            builder.Register<DateEntity>(Lifetime.Scoped);
             builder.Register<FieldEntity>(Lifetime.Scoped);
             builder.Register<GameStateEntity>(Lifetime.Scoped);
             builder.Register<PlayerEntity>(Lifetime.Scoped);
             builder.Register<TreasureEntity>(Lifetime.Scoped);
 
             // Ports
+            builder.Register<DatePorts>(Lifetime.Scoped);
             builder.Register<EventPorts>(Lifetime.Scoped);
             builder.Register<FieldPorts>(Lifetime.Scoped);
             builder.Register<GameStatePorts>(Lifetime.Scoped);
@@ -41,6 +43,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<FieldRepository>(Lifetime.Scoped);
 
             // UseCase
+            builder.Register<DateUseCase>(Lifetime.Scoped);
             builder.Register<EventUseCase>(Lifetime.Scoped);
             builder.Register<FieldUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
@@ -56,6 +59,7 @@ namespace GameOff2026.Game.Installer
             // Presenter
             builder.UseEntryPoints(Lifetime.Scoped, entryPoints =>
             {
+                entryPoints.Add<DatePresenter>();
                 entryPoints.Add<EventPresenter>();
                 entryPoints.Add<FieldPresenter>();
                 entryPoints.Add<GameStatePresenter>();
@@ -65,12 +69,14 @@ namespace GameOff2026.Game.Installer
             });
 
             // Facade
+            builder.Register<DateFacade>(Lifetime.Scoped);
             builder.Register<FieldFacade>(Lifetime.Scoped);
             builder.Register<MovementFacade>(Lifetime.Scoped);
             builder.Register<PlayerFacade>(Lifetime.Scoped);
             builder.Register<TreasureFacade>(Lifetime.Scoped);
 
             // View
+            builder.RegisterComponentInHierarchy<DateView>();
             builder.RegisterComponentInHierarchy<DoorView>();
             builder.RegisterComponentInHierarchy<FieldView>();
             builder.RegisterComponentInHierarchy<MovementView>();

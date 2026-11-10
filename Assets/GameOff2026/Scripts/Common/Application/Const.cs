@@ -20,6 +20,7 @@ namespace GameOff2026.Common.Application
         public const string UNKNOWN_ERROR = "UNKNOWN_ERROR";
         public const string MAX_RETRY = "MAX_RETRY";
         public const string FAILED_TO_LOAD_SCENE = "FAILED_TO_LOAD_SCENE";
+        public const string INVALID_DATE = "INVALID_DATE";
         public const string INVALID_DURATION = "INVALID_DURATION";
         public const string INVALID_FADE = "INVALID_FADE";
         public const string INVALID_FIELD = "INVALID_FIELD";

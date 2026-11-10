@@ -18,6 +18,13 @@ namespace GameOff2026.Game.Application
         Right = 4,
     }
 
+    public enum DateType
+    {
+        None = 0,
+        Day = 1,
+        Night = 2,
+    }
+
     public enum FieldType
     {
         None = 0,

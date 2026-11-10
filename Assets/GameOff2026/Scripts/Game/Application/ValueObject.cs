@@ -140,4 +140,22 @@ namespace GameOff2026.Game.Application
             }
         }
     }
+
+    public sealed class DateTransitionVO
+    {
+        public readonly DateType date;
+        public readonly TransitionVO transition;
+
+        public DateTransitionVO(DateType date, TransitionVO transition)
+        {
+            this.date = date;
+            this.transition = transition;
+        }
+
+        public static DateTransitionVO Create(DateType date, Fade fade, float duration)
+        {
+            var transition = new TransitionVO(fade, duration);
+            return new DateTransitionVO(date, transition);
+        }
+    }
 }
