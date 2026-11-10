@@ -25,6 +25,10 @@ namespace GameOff2026.Game.Presentation.Presenter
             _dateUseCase.dateTransition
                 .Subscribe(_dateFacade.RenderAsync)
                 .AddTo(_disposable);
+
+            _dateFacade.OnShiftAsObservable()
+                .Subscribe(_ => _dateUseCase.HandleShift())
+                .AddTo(_disposable);
         }
 
         void IDisposable.Dispose()

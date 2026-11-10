@@ -4,16 +4,20 @@ using DG.Tweening;
 using GameOff2026.Common.Application;
 using GameOff2026.Game.Application;
 using GameOff2026.Game.Presentation.View;
+using GameOff2026.Game.Presentation.View.Button;
+using R3;
 
 namespace GameOff2026.Game.Presentation.Facade
 {
     public sealed class DateFacade
     {
         private readonly DateView _dateView;
+        private readonly DateShiftButtonView _dateShiftButtonView;
 
-        public DateFacade(DateView dateView)
+        public DateFacade(DateView dateView, DateShiftButtonView dateShiftButtonView)
         {
             _dateView = dateView;
+            _dateShiftButtonView = dateShiftButtonView;
         }
 
         public UniTask RenderAsync(DateTransitionVO dateTransition, CancellationToken token)
@@ -32,6 +36,11 @@ namespace GameOff2026.Game.Presentation.Facade
 
             return tween
                 .ToUniTask(TweenCancelBehaviour.KillAndCancelAwait, token);
+        }
+
+        public Observable<Unit> OnShiftAsObservable()
+        {
+            return _dateShiftButtonView.click;
         }
     }
 }

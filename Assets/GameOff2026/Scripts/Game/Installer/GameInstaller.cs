@@ -7,6 +7,7 @@ using GameOff2026.Game.Presentation.Facade;
 using GameOff2026.Game.Presentation.Presenter;
 using GameOff2026.Game.Presentation.State;
 using GameOff2026.Game.Presentation.View;
+using GameOff2026.Game.Presentation.View.Button;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -76,6 +77,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<TreasureFacade>(Lifetime.Scoped);
 
             // View
+            builder.RegisterComponentInHierarchy<DateShiftButtonView>();
             builder.RegisterComponentInHierarchy<DateView>();
             builder.RegisterComponentInHierarchy<DoorView>();
             builder.RegisterComponentInHierarchy<FieldView>();
