@@ -148,6 +148,8 @@ namespace GameOff2026.Game.Application
 
         public DateTransitionVO(DateType date, TransitionVO transition)
         {
+            if (date is DateType.None) throw new QuitExceptionVO(ExceptionConfig.INVALID_DATE);
+
             this.date = date;
             this.transition = transition;
         }
