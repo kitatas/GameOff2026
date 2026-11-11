@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
@@ -27,12 +26,6 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _subscriber = new FakeAsyncSubscriber<DateTransitionVO>();
             _publisher = new FakeAsyncPublisher<DateTransitionVO>();
             _useCase = new DateUseCase(_dateEntity, new DatePorts(_subscriber, _publisher));
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            ((IDisposable)_useCase).Dispose();
         }
 
         [Test]
@@ -73,11 +66,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         {
             _dateEntity.Set(date);
             using var source = new CancellationTokenSource();
-            // ShiftAsyncは入力通知を待つため、開始後にHandleShiftで通知する。
-            var shiftTask = _useCase.ShiftAsync(source.Token).AsTask();
 
-            _useCase.HandleShift();
-            await shiftTask;
+            await _useCase.ShiftAsync(source.Token).AsTask();
 
             Assert.AreEqual(expectedDate, _dateEntity.value);
             Assert.AreEqual(1, _publisher.PublishCount);
