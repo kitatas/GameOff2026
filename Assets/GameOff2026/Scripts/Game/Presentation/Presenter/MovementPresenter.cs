@@ -25,10 +25,6 @@ namespace GameOff2026.Game.Presentation.Presenter
             _movementUseCase.movableDirections
                 .Subscribe(_movementFacade.RenderButtonsAsync)
                 .AddTo(_disposable);
-
-            _movementFacade.OnClickAnyDirectionAsObservable()
-                .Subscribe(_movementUseCase.HandleClickDirection)
-                .AddTo(_disposable);
         }
 
         void IDisposable.Dispose()

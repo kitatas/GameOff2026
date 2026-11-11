@@ -2,6 +2,7 @@
     "name": "Game.Presentation.State",
     "rootNamespace": "",
     "references": [
+        "GUID:5866b7176a79446e997d71e22dc6d4bf",
         "GUID:fc320ce6ea0543599cfa498e0a7fda85",
         "GUID:3a341b1324b94c719dd09bea852020b6",
         "GUID:56dee27e897440868fff41e91e3c9a97",

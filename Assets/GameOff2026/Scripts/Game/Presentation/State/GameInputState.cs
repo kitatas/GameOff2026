@@ -1,5 +1,6 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using GameOff2026.Common.Application;
 using GameOff2026.Game.Application;
 using GameOff2026.Game.Domain.UseCase;
 
@@ -8,11 +9,13 @@ namespace GameOff2026.Game.Presentation.State
     public sealed class GameInputState : BaseGameState
     {
         private readonly DateUseCase _dateUseCase;
+        private readonly InputUseCase _inputUseCase;
         private readonly MovementUseCase _movementUseCase;
 
-        public GameInputState(DateUseCase dateUseCase, MovementUseCase movementUseCase)
+        public GameInputState(DateUseCase dateUseCase, InputUseCase inputUseCase, MovementUseCase movementUseCase)
         {
             _dateUseCase = dateUseCase;
+            _inputUseCase = inputUseCase;
             _movementUseCase = movementUseCase;
         }
 
@@ -29,15 +32,15 @@ namespace GameOff2026.Game.Presentation.State
         {
             await _movementUseCase.PublishMovableDirectionsAsync(token);
 
-            var index = await UniTask.WhenAny(
-                _dateUseCase.ShiftAsync(token),
-                _movementUseCase.InputAsync(token)
-            );
+            var input = await _inputUseCase.InputAsync(token);
+            await (input.input switch
+            {
+                InputType.Move => _movementUseCase.MoveAsync(input.direction, token),
+                InputType.Shift => _dateUseCase.ShiftAsync(token),
+                _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_INPUT),
+            });
 
             // TODO: date change event
-            if (index == 0) return GameState.Event;
-
-            await _movementUseCase.MoveAsync(token);
 
             return GameState.Event;
         }
