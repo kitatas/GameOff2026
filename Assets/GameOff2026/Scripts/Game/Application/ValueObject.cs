@@ -158,4 +158,20 @@ namespace GameOff2026.Game.Application
             return new DateTransitionVO(date, transition);
         }
     }
+
+    public sealed class InputVO
+    {
+        public readonly InputType input;
+        public readonly Direction direction;
+
+        public InputVO(InputType input, Direction direction)
+        {
+            if (input is InputType.None) throw new QuitExceptionVO(ExceptionConfig.INVALID_INPUT);
+            if (input is InputType.Move && direction is Direction.None)
+                throw new QuitExceptionVO(ExceptionConfig.NOT_FOUND_DIRECTION);
+
+            this.input = input;
+            this.direction = direction;
+        }
+    }
 }

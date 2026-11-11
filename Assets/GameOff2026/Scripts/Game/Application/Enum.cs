@@ -9,6 +9,13 @@ namespace GameOff2026.Game.Application
         Event = 4,
     }
 
+    public enum InputType
+    {
+        None = 0,
+        Move = 1,
+        Shift = 2,
+    }
+
     public enum Direction
     {
         None = 0,
