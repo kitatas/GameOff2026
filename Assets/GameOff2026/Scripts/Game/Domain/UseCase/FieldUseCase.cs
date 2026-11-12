@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using GameOff2026.Game.Application;
@@ -12,15 +13,19 @@ namespace GameOff2026.Game.Domain.UseCase
 {
     public sealed class FieldUseCase
     {
+        private readonly DateEntity _dateEntity;
         private readonly FieldEntity _fieldEntity;
+        private readonly FieldPatternEntity _fieldPatternEntity;
         private readonly FieldPorts _fieldPorts;
         private readonly FieldRepository _fieldRepository;
         private readonly FieldPatternRepository _fieldPatternRepository;
 
-        public FieldUseCase(FieldEntity fieldEntity, FieldPorts fieldPorts, FieldRepository fieldRepository,
-            FieldPatternRepository fieldPatternRepository)
+        public FieldUseCase(DateEntity dateEntity, FieldEntity fieldEntity, FieldPatternEntity fieldPatternEntity,
+            FieldPorts fieldPorts, FieldRepository fieldRepository, FieldPatternRepository fieldPatternRepository)
         {
+            _dateEntity = dateEntity;
             _fieldEntity = fieldEntity;
+            _fieldPatternEntity = fieldPatternEntity;
             _fieldPorts = fieldPorts;
             _fieldRepository = fieldRepository;
             _fieldPatternRepository = fieldPatternRepository;
@@ -32,24 +37,9 @@ namespace GameOff2026.Game.Domain.UseCase
         {
             _fieldEntity.Clear();
 
-            var patterns = _fieldPatternRepository.GetRandom4();
-            for (int rank = 0; rank < FieldConfig.MAX_RANK; rank++)
-            {
-                var patternRankIndex = rank / FieldConfig.HALF_RANK;
-
-                for (int file = 0; file < FieldConfig.MAX_FILE; file++)
-                {
-                    var patternOffset = (file / FieldConfig.HALF_FILE) * (FieldConfig.MAX_FILE / FieldConfig.HALF_FILE);
-                    var typeOffset = (file % FieldConfig.HALF_FILE) * FieldConfig.HALF_RANK;
-
-                    var pattern = patterns[patternRankIndex + patternOffset];
-                    var type = pattern.types[(rank % FieldConfig.HALF_RANK) + typeOffset];
-
-                    var field = _fieldRepository.Find(type);
-                    var fieldSquare = FieldSquareVO.Create(file + 1, rank + 1, field);
-                    _fieldEntity.Add(fieldSquare);
-                }
-            }
+            var patterns = _fieldPatternRepository.GetRandom4(_dateEntity.value);
+            _fieldPatternEntity.SetUp(patterns);
+            BuildField();
 
             // 壁沿いマスの算出
             const int length = FieldConfig.MAX_FILE * FieldConfig.MAX_RANK;
@@ -84,6 +74,27 @@ namespace GameOff2026.Game.Domain.UseCase
             }
 
             return PublishRenderAsync(token);
+        }
+
+        private void BuildField()
+        {
+            for (int rank = 0; rank < FieldConfig.MAX_RANK; rank++)
+            {
+                var patternRankIndex = rank / FieldConfig.HALF_RANK;
+
+                for (int file = 0; file < FieldConfig.MAX_FILE; file++)
+                {
+                    var patternOffset = (file / FieldConfig.HALF_FILE) * (FieldConfig.MAX_FILE / FieldConfig.HALF_FILE);
+                    var typeOffset = (file % FieldConfig.HALF_FILE) * FieldConfig.HALF_RANK;
+
+                    var pattern = _fieldPatternEntity.Get(patternRankIndex + patternOffset);
+                    var type = pattern.types[(rank % FieldConfig.HALF_RANK) + typeOffset];
+
+                    var field = _fieldRepository.Find(type);
+                    var fieldSquare = FieldSquareVO.Create(file + 1, rank + 1, field);
+                    _fieldEntity.Add(fieldSquare);
+                }
+            }
         }
 
         public UniTask PublishRenderAsync(CancellationToken token)

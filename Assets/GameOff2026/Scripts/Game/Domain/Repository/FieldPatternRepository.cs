@@ -1,4 +1,5 @@
 using System.Linq;
+using FastEnumUtility;
 using GameOff2026.Game.Application;
 using GameOff2026.Game.Data.DataStore;
 using GameOff2026.Game.Data.DataStore.Tables;
@@ -16,11 +17,16 @@ namespace GameOff2026.Game.Domain.Repository
             _fieldPatternMasterTable = memoryDatabase.FieldPatternMasterTable;
         }
 
-        public FieldPatternVO[] GetRandom4()
+        public FieldPatternVO[] GetRandom4(DateType date)
         {
-            return Enumerable.Range(0, 4)
+            var targets = _fieldPatternMasterTable.All
                 .AsValueEnumerable()
-                .Select(_ => _fieldPatternMasterTable.All.GetRandom().ToVO())
+                .Where(x => x.Date == date.ToInt32())
+                .ToArray();
+
+            return Enumerable.Range(0, FieldConfig.LOT_PATTERN_COUNT)
+                .AsValueEnumerable()
+                .Select(_ => targets.GetRandom().ToVO())
                 .ToArray();
         }
     }

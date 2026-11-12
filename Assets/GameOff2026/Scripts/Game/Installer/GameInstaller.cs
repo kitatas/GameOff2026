@@ -28,6 +28,7 @@ namespace GameOff2026.Game.Installer
             // Entity
             builder.Register<DateEntity>(Lifetime.Scoped);
             builder.Register<FieldEntity>(Lifetime.Scoped);
+            builder.Register<FieldPatternEntity>(Lifetime.Scoped);
             builder.Register<GameStateEntity>(Lifetime.Scoped);
             builder.Register<PlayerEntity>(Lifetime.Scoped);
             builder.Register<TreasureEntity>(Lifetime.Scoped);

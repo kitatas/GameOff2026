@@ -8,6 +8,7 @@ namespace GameOff2026.Game.Application
         public const int MIN_RANK = 1;
         public const int MAX_RANK = 6;
         public const int HALF_RANK = MAX_RANK / 2;
+        public const int LOT_PATTERN_COUNT = 4;
 
         public static readonly Rotation[] ROTATIONS =
         {
