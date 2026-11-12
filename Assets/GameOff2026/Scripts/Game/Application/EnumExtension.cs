@@ -49,5 +49,15 @@ namespace GameOff2026.Game.Application
                 _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_ROTATION),
             };
         }
+
+        public static DateType Shift(this DateType self)
+        {
+            return self switch
+            {
+                DateType.Day => DateType.Night,
+                DateType.Night => DateType.Day,
+                _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_DATE),
+            };
+        }
     }
 }
