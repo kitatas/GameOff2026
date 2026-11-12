@@ -116,17 +116,28 @@ namespace GameOff2026.Game.Application
     public sealed class FieldPatternVO
     {
         public readonly int id;
+        public readonly DateType date;
         public readonly FieldType[] types;
         public readonly Rotation rotation;
 
-        public FieldPatternVO(int id, int[] types)
+        public FieldPatternVO(int id, int date, int[] types)
+            : this(id, date, types, FieldConfig.ROTATIONS.GetRandom())
         {
+        }
+
+        public FieldPatternVO(int id, int date, int[] types, Rotation rotation)
+        {
+            if (date == 0) throw new QuitExceptionVO(ExceptionConfig.INVALID_DATE);
+
             const int length = FieldConfig.HALF_FILE * FieldConfig.HALF_RANK;
             if (types.Length != length) throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD_LENGTH);
 
+            if (rotation is Rotation.None) throw new QuitExceptionVO(ExceptionConfig.INVALID_ROTATION);
+
             this.id = id;
+            this.date = date.ToDateType();
             this.types = new FieldType[length];
-            this.rotation = FieldConfig.ROTATIONS.GetRandom();
+            this.rotation = rotation;
 
             for (int file = 0; file < FieldConfig.HALF_FILE; file++)
             {

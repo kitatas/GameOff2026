@@ -6,6 +6,13 @@ namespace GameOff2026.Game.Application
 {
     public static class EnumExtension
     {
+        public static DateType ToDateType(this int self)
+        {
+            return FastEnum.IsDefined<DateType>(self)
+                ? (DateType)self
+                : throw new QuitExceptionVO(ExceptionConfig.INVALID_DATE);
+        }
+
         public static FieldType ToFieldType(this int self)
         {
             return FastEnum.IsDefined<FieldType>(self)
