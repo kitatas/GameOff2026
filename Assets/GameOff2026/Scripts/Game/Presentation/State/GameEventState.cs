@@ -25,7 +25,7 @@ namespace GameOff2026.Game.Presentation.State
 
             return result.isGoal
                 ? GameState.SetUp
-                : GameState.Input;
+                : GameState.Wander;
         }
     }
 }

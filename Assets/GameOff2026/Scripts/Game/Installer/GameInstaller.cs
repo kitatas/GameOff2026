@@ -47,6 +47,7 @@ namespace GameOff2026.Game.Installer
 
             // UseCase
             builder.Register<DateUseCase>(Lifetime.Scoped);
+            builder.Register<EnemyWanderUseCase>(Lifetime.Scoped);
             builder.Register<EventUseCase>(Lifetime.Scoped);
             builder.Register<FieldUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
@@ -59,6 +60,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<BaseGameState, GameInitState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameInputState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameSetUpState>(Lifetime.Scoped);
+            builder.Register<BaseGameState, GameWanderState>(Lifetime.Scoped);
 
             // Presenter
             builder.UseEntryPoints(Lifetime.Scoped, entryPoints =>
