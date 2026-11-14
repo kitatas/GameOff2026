@@ -57,6 +57,7 @@ namespace GameOff2026.Game.Data.Entity
                 FieldType.Wall => false,
                 FieldType.WallDoor => false,
                 FieldType.Block => false,
+                FieldType.DayEnemy => false,
                 _ => true,
             };
         }

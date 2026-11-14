@@ -66,5 +66,10 @@ namespace GameOff2026.Game.Application
                 _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_DATE),
             };
         }
+
+        public static bool IsEnemy(this FieldType self)
+        {
+            return self is FieldType.DayEnemy or FieldType.NightEnemy;
+        }
     }
 }
