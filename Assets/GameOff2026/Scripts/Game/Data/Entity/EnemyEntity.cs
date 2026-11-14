@@ -16,6 +16,11 @@ namespace GameOff2026.Game.Data.Entity
             };
         }
 
+        public SquareVO[] Get(DateType date)
+        {
+            return _enemyMap[date];
+        }
+
         public void Set(DateType date, int index, SquareVO square)
         {
             _enemyMap[date][index] = square;

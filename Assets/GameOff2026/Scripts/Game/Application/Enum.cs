@@ -43,7 +43,9 @@ namespace GameOff2026.Game.Application
         WallDoor = 6,
         Block = 7,
         DayEnemy = 8,
-        NightEnemy = 9,
+        DayEnemyRoute = 9,
+        NightEnemy = 10,
+        NightEnemyRoute = 11,
     }
 
     public enum Rotation

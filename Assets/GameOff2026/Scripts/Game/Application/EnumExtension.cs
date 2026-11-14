@@ -71,5 +71,36 @@ namespace GameOff2026.Game.Application
         {
             return self is FieldType.DayEnemy or FieldType.NightEnemy;
         }
+
+        public static SquareVO[] Arounds(this SquareVO self)
+        {
+            return new[]
+            {
+                new SquareVO(self.file - 1, self.rank),
+                new SquareVO(self.file + 1, self.rank),
+                new SquareVO(self.file, self.rank - 1),
+                new SquareVO(self.file, self.rank + 1),
+            };
+        }
+
+        public static FieldType ToEnemy(this DateType self)
+        {
+            return self switch
+            {
+                DateType.Day => FieldType.DayEnemy,
+                DateType.Night => FieldType.NightEnemy,
+                _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_DATE),
+            };
+        }
+
+        public static FieldType ToEnemyRoute(this DateType self)
+        {
+            return self switch
+            {
+                DateType.Day => FieldType.DayEnemyRoute,
+                DateType.Night => FieldType.NightEnemyRoute,
+                _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_DATE),
+            };
+        }
     }
 }
