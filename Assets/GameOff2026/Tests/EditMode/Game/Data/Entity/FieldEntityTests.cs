@@ -92,5 +92,24 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             Assert.IsNull(fieldSquare);
             Assert.AreEqual(-1, index);
         }
+
+        [Test]
+        public void IsMovable_DayEnemySquare_ReturnsFalse()
+        {
+            var entity = new FieldEntity();
+            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.DayEnemy, TestSpriteFactory.Valid, 1.0f)));
+
+            Assert.IsFalse(entity.IsMovable(new SquareVO(2, 3)));
+        }
+
+        [TestCase(FieldType.DayEnemyRoute)]
+        [TestCase(FieldType.NightEnemyRoute)]
+        public void IsMovable_EnemyRouteSquare_ReturnsTrue(FieldType fieldType)
+        {
+            var entity = new FieldEntity();
+            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(fieldType, TestSpriteFactory.Valid, 1.0f)));
+
+            Assert.IsTrue(entity.IsMovable(new SquareVO(2, 3)));
+        }
     }
 }

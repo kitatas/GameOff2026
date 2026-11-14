@@ -109,6 +109,27 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             Assert.AreSame(result, _eventResultPublisher.LastPublished);
         }
 
+        [TestCase(FieldType.DayEnemyRoute)]
+        [TestCase(FieldType.NightEnemyRoute)]
+        public async Task ApplyAsync_EnemyRouteSquare_PublishesNonGoalResult(FieldType fieldType)
+        {
+            var square = new SquareVO(2, 3);
+            _fieldEntity.Add(new FieldSquareVO(square, new FieldVO(fieldType, TestSpriteFactory.Valid, 1.0f)));
+            _playerEntity.SetSquare(square);
+            using var source = new CancellationTokenSource();
+
+            var result = await _useCase.ApplyAsync(source.Token).AsTask();
+
+            Assert.AreEqual(fieldType, result.type);
+            Assert.AreEqual(0, result.treasureNum);
+            Assert.IsFalse(result.isGoal);
+            Assert.AreEqual(1, _eventResultPublisher.PublishCount);
+            Assert.AreSame(result, _eventResultPublisher.LastPublished);
+            Assert.AreEqual(source.Token, _eventResultPublisher.tokens[0]);
+            Assert.AreSame(square, _fieldEntity.fieldSquares[0].square);
+            Assert.AreEqual(fieldType, _fieldEntity.fieldSquares[0].field.type);
+        }
+
         [Test]
         public void EventResultSubscriber_AfterConstruction_ExposesPortsSubscriber()
         {

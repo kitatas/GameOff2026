@@ -22,6 +22,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
     public sealed class FieldUseCaseTests
     {
         private DateEntity _dateEntity;
+        private EnemyEntity _enemyEntity;
         private FieldEntity _fieldEntity;
         private FieldPatternEntity _fieldPatternEntity;
         private FieldTable _fieldTable;
@@ -35,11 +36,12 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         public void SetUp()
         {
             _dateEntity = new DateEntity();
+            _enemyEntity = new EnemyEntity();
             _fieldEntity = new FieldEntity();
             _fieldPatternEntity = new FieldPatternEntity();
             _fieldTable = ScriptableObject.CreateInstance<FieldTable>();
             _fieldDataAssets = new List<FieldData>();
-            for (var type = (int)FieldType.Ground; type <= (int)FieldType.Block; type++)
+            for (var type = (int)FieldType.Ground; type <= (int)FieldType.NightEnemyRoute; type++)
             {
                 _fieldDataAssets.Add(CreateFieldData((FieldType)type));
             }
@@ -53,7 +55,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             var ports = new FieldPorts(_subscriber, _publisher);
             var repository = new FieldRepository(_fieldTable);
             var patternRepository = new FieldPatternRepository(new MemoryDatabase(_memoryFile.bytes));
-            _useCase = new FieldUseCase(_dateEntity, _fieldEntity, _fieldPatternEntity, ports, repository,
+            _useCase = new FieldUseCase(_dateEntity, _enemyEntity, _fieldEntity, _fieldPatternEntity, ports, repository,
                 patternRepository);
         }
 
@@ -98,6 +100,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             Assert.LessOrEqual(CountFieldType(squares, FieldType.GroundWall), FieldConfig.MAX_FILE - 1);
             Assert.AreEqual(1, CountFieldType(squares, FieldType.WallDoor));
             Assert.AreEqual(FieldConfig.MAX_FILE - 1, CountFieldType(squares, FieldType.Wall));
+            AssertEnemyPositionsTracked(squares, DateType.Day, FieldType.DayEnemy);
         }
 
         [Test]
@@ -112,6 +115,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 dayPatterns[i] = _fieldPatternEntity.Get(i);
             }
 
+            _dateEntity.Shift();
             await _useCase.ShiftAsync(source.Token).AsTask();
 
             for (var i = 0; i < dayPatterns.Length; i++)
@@ -138,6 +142,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                         squares[rank * FieldConfig.MAX_FILE + file].field.type);
                 }
             }
+
+            AssertEnemyPositionsTracked(squares, DateType.Night, FieldType.NightEnemy);
         }
 
         [Test]
@@ -184,6 +190,33 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             }
 
             return count;
+        }
+
+        private void AssertEnemyPositionsTracked(FieldSquareVO[] squares, DateType date, FieldType enemyType)
+        {
+            var enemies = _enemyEntity.Get(date);
+            for (var i = 0; i < enemies.Length; i++)
+            {
+                if (enemies[i] == null) continue;
+
+                var found = false;
+                foreach (var fieldSquare in squares)
+                {
+                    if (fieldSquare.field.type != enemyType || !fieldSquare.square.IsEqual(enemies[i])) continue;
+
+                    var file = fieldSquare.square.file - 1;
+                    var rank = fieldSquare.square.rank - 1;
+                    var patternIndex = rank / FieldConfig.HALF_RANK +
+                                       (file / FieldConfig.HALF_FILE) *
+                                       (FieldConfig.MAX_FILE / FieldConfig.HALF_FILE);
+                    if (patternIndex != i) continue;
+
+                    found = true;
+                    break;
+                }
+
+                Assert.IsTrue(found, $"Enemy at index {i} must match a {enemyType} field square.");
+            }
         }
 
         private static void SetField(object target, string fieldName, object value)
