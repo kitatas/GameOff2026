@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace GameOff2026.Game.Domain.UseCase
 
             var patterns = _fieldPatternRepository.GetRandom4(_dateEntity.value);
             _fieldPatternEntity.SetUp(patterns);
-            BuildField();
+            BuildField((file, rank, field) => _fieldEntity.Add(FieldSquareVO.Create(file + 1, rank + 1, field)));
 
             // 壁沿いマスの算出
             const int length = FieldConfig.MAX_FILE * FieldConfig.MAX_RANK;
@@ -76,7 +77,21 @@ namespace GameOff2026.Game.Domain.UseCase
             return PublishRenderAsync(token);
         }
 
-        private void BuildField()
+        public UniTask ShiftAsync(CancellationToken token)
+        {
+            var patterns = Enumerable.Range(0, FieldConfig.LOT_PATTERN_COUNT)
+                .AsValueEnumerable()
+                .Select(x => _fieldPatternEntity.Get(x))
+                .Select(x => _fieldPatternRepository.Get(x.id, x.date.Shift(), x.rotation))
+                .ToArray();
+            _fieldPatternEntity.SetUp(patterns);
+
+            BuildField((file, rank, field) => _fieldEntity.SetField(rank * FieldConfig.MAX_FILE + file, field));
+
+            return PublishRenderAsync(token);
+        }
+
+        private void BuildField(Action<int, int, FieldVO> action)
         {
             for (int rank = 0; rank < FieldConfig.MAX_RANK; rank++)
             {
@@ -91,8 +106,7 @@ namespace GameOff2026.Game.Domain.UseCase
                     var type = pattern.types[(rank % FieldConfig.HALF_RANK) + typeOffset];
 
                     var field = _fieldRepository.Find(type);
-                    var fieldSquare = FieldSquareVO.Create(file + 1, rank + 1, field);
-                    _fieldEntity.Add(fieldSquare);
+                    action?.Invoke(file, rank, field);
                 }
             }
         }

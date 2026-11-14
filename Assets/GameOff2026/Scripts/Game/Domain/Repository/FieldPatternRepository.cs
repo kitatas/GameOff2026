@@ -1,5 +1,6 @@
 using System.Linq;
 using FastEnumUtility;
+using GameOff2026.Common.Application;
 using GameOff2026.Game.Application;
 using GameOff2026.Game.Data.DataStore;
 using GameOff2026.Game.Data.DataStore.Tables;
@@ -28,6 +29,13 @@ namespace GameOff2026.Game.Domain.Repository
                 .AsValueEnumerable()
                 .Select(_ => targets.GetRandom().ToVO())
                 .ToArray();
+        }
+
+        public FieldPatternVO Get(int id, DateType date, Rotation rotation)
+        {
+            return _fieldPatternMasterTable.TryFindByIdAndDate((id, date.ToInt32()), out var master)
+                ? master.ToVO(rotation)
+                : throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD_PATTERN);
         }
     }
 }
