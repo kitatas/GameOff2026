@@ -9,19 +9,66 @@ namespace GameOff2026.Tests.EditMode.Game.Application
     public sealed class FieldPatternVOTests
     {
         [Test]
-        public void Constructor_ValidPattern_StoresIdAndRotatedFieldTypes()
+        public void Constructor_ValidPattern_StoresIdDateAndRotatedFieldTypes()
         {
-            var pattern = new FieldPatternVO(7, new[] { 1, 2, 3, 4, 5, 6, 1, 2, 3 });
+            var pattern = new FieldPatternVO(7, 1, new[] { 1, 2, 3, 4, 5, 6, 1, 2, 3 });
 
             Assert.AreEqual(7, pattern.id);
+            Assert.AreEqual(DateType.Day, pattern.date);
             Assert.AreEqual(FieldConfig.HALF_FILE * FieldConfig.HALF_RANK, pattern.types.Length);
             Assert.IsTrue(Array.TrueForAll(pattern.types, type => type != FieldType.None));
         }
 
         [Test]
+        public void Constructor_Angle90Rotation_RearrangesFieldTypes()
+        {
+            var pattern = new FieldPatternVO(7, 1, new[] { 1, 1, 2, 3, 4, 5, 6, 7, 1 }, Rotation.Angle90);
+
+            CollectionAssert.AreEqual(
+                new[] { FieldType.GroundDoor, FieldType.Wall, FieldType.Ground,
+                    FieldType.Ground, FieldType.Treasure, FieldType.Block,
+                    FieldType.Ground, FieldType.GroundWall, FieldType.WallDoor },
+                pattern.types);
+        }
+
+        [Test]
         public void Constructor_InvalidLength_ThrowsQuitException()
         {
-            Assert.Throws<QuitExceptionVO>(() => new FieldPatternVO(1, new[] { 1, 2, 3, 4, 5, 6, 7, 8 }));
+            Assert.Throws<QuitExceptionVO>(() => new FieldPatternVO(1, 1, new[] { 1, 2, 3, 4, 5, 6, 7, 8 }));
+        }
+
+        [Test]
+        public void Constructor_InvalidDate_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() => new FieldPatternVO(1, 0, new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }));
+        }
+
+        [Test]
+        public void Constructor_UndefinedDate_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() =>
+                new FieldPatternVO(1, 99, new[] { 1, 2, 3, 4, 5, 6, 7, 1, 2 }));
+        }
+
+        [Test]
+        public void Constructor_UndefinedFieldType_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() =>
+                new FieldPatternVO(1, 1, new[] { 1, 2, 3, 4, 5, 6, 7, 99, 2 }));
+        }
+
+        [Test]
+        public void Constructor_UndefinedRotation_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() =>
+                new FieldPatternVO(1, 1, new[] { 1, 2, 3, 4, 5, 6, 7, 1, 2 }, (Rotation)99));
+        }
+
+        [Test]
+        public void Constructor_NoneRotation_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() =>
+                new FieldPatternVO(1, 1, new[] { 1, 2, 3, 4, 5, 6, 7, 1, 2 }, Rotation.None));
         }
     }
 }

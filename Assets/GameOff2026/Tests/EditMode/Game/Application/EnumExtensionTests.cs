@@ -8,18 +8,37 @@ namespace GameOff2026.Tests.EditMode.Game.Application
     [TestFixture]
     public sealed class EnumExtensionTests
     {
+        [TestCase(0, DateType.None)]
+        [TestCase(1, DateType.Day)]
+        [TestCase(2, DateType.Night)]
+        public void ToDateType_DefinedValue_ReturnsMatchingEnum(int value, DateType expected)
+        {
+            Assert.AreEqual(expected, value.ToDateType());
+        }
+
+        [Test]
+        public void ToDateType_UndefinedValue_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() => 99.ToDateType());
+        }
+
+        [TestCase(0, FieldType.None)]
         [TestCase(1, FieldType.Ground)]
         [TestCase(2, FieldType.GroundDoor)]
+        [TestCase(3, FieldType.GroundWall)]
         [TestCase(4, FieldType.Treasure)]
+        [TestCase(5, FieldType.Wall)]
+        [TestCase(6, FieldType.WallDoor)]
+        [TestCase(7, FieldType.Block)]
         public void ToFieldType_ValidValue_ReturnsMatchingEnum(int value, FieldType expected)
         {
             Assert.AreEqual(expected, value.ToFieldType());
         }
 
-        [TestCase(99)]
-        public void ToFieldType_InvalidValue_ThrowsQuitException(int value)
+        [Test]
+        public void ToFieldType_UndefinedValue_ThrowsQuitException()
         {
-            Assert.Throws<QuitExceptionVO>(() => value.ToFieldType());
+            Assert.Throws<QuitExceptionVO>(() => 99.ToFieldType());
         }
 
         [TestCase(Direction.Up, 0, 1)]
@@ -51,10 +70,19 @@ namespace GameOff2026.Tests.EditMode.Game.Application
             Assert.AreEqual(rank, square.rank);
         }
 
+        [Test]
+        public void ToSquareVO_None_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() => Direction.None.ToSquareVO());
+        }
+
         [TestCase(Rotation.Angle0, 1, 2, 1, 2)]
         [TestCase(Rotation.Angle90, 0, 0, 2, 0)]
         [TestCase(Rotation.Angle180, 0, 0, 2, 2)]
         [TestCase(Rotation.Angle270, 0, 0, 0, 2)]
+        [TestCase(Rotation.Angle90, 1, 2, 0, 1)]
+        [TestCase(Rotation.Angle180, 1, 2, 1, 0)]
+        [TestCase(Rotation.Angle270, 1, 2, 2, 1)]
         public void Rotate_ValidRotation_ReturnsExpectedCoordinates(Rotation rotation, int file, int rank, int expectedFile, int expectedRank)
         {
             var result = rotation.Rotate(file, rank);
@@ -66,6 +94,19 @@ namespace GameOff2026.Tests.EditMode.Game.Application
         public void Rotate_InvalidRotation_ThrowsQuitException()
         {
             Assert.Throws<QuitExceptionVO>(() => Rotation.None.Rotate(1, 2));
+        }
+
+        [TestCase(DateType.Day, DateType.Night)]
+        [TestCase(DateType.Night, DateType.Day)]
+        public void Shift_ValidDate_ReturnsOppositeDate(DateType date, DateType expected)
+        {
+            Assert.AreEqual(expected, date.Shift());
+        }
+
+        [Test]
+        public void Shift_InvalidDate_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() => DateType.None.Shift());
         }
     }
 }

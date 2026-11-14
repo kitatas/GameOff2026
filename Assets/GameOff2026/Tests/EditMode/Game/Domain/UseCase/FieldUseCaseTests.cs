@@ -13,6 +13,7 @@ using GameOff2026.Game.Domain.Repository;
 using GameOff2026.Game.Domain.UseCase;
 using GameOff2026.Tests.EditMode.TestHelpers;
 using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
 
 namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
@@ -20,10 +21,12 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
     [TestFixture]
     public sealed class FieldUseCaseTests
     {
+        private DateEntity _dateEntity;
         private FieldEntity _fieldEntity;
+        private FieldPatternEntity _fieldPatternEntity;
         private FieldTable _fieldTable;
-        private FieldData _fieldData;
-        private FieldData _treasureFieldData;
+        private List<FieldData> _fieldDataAssets;
+        private TextAsset _memoryFile;
         private FakeAsyncSubscriber<RenderFieldSquareVO> _subscriber;
         private FakeAsyncPublisher<RenderFieldSquareVO> _publisher;
         private FieldUseCase _useCase;
@@ -31,31 +34,110 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         [SetUp]
         public void SetUp()
         {
+            _dateEntity = new DateEntity();
             _fieldEntity = new FieldEntity();
+            _fieldPatternEntity = new FieldPatternEntity();
             _fieldTable = ScriptableObject.CreateInstance<FieldTable>();
-            _fieldData = ScriptableObject.CreateInstance<FieldData>();
-            _treasureFieldData = ScriptableObject.CreateInstance<FieldData>();
-            SetField(_fieldData, "fieldType", FieldType.Ground);
-            SetField(_fieldData, "sprite", TestSpriteFactory.Valid);
-            SetField(_fieldData, "weight", 1.0f);
-            SetField(_treasureFieldData, "fieldType", FieldType.Treasure);
-            SetField(_treasureFieldData, "sprite", TestSpriteFactory.Valid);
-            SetField(_treasureFieldData, "weight", 1.0f);
+            _fieldDataAssets = new List<FieldData>();
+            for (var type = (int)FieldType.Ground; type <= (int)FieldType.Block; type++)
+            {
+                _fieldDataAssets.Add(CreateFieldData((FieldType)type));
+            }
             SetField(typeof(BaseTable<FieldData>), _fieldTable, "list",
-                new List<FieldData> { _fieldData, _treasureFieldData });
+                _fieldDataAssets);
+            // 実際の MasterMemory データを使い、FieldUseCase から Repository までを通して検証する。
+            _memoryFile = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Externals/Binary/MasterMemory.bytes");
+            Assert.IsNotNull(_memoryFile);
             _subscriber = new FakeAsyncSubscriber<RenderFieldSquareVO>();
             _publisher = new FakeAsyncPublisher<RenderFieldSquareVO>();
             var ports = new FieldPorts(_subscriber, _publisher);
             var repository = new FieldRepository(_fieldTable);
-            _useCase = new FieldUseCase(_fieldEntity, ports, repository, null);
+            var patternRepository = new FieldPatternRepository(new MemoryDatabase(_memoryFile.bytes));
+            _useCase = new FieldUseCase(_dateEntity, _fieldEntity, _fieldPatternEntity, ports, repository,
+                patternRepository);
         }
 
         [TearDown]
         public void TearDown()
         {
-            UnityEngine.Object.DestroyImmediate(_fieldData);
-            UnityEngine.Object.DestroyImmediate(_treasureFieldData);
+            foreach (var fieldData in _fieldDataAssets)
+            {
+                UnityEngine.Object.DestroyImmediate(fieldData);
+            }
             UnityEngine.Object.DestroyImmediate(_fieldTable);
+        }
+
+        [Test]
+        public async Task BuildFieldAsync_ValidMasterData_BuildsFieldAndPublishesRefresh()
+        {
+            _dateEntity.Reset();
+            _fieldEntity.Add(FieldSquareVO.Create(1, 1, new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f)));
+            using var source = new CancellationTokenSource();
+
+            await _useCase.BuildFieldAsync(source.Token).AsTask();
+
+            var squares = _fieldEntity.fieldSquares;
+            var renderMessage = _publisher.LastPublished;
+            Assert.AreEqual(42, squares.Length);
+            Assert.AreEqual(1, _publisher.PublishCount);
+            Assert.AreEqual(source.Token, _publisher.tokens[0]);
+            Assert.AreEqual(RenderType.Refresh, renderMessage.type);
+            Assert.AreEqual(squares.Length, renderMessage.squares.Length);
+            for (var i = 0; i < squares.Length; i++)
+            {
+                Assert.AreSame(squares[i], renderMessage.squares[i]);
+            }
+
+            for (var i = 0; i < FieldConfig.MAX_FILE * FieldConfig.MAX_RANK; i++)
+            {
+                Assert.AreEqual(i % FieldConfig.MAX_FILE + 1, squares[i].square.file);
+                Assert.AreEqual(i / FieldConfig.MAX_FILE + 1, squares[i].square.rank);
+            }
+
+            Assert.AreEqual(1, CountFieldType(squares, FieldType.GroundDoor));
+            Assert.LessOrEqual(CountFieldType(squares, FieldType.GroundWall), FieldConfig.MAX_FILE - 1);
+            Assert.AreEqual(1, CountFieldType(squares, FieldType.WallDoor));
+            Assert.AreEqual(FieldConfig.MAX_FILE - 1, CountFieldType(squares, FieldType.Wall));
+        }
+
+        [Test]
+        public async Task ShiftAsync_AfterBuildingDayField_ShiftsPatternsAndRebuildsField()
+        {
+            _dateEntity.Reset();
+            using var source = new CancellationTokenSource();
+            await _useCase.BuildFieldAsync(source.Token).AsTask();
+            var dayPatterns = new FieldPatternVO[FieldConfig.LOT_PATTERN_COUNT];
+            for (var i = 0; i < dayPatterns.Length; i++)
+            {
+                dayPatterns[i] = _fieldPatternEntity.Get(i);
+            }
+
+            await _useCase.ShiftAsync(source.Token).AsTask();
+
+            for (var i = 0; i < dayPatterns.Length; i++)
+            {
+                var nightPattern = _fieldPatternEntity.Get(i);
+                Assert.AreEqual(dayPatterns[i].id, nightPattern.id);
+                Assert.AreEqual(DateType.Night, nightPattern.date);
+                Assert.AreEqual(dayPatterns[i].rotation, nightPattern.rotation);
+            }
+
+            var squares = _fieldEntity.fieldSquares;
+            Assert.AreEqual(42, squares.Length);
+            Assert.AreEqual(2, _publisher.PublishCount);
+            Assert.AreEqual(RenderType.Refresh, _publisher.LastPublished.type);
+            for (var rank = 0; rank < FieldConfig.MAX_RANK; rank++)
+            {
+                for (var file = 0; file < FieldConfig.MAX_FILE; file++)
+                {
+                    var patternIndex = rank / FieldConfig.HALF_RANK +
+                                      (file / FieldConfig.HALF_FILE) * (FieldConfig.MAX_FILE / FieldConfig.HALF_FILE);
+                    var typeIndex = rank % FieldConfig.HALF_RANK +
+                                    (file % FieldConfig.HALF_FILE) * FieldConfig.HALF_RANK;
+                    Assert.AreEqual(_fieldPatternEntity.Get(patternIndex).types[typeIndex],
+                        squares[rank * FieldConfig.MAX_FILE + file].field.type);
+                }
+            }
         }
 
         [Test]
@@ -82,6 +164,26 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         public void RenderField_AfterConstruction_ExposesPortsSubscriber()
         {
             Assert.AreSame(_subscriber, _useCase.renderField);
+        }
+
+        private FieldData CreateFieldData(FieldType type)
+        {
+            var fieldData = ScriptableObject.CreateInstance<FieldData>();
+            SetField(fieldData, "fieldType", type);
+            SetField(fieldData, "sprite", TestSpriteFactory.Valid);
+            SetField(fieldData, "weight", 1.0f);
+            return fieldData;
+        }
+
+        private static int CountFieldType(FieldSquareVO[] squares, FieldType type)
+        {
+            var count = 0;
+            foreach (var square in squares)
+            {
+                if (square.field.type == type) count++;
+            }
+
+            return count;
         }
 
         private static void SetField(object target, string fieldName, object value)

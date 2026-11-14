@@ -27,5 +27,12 @@ namespace GameOff2026.Tests.EditMode.Game.Application
             Assert.AreEqual(Fade.InOut, dateTransition.transition.fade);
             Assert.AreEqual(0.5f, dateTransition.transition.duration);
         }
+
+        [Test]
+        public void Constructor_NoneDate_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() =>
+                new DateTransitionVO(DateType.None, new TransitionVO(Fade.InOut, 0.25f)));
+        }
     }
 }
