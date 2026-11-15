@@ -41,4 +41,9 @@ namespace GameOff2026.Game.Application
     {
         public const float FADE_DURATION = 0.25f;
     }
+
+    public sealed class DayConfig
+    {
+        public const int MAX_DAY = 7;
+    }
 }

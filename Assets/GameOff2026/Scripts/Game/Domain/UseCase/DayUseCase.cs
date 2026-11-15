@@ -35,6 +35,13 @@ namespace GameOff2026.Game.Domain.UseCase
             }
         }
 
+        public bool IsMaxDay()
+        {
+            return
+                _dateEntity.value is DateType.Night &&
+                _dayEntity.value == DayConfig.MAX_DAY;
+        }
+
         void IDisposable.Dispose()
         {
             _day?.Dispose();
