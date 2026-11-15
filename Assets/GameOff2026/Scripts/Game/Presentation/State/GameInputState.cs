@@ -36,16 +36,29 @@ namespace GameOff2026.Game.Presentation.State
             await _movementUseCase.PublishMovableDirectionsAsync(token);
 
             var input = await _inputUseCase.InputAsync(token);
-            await (input.input switch
+            return await (input.input switch
             {
-                InputType.Move => _movementUseCase.MoveAsync(input.direction, token),
-                InputType.Shift => UniTask.WhenAll(_dateUseCase.ShiftAsync(token), _fieldUseCase.ShiftAsync(token)),
+                InputType.Move => ExecMoveAsync(input.direction, token),
+                InputType.Shift => ExecShiftAsync(token),
                 _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_INPUT),
             });
+        }
 
-            // TODO: date change event
-
+        private async UniTask<GameState> ExecMoveAsync(Direction direction, CancellationToken token)
+        {
+            await (
+                _movementUseCase.MoveAsync(direction, token)
+            );
             return GameState.Event;
+        }
+
+        private async UniTask<GameState> ExecShiftAsync(CancellationToken token)
+        {
+            await (
+                _dateUseCase.ShiftAsync(token),
+                _fieldUseCase.ShiftAsync(token)
+            );
+            return GameState.Input;
         }
     }
 }
