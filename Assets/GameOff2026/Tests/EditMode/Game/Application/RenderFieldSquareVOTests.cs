@@ -13,7 +13,7 @@ namespace GameOff2026.Tests.EditMode.Game.Application
         {
             var squares = new[]
             {
-                FieldSquareVO.Create(1, 1, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)),
+                FieldSquareVO.Create(1, 1, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)),
             };
 
             var renderFieldSquare = new RenderFieldSquareVO(RenderType.Refresh, squares);
@@ -27,7 +27,7 @@ namespace GameOff2026.Tests.EditMode.Game.Application
         {
             var squares = new[]
             {
-                FieldSquareVO.Create(1, 1, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)),
+                FieldSquareVO.Create(1, 1, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)),
             };
 
             Assert.Throws<QuitExceptionVO>(() => new RenderFieldSquareVO(RenderType.None, squares));

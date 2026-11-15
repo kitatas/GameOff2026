@@ -31,9 +31,13 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _fieldEntity = new FieldEntity();
             _fieldTable = ScriptableObject.CreateInstance<FieldTable>();
             _fieldDataAssets = new List<FieldData>();
-            for (var type = (int)FieldType.Ground; type <= (int)FieldType.NightEnemyRoute; type++)
+            foreach (var type in new[]
+                     {
+                         FieldType.Empty, FieldType.Treasure, FieldType.Block, FieldType.DayEnemy,
+                         FieldType.DayEnemyRoute, FieldType.NightEnemy, FieldType.NightEnemyRoute,
+                     })
             {
-                _fieldDataAssets.Add(CreateFieldData((FieldType)type));
+                _fieldDataAssets.Add(CreateFieldData(type));
             }
 
             SetField(typeof(BaseTable<FieldData>), _fieldTable, "list", _fieldDataAssets);

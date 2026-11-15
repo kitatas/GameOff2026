@@ -24,7 +24,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         private PlayerEntity _playerEntity;
         private TreasureEntity _treasureEntity;
         private FieldTable _fieldTable;
-        private FieldData _groundFieldData;
+        private FieldData _emptyFieldData;
         private FakeAsyncSubscriber<EventResultVO> _eventResultSubscriber;
         private FakeAsyncPublisher<EventResultVO> _eventResultPublisher;
         private EventUseCase _useCase;
@@ -36,11 +36,11 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _playerEntity = new PlayerEntity();
             _treasureEntity = new TreasureEntity();
             _fieldTable = ScriptableObject.CreateInstance<FieldTable>();
-            _groundFieldData = ScriptableObject.CreateInstance<FieldData>();
-            SetField(_groundFieldData, "fieldType", FieldType.Ground);
-            SetField(_groundFieldData, "sprite", TestSpriteFactory.Valid);
-            SetField(_groundFieldData, "weight", 1.0f);
-            SetField(typeof(BaseTable<FieldData>), _fieldTable, "list", new List<FieldData> { _groundFieldData });
+            _emptyFieldData = ScriptableObject.CreateInstance<FieldData>();
+            SetField(_emptyFieldData, "fieldType", FieldType.Empty);
+            SetField(_emptyFieldData, "sprite", TestSpriteFactory.Valid);
+            SetField(_emptyFieldData, "weight", 1.0f);
+            SetField(typeof(BaseTable<FieldData>), _fieldTable, "list", new List<FieldData> { _emptyFieldData });
             var repository = new FieldRepository(_fieldTable);
             _eventResultSubscriber = new FakeAsyncSubscriber<EventResultVO>();
             _eventResultPublisher = new FakeAsyncPublisher<EventResultVO>();
@@ -51,14 +51,14 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         [TearDown]
         public void TearDown()
         {
-            UnityEngine.Object.DestroyImmediate(_groundFieldData);
+            UnityEngine.Object.DestroyImmediate(_emptyFieldData);
             UnityEngine.Object.DestroyImmediate(_fieldTable);
         }
 
         [Test]
-        public async Task ApplyAsync_GroundSquare_LeavesFieldUnchanged()
+        public async Task ApplyAsync_EmptySquare_LeavesFieldUnchanged()
         {
-            var fieldSquare = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f));
+            var fieldSquare = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f));
             _fieldEntity.Add(fieldSquare);
             _playerEntity.SetSquare(new SquareVO(2, 3));
             using var source = new CancellationTokenSource();
@@ -67,14 +67,13 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
 
             Assert.AreSame(fieldSquare, _fieldEntity.fieldSquares[0]);
             Assert.AreEqual(1, _eventResultPublisher.PublishCount);
-            Assert.AreEqual(FieldType.Ground, _eventResultPublisher.LastPublished.type);
+            Assert.AreEqual(FieldType.Empty, _eventResultPublisher.LastPublished.type);
             Assert.AreEqual(0, _eventResultPublisher.LastPublished.treasureNum);
-            Assert.IsFalse(_eventResultPublisher.LastPublished.isGoal);
             Assert.AreEqual(source.Token, _eventResultPublisher.tokens[0]);
         }
 
         [Test]
-        public async Task ApplyAsync_TreasureSquare_ReplacesFieldWithGround()
+        public async Task ApplyAsync_TreasureSquare_ReplacesFieldWithEmpty()
         {
             var square = new SquareVO(2, 3);
             _fieldEntity.Add(new FieldSquareVO(square, new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f)));
@@ -85,28 +84,29 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
 
             var updatedFieldSquare = _fieldEntity.fieldSquares[0];
             Assert.AreSame(square, updatedFieldSquare.square);
-            Assert.AreEqual(FieldType.Ground, updatedFieldSquare.field.type);
+            Assert.AreEqual(FieldType.Empty, updatedFieldSquare.field.type);
             Assert.AreEqual(1, _eventResultPublisher.PublishCount);
             Assert.AreEqual(FieldType.Treasure, _eventResultPublisher.LastPublished.type);
             Assert.AreEqual(1, _eventResultPublisher.LastPublished.treasureNum);
-            Assert.IsFalse(_eventResultPublisher.LastPublished.isGoal);
             Assert.AreEqual(source.Token, _eventResultPublisher.tokens[0]);
         }
 
         [Test]
-        public async Task ApplyAsync_GroundDoorWithTreasure_ReturnsGoalResult()
+        public async Task ApplyAsync_EmptySquareWithTreasure_PublishesEmptyResult()
         {
             var square = new SquareVO(2, 3);
-            _fieldEntity.Add(new FieldSquareVO(square, new FieldVO(FieldType.GroundDoor, TestSpriteFactory.Valid, 1.0f)));
+            _fieldEntity.Add(new FieldSquareVO(square, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)));
             _playerEntity.SetSquare(square);
             _treasureEntity.Add(1);
             using var source = new CancellationTokenSource();
 
             var result = await _useCase.ApplyAsync(source.Token).AsTask();
 
-            Assert.AreEqual(FieldType.GroundDoor, result.type);
-            Assert.IsTrue(result.isGoal);
+            Assert.AreEqual(FieldType.Empty, result.type);
+            Assert.AreEqual(0, result.treasureNum);
+            Assert.AreEqual(1, _eventResultPublisher.PublishCount);
             Assert.AreSame(result, _eventResultPublisher.LastPublished);
+            Assert.AreEqual(source.Token, _eventResultPublisher.tokens[0]);
         }
 
         [TestCase(FieldType.DayEnemyRoute)]
@@ -122,7 +122,6 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
 
             Assert.AreEqual(fieldType, result.type);
             Assert.AreEqual(0, result.treasureNum);
-            Assert.IsFalse(result.isGoal);
             Assert.AreEqual(1, _eventResultPublisher.PublishCount);
             Assert.AreSame(result, _eventResultPublisher.LastPublished);
             Assert.AreEqual(source.Token, _eventResultPublisher.tokens[0]);

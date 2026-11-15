@@ -21,33 +21,34 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
         public void Add_FieldSquare_StoresSquareAndAllowsMovementOnIt()
         {
             var entity = new FieldEntity();
-            var fieldSquare = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f));
+            var fieldSquare = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f));
 
             entity.Add(fieldSquare);
 
             Assert.AreEqual(1, entity.fieldSquares.Length);
             Assert.AreSame(fieldSquare, entity.fieldSquares[0]);
-            Assert.IsTrue(entity.IsMovable(new SquareVO(2, 3)));
-            Assert.IsFalse(entity.IsMovable(new SquareVO(3, 3)));
+            Assert.IsTrue(entity.IsMovable(new SquareVO(2, 3), DateType.Day));
+            Assert.IsFalse(entity.IsMovable(new SquareVO(3, 3), DateType.Day));
         }
 
         [Test]
         public void Clear_AfterAddingFieldSquares_RemovesAllSquaresAndMovability()
         {
             var entity = new FieldEntity();
-            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
+            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)));
 
             entity.Clear();
 
             Assert.IsEmpty(entity.fieldSquares);
-            Assert.IsFalse(entity.IsMovable(new SquareVO(2, 3)));
+            Assert.IsFalse(entity.IsMovable(new SquareVO(2, 3), DateType.Day));
         }
 
         [Test]
         public void SetField_ExistingIndex_ReplacesFieldAndPreservesSquare()
         {
             var entity = new FieldEntity();
-            var originalFieldSquare = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f));
+            var originalFieldSquare =
+                FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f));
             var replacementField = new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f);
             entity.Add(originalFieldSquare);
 
@@ -64,15 +65,15 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             var entity = new FieldEntity();
 
             Assert.Throws<QuitExceptionVO>(() =>
-                entity.SetField(0, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
+                entity.SetField(0, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)));
         }
 
         [Test]
         public void Find_ExistingSquare_ReturnsFieldSquareAndIndex()
         {
             var entity = new FieldEntity();
-            var expected = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f));
-            entity.Add(FieldSquareVO.Create(1, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
+            var expected = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f));
+            entity.Add(FieldSquareVO.Create(1, 3, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)));
             entity.Add(expected);
 
             var (fieldSquare, index) = entity.Find(new SquareVO(2, 3));
@@ -85,7 +86,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
         public void Find_MissingSquare_ReturnsNullAndMinusOne()
         {
             var entity = new FieldEntity();
-            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
+            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)));
 
             var (fieldSquare, index) = entity.Find(new SquareVO(3, 3));
 
@@ -99,7 +100,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             var entity = new FieldEntity();
             entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.DayEnemy, TestSpriteFactory.Valid, 1.0f)));
 
-            Assert.IsFalse(entity.IsMovable(new SquareVO(2, 3)));
+            Assert.IsFalse(entity.IsMovable(new SquareVO(2, 3), DateType.Day));
         }
 
         [TestCase(FieldType.DayEnemyRoute)]
@@ -109,7 +110,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             var entity = new FieldEntity();
             entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(fieldType, TestSpriteFactory.Valid, 1.0f)));
 
-            Assert.IsTrue(entity.IsMovable(new SquareVO(2, 3)));
+            Assert.IsTrue(entity.IsMovable(new SquareVO(2, 3), DateType.Day));
         }
     }
 }

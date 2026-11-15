@@ -8,19 +8,18 @@ namespace GameOff2026.Tests.EditMode.Game.Application
     public sealed class EventResultVOTests
     {
         [Test]
-        public void Constructor_ValidValues_RetainsAllValues()
+        public void Constructor_ValidValues_RetainsTypeAndTreasureCount()
         {
-            var result = new EventResultVO(FieldType.Treasure, 3, true);
+            var result = new EventResultVO(FieldType.Treasure, 3);
 
             Assert.AreEqual(FieldType.Treasure, result.type);
             Assert.AreEqual(3, result.treasureNum);
-            Assert.IsTrue(result.isGoal);
         }
 
         [Test]
         public void Constructor_NoneType_ThrowsQuitException()
         {
-            Assert.Throws<QuitExceptionVO>(() => new EventResultVO(FieldType.None, 3, false));
+            Assert.Throws<QuitExceptionVO>(() => new EventResultVO(FieldType.None, 3));
         }
     }
 }

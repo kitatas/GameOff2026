@@ -14,6 +14,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
     public sealed class MovementUseCaseTests
     {
         private FieldEntity _fieldEntity;
+        private DateEntity _dateEntity;
         private PlayerEntity _playerEntity;
         private FakeAsyncPublisher<MovementVO> _movementPublisher;
         private FakeAsyncPublisher<MovableDirectionVO[]> _movableDirectionsPublisher;
@@ -25,6 +26,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         public void SetUp()
         {
             _fieldEntity = new FieldEntity();
+            _dateEntity = new DateEntity();
+            _dateEntity.Reset();
             _playerEntity = new PlayerEntity();
             _movementPublisher = new FakeAsyncPublisher<MovementVO>();
             _movableDirectionsPublisher = new FakeAsyncPublisher<MovableDirectionVO[]>();
@@ -35,7 +38,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 _movableDirectionsSubscriber,
                 _movementPublisher,
                 _movableDirectionsPublisher);
-            _useCase = new MovementUseCase(_fieldEntity, _playerEntity, ports);
+            _useCase = new MovementUseCase(_dateEntity, _fieldEntity, _playerEntity, ports);
         }
 
         [TestCase(Direction.Up, 2, 4)]
@@ -83,8 +86,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         public async Task PublishMovableDirectionsAsync_AdjacentSquaresExist_ReportsMovableDirections()
         {
             _playerEntity.SetSquare(new SquareVO(1, 1));
-            _fieldEntity.Add(FieldSquareVO.Create(1, 2, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
-            _fieldEntity.Add(FieldSquareVO.Create(2, 1, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f)));
+            _fieldEntity.Add(FieldSquareVO.Create(1, 2, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)));
+            _fieldEntity.Add(FieldSquareVO.Create(2, 1, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)));
 
             await _useCase.PublishMovableDirectionsAsync(CancellationToken.None).AsTask();
 

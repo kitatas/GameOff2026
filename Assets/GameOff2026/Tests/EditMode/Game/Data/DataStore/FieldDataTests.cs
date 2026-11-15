@@ -43,7 +43,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.DataStore
         [Test]
         public void ToVO_InvalidSerializedValues_PropagatesValidationException()
         {
-            SetField("fieldType", FieldType.Ground);
+            SetField("fieldType", FieldType.Empty);
             SetField("sprite", TestSpriteFactory.Valid);
             SetField("weight", 0.0f);
 

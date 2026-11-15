@@ -11,9 +11,9 @@ namespace GameOff2026.Tests.EditMode.Game.Application
         [Test]
         public void Constructor_ValidValues_RetainsFieldData()
         {
-            var field = new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f);
+            var field = new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f);
 
-            Assert.AreEqual(FieldType.Ground, field.type);
+            Assert.AreEqual(FieldType.Empty, field.type);
             Assert.AreSame(TestSpriteFactory.Valid, field.sprite);
             Assert.AreEqual(1.0f, field.weight);
         }
@@ -27,14 +27,14 @@ namespace GameOff2026.Tests.EditMode.Game.Application
         [Test]
         public void Constructor_NullSprite_ThrowsQuitException()
         {
-            Assert.Throws<QuitExceptionVO>(() => new FieldVO(FieldType.Ground, null, 1.0f));
+            Assert.Throws<QuitExceptionVO>(() => new FieldVO(FieldType.Empty, null, 1.0f));
         }
 
         [TestCase(0.0f)]
         [TestCase(-1.0f)]
         public void Constructor_NonPositiveWeight_ThrowsQuitException(float weight)
         {
-            Assert.Throws<QuitExceptionVO>(() => new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, weight));
+            Assert.Throws<QuitExceptionVO>(() => new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, weight));
         }
     }
 }

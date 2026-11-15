@@ -23,12 +23,8 @@ namespace GameOff2026.Tests.EditMode.Game.Application
         }
 
         [TestCase(0, FieldType.None)]
-        [TestCase(1, FieldType.Ground)]
-        [TestCase(2, FieldType.GroundDoor)]
-        [TestCase(3, FieldType.GroundWall)]
+        [TestCase(1, FieldType.Empty)]
         [TestCase(4, FieldType.Treasure)]
-        [TestCase(5, FieldType.Wall)]
-        [TestCase(6, FieldType.WallDoor)]
         [TestCase(7, FieldType.Block)]
         [TestCase(8, FieldType.DayEnemy)]
         [TestCase(9, FieldType.DayEnemyRoute)]
@@ -87,7 +83,8 @@ namespace GameOff2026.Tests.EditMode.Game.Application
         [TestCase(Rotation.Angle90, 1, 2, 0, 1)]
         [TestCase(Rotation.Angle180, 1, 2, 1, 0)]
         [TestCase(Rotation.Angle270, 1, 2, 2, 1)]
-        public void Rotate_ValidRotation_ReturnsExpectedCoordinates(Rotation rotation, int file, int rank, int expectedFile, int expectedRank)
+        public void Rotate_ValidRotation_ReturnsExpectedCoordinates(Rotation rotation, int file, int rank,
+            int expectedFile, int expectedRank)
         {
             var result = rotation.Rotate(file, rank);
 
@@ -117,7 +114,7 @@ namespace GameOff2026.Tests.EditMode.Game.Application
         [TestCase(FieldType.NightEnemy, true)]
         [TestCase(FieldType.DayEnemyRoute, false)]
         [TestCase(FieldType.NightEnemyRoute, false)]
-        [TestCase(FieldType.Ground, false)]
+        [TestCase(FieldType.Empty, false)]
         public void IsEnemy_FieldType_ReturnsWhetherTypeIsEnemy(FieldType fieldType, bool expected)
         {
             Assert.AreEqual(expected, fieldType.IsEnemy());

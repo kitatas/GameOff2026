@@ -41,10 +41,15 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _fieldPatternEntity = new FieldPatternEntity();
             _fieldTable = ScriptableObject.CreateInstance<FieldTable>();
             _fieldDataAssets = new List<FieldData>();
-            for (var type = (int)FieldType.Ground; type <= (int)FieldType.NightEnemyRoute; type++)
+            foreach (var type in new[]
+                     {
+                         FieldType.Empty, FieldType.Treasure, FieldType.Block, FieldType.DayEnemy,
+                         FieldType.DayEnemyRoute, FieldType.NightEnemy, FieldType.NightEnemyRoute,
+                     })
             {
-                _fieldDataAssets.Add(CreateFieldData((FieldType)type));
+                _fieldDataAssets.Add(CreateFieldData(type));
             }
+
             SetField(typeof(BaseTable<FieldData>), _fieldTable, "list",
                 _fieldDataAssets);
             // 実際の MasterMemory データを使い、FieldUseCase から Repository までを通して検証する。
@@ -66,6 +71,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             {
                 UnityEngine.Object.DestroyImmediate(fieldData);
             }
+
             UnityEngine.Object.DestroyImmediate(_fieldTable);
         }
 
@@ -73,14 +79,15 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         public async Task BuildFieldAsync_ValidMasterData_BuildsFieldAndPublishesRefresh()
         {
             _dateEntity.Reset();
-            _fieldEntity.Add(FieldSquareVO.Create(1, 1, new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f)));
+            _fieldEntity.Add(FieldSquareVO.Create(1, 1,
+                new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f)));
             using var source = new CancellationTokenSource();
 
             await _useCase.BuildFieldAsync(source.Token).AsTask();
 
             var squares = _fieldEntity.fieldSquares;
             var renderMessage = _publisher.LastPublished;
-            Assert.AreEqual(42, squares.Length);
+            Assert.AreEqual(FieldConfig.MAX_FILE * FieldConfig.MAX_RANK, squares.Length);
             Assert.AreEqual(1, _publisher.PublishCount);
             Assert.AreEqual(source.Token, _publisher.tokens[0]);
             Assert.AreEqual(RenderType.Refresh, renderMessage.type);
@@ -96,11 +103,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 Assert.AreEqual(i / FieldConfig.MAX_FILE + 1, squares[i].square.rank);
             }
 
-            Assert.AreEqual(1, CountFieldType(squares, FieldType.GroundDoor));
-            Assert.LessOrEqual(CountFieldType(squares, FieldType.GroundWall), FieldConfig.MAX_FILE - 1);
-            Assert.AreEqual(1, CountFieldType(squares, FieldType.WallDoor));
-            Assert.AreEqual(FieldConfig.MAX_FILE - 1, CountFieldType(squares, FieldType.Wall));
-            AssertEnemyPositionsTracked(squares, DateType.Day, FieldType.DayEnemy);
+            AssertEnemyPositionsTracked(squares, DateType.Day);
         }
 
         [Test]
@@ -127,7 +130,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             }
 
             var squares = _fieldEntity.fieldSquares;
-            Assert.AreEqual(42, squares.Length);
+            Assert.AreEqual(FieldConfig.MAX_FILE * FieldConfig.MAX_RANK, squares.Length);
             Assert.AreEqual(2, _publisher.PublishCount);
             Assert.AreEqual(RenderType.Refresh, _publisher.LastPublished.type);
             for (var rank = 0; rank < FieldConfig.MAX_RANK; rank++)
@@ -135,7 +138,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 for (var file = 0; file < FieldConfig.MAX_FILE; file++)
                 {
                     var patternIndex = rank / FieldConfig.HALF_RANK +
-                                      (file / FieldConfig.HALF_FILE) * (FieldConfig.MAX_FILE / FieldConfig.HALF_FILE);
+                                       (file / FieldConfig.HALF_FILE) * (FieldConfig.MAX_FILE / FieldConfig.HALF_FILE);
                     var typeIndex = rank % FieldConfig.HALF_RANK +
                                     (file % FieldConfig.HALF_FILE) * FieldConfig.HALF_RANK;
                     Assert.AreEqual(_fieldPatternEntity.Get(patternIndex).types[typeIndex],
@@ -143,13 +146,13 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 }
             }
 
-            AssertEnemyPositionsTracked(squares, DateType.Night, FieldType.NightEnemy);
+            AssertEnemyPositionsTracked(squares, DateType.Night);
         }
 
         [Test]
         public async Task PublishRenderAsync_FieldSquaresExist_PublishesRefreshWithSquaresAndToken()
         {
-            var first = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Ground, TestSpriteFactory.Valid, 1.0f));
+            var first = FieldSquareVO.Create(2, 3, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f));
             var second = FieldSquareVO.Create(4, 5, new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 2.0f));
             _fieldEntity.Add(first);
             _fieldEntity.Add(second);
@@ -181,18 +184,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             return fieldData;
         }
 
-        private static int CountFieldType(FieldSquareVO[] squares, FieldType type)
-        {
-            var count = 0;
-            foreach (var square in squares)
-            {
-                if (square.field.type == type) count++;
-            }
-
-            return count;
-        }
-
-        private void AssertEnemyPositionsTracked(FieldSquareVO[] squares, DateType date, FieldType enemyType)
+        private void AssertEnemyPositionsTracked(FieldSquareVO[] squares, DateType date)
         {
             var enemies = _enemyEntity.Get(date);
             for (var i = 0; i < enemies.Length; i++)
@@ -202,7 +194,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 var found = false;
                 foreach (var fieldSquare in squares)
                 {
-                    if (fieldSquare.field.type != enemyType || !fieldSquare.square.IsEqual(enemies[i])) continue;
+                    if (!fieldSquare.field.type.IsEnemy() || !fieldSquare.square.IsEqual(enemies[i])) continue;
 
                     var file = fieldSquare.square.file - 1;
                     var rank = fieldSquare.square.rank - 1;
@@ -215,7 +207,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                     break;
                 }
 
-                Assert.IsTrue(found, $"Enemy at index {i} must match a {enemyType} field square.");
+                Assert.IsTrue(found, $"Enemy at index {i} must match an enemy field square.");
             }
         }
 

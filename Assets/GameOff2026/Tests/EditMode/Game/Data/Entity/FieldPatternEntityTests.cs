@@ -65,7 +65,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
 
         private static FieldPatternVO CreatePattern(int id)
         {
-            return new FieldPatternVO(id, (int)DateType.Day, new[] { 1, 2, 3, 4, 5, 6, 7, 1, 2 },
+            return new FieldPatternVO(id, (int)DateType.Day, new[] { 1, 4, 7, 8, 9, 10, 11, 1, 4 },
                 Rotation.Angle0);
         }
     }

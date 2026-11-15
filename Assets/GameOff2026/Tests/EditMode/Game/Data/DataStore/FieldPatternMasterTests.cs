@@ -11,7 +11,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.DataStore
         [Test]
         public void ToVO_Angle0Rotation_CreatesMatchingPattern()
         {
-            var types = new[] { 1, 2, 3, 4, 5, 6, 7, 1, 2 };
+            var types = new[] { 1, 4, 7, 4, 8, 9, 10, 11, 1 };
             var master = new FieldPatternMaster(12, (int)DateType.Night, types);
 
             var pattern = master.ToVO(Rotation.Angle0);
@@ -23,9 +23,9 @@ namespace GameOff2026.Tests.EditMode.Game.Data.DataStore
             Assert.AreEqual(DateType.Night, pattern.date);
             CollectionAssert.AreEqual(new[]
             {
-                FieldType.Ground, FieldType.GroundDoor, FieldType.GroundWall,
-                FieldType.Treasure, FieldType.Wall, FieldType.WallDoor,
-                FieldType.Block, FieldType.Ground, FieldType.GroundDoor,
+                FieldType.Empty, FieldType.Treasure, FieldType.Block,
+                FieldType.Treasure, FieldType.DayEnemy, FieldType.DayEnemyRoute,
+                FieldType.NightEnemy, FieldType.NightEnemyRoute, FieldType.Empty,
             }, pattern.types);
             Assert.AreEqual(Rotation.Angle0, pattern.rotation);
         }
@@ -33,7 +33,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.DataStore
         [Test]
         public void ToVO_DefaultRotation_UsesAConfiguredRotation()
         {
-            var master = new FieldPatternMaster(3, (int)DateType.Day, new[] { 1, 2, 3, 4, 5, 6, 7, 1, 2 });
+            var master = new FieldPatternMaster(3, (int)DateType.Day, new[] { 1, 4, 7, 4, 8, 9, 10, 11, 1 });
 
             var pattern = master.ToVO();
 
