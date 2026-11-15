@@ -30,7 +30,7 @@ namespace GameOff2026.Game.Domain.UseCase
                 var enemySquare = enemies[i];
                 var routeFields = _fieldEntity.fieldSquares
                     .AsValueEnumerable()
-                    .Where(x => x.field.type == _dateEntity.value.ToEnemyRoute())
+                    .Where(x => x.field.type is FieldType.EnemyRouteActive)
                     .Where(x => enemySquare.Arounds().AsValueEnumerable().Any(y => y.IsEqual(x.square)))
                     .ToArray();
 
@@ -42,7 +42,7 @@ namespace GameOff2026.Game.Domain.UseCase
                 Replace(routeField.square, _dateEntity.value.ToEnemy());
 
                 // Enemy to Route
-                Replace(enemySquare, _dateEntity.value.ToEnemyRoute());
+                Replace(enemySquare, FieldType.EnemyRouteActive);
             }
         }
 

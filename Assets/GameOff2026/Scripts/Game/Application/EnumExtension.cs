@@ -69,7 +69,7 @@ namespace GameOff2026.Game.Application
 
         public static bool IsEnemy(this FieldType self)
         {
-            return self is FieldType.DayEnemy or FieldType.NightEnemy;
+            return self is FieldType.EnemyDay or FieldType.EnemyNight;
         }
 
         public static SquareVO[] Arounds(this SquareVO self)
@@ -87,19 +87,24 @@ namespace GameOff2026.Game.Application
         {
             return self switch
             {
-                DateType.Day => FieldType.DayEnemy,
-                DateType.Night => FieldType.NightEnemy,
+                DateType.Day => FieldType.EnemyDay,
+                DateType.Night => FieldType.EnemyNight,
                 _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_DATE),
             };
         }
 
-        public static FieldType ToEnemyRoute(this DateType self)
+        public static bool IsRoute(this FieldType self)
+        {
+            return self is FieldType.EnemyRouteActive or FieldType.EnemyRouteDeactive;
+        }
+
+        public static FieldType ShiftRoute(this FieldType self)
         {
             return self switch
             {
-                DateType.Day => FieldType.DayEnemyRoute,
-                DateType.Night => FieldType.NightEnemyRoute,
-                _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_DATE),
+                FieldType.EnemyRouteActive => FieldType.EnemyRouteDeactive,
+                FieldType.EnemyRouteDeactive => FieldType.EnemyRouteActive,
+                _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD),
             };
         }
     }

@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using GameOff2026.Game.Application;
@@ -7,8 +6,6 @@ using GameOff2026.Game.Data.Entity;
 using GameOff2026.Game.Domain.Ports;
 using GameOff2026.Game.Domain.Repository;
 using MessagePipe;
-using UniEx;
-using ZLinq;
 
 namespace GameOff2026.Game.Domain.UseCase
 {
@@ -55,19 +52,15 @@ namespace GameOff2026.Game.Domain.UseCase
 
         public UniTask ShiftAsync(CancellationToken token)
         {
-            var patterns = Enumerable.Range(0, FieldConfig.LOT_PATTERN_COUNT)
-                .AsValueEnumerable()
-                .Select(x => _fieldPatternEntity.Get(x))
-                .Select(x => _fieldPatternRepository.Get(x.id, x.date.Shift(), x.rotation))
-                .ToArray();
-            _fieldPatternEntity.SetUp(patterns);
-
-            BuildField((file, rank, field) =>
+            for (int i = 0; i < _fieldEntity.fieldSquares.Length; i++)
             {
-                var index = rank * FieldConfig.MAX_FILE + file;
-                if (field.type.IsEnemy()) SetEnemy(file, rank, _fieldEntity.fieldSquares[index].square);
-                _fieldEntity.SetField(index, field);
-            });
+                var fieldSquare = _fieldEntity.fieldSquares[i];
+                if (!fieldSquare.field.type.IsRoute()) continue;
+
+                var type = fieldSquare.field.type.ShiftRoute();
+                var field = _fieldRepository.Find(type);
+                _fieldEntity.SetField(i, field);
+            }
 
             return PublishRenderAsync(token);
         }

@@ -39,10 +39,10 @@ namespace GameOff2026.Game.Application
         Empty = 1,
         Treasure = 4,
         Block = 7,
-        DayEnemy = 8,
-        DayEnemyRoute = 9,
-        NightEnemy = 10,
-        NightEnemyRoute = 11,
+        EnemyDay = 8,
+        EnemyNight = 9,
+        EnemyRouteActive = 10,
+        EnemyRouteDeactive = 11,
     }
 
     public enum Rotation

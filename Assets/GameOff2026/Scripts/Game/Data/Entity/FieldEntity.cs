@@ -55,8 +55,8 @@ namespace GameOff2026.Game.Data.Entity
             {
                 // TODO: 移動不可の field type
                 FieldType.Block => false,
-                FieldType.DayEnemy => false,
-                FieldType.NightEnemy => dateType is not DateType.Night,
+                FieldType.EnemyDay => false,
+                FieldType.EnemyNight => dateType is not DateType.Night,
                 _ => true,
             };
         }
