@@ -46,7 +46,7 @@ namespace GameOff2026.Game.Data.Entity
                 : (_fieldSquares[index], index);
         }
 
-        public bool IsMovable(SquareVO square)
+        public bool IsMovable(SquareVO square, DateType dateType)
         {
             var (fieldSquare, _) = Find(square);
             if (fieldSquare == null) return false;
@@ -58,6 +58,7 @@ namespace GameOff2026.Game.Data.Entity
                 FieldType.WallDoor => false,
                 FieldType.Block => false,
                 FieldType.DayEnemy => false,
+                FieldType.NightEnemy => dateType is not DateType.Night,
                 _ => true,
             };
         }

@@ -11,12 +11,15 @@ namespace GameOff2026.Game.Domain.UseCase
 {
     public sealed class MovementUseCase
     {
+        private readonly DateEntity _dateEntity;
         private readonly FieldEntity _fieldEntity;
         private readonly PlayerEntity _playerEntity;
         private readonly MovementPorts _movementPorts;
 
-        public MovementUseCase(FieldEntity fieldEntity, PlayerEntity playerEntity, MovementPorts movementPorts)
+        public MovementUseCase(DateEntity dateEntity, FieldEntity fieldEntity, PlayerEntity playerEntity,
+            MovementPorts movementPorts)
         {
+            _dateEntity = dateEntity;
             _fieldEntity = fieldEntity;
             _playerEntity = playerEntity;
             _movementPorts = movementPorts;
@@ -33,7 +36,7 @@ namespace GameOff2026.Game.Domain.UseCase
                 .Select(x =>
                 {
                     var nextSquare = _playerEntity.square.AddDirection(x);
-                    return new MovableDirectionVO(x, _fieldEntity.IsMovable(nextSquare));
+                    return new MovableDirectionVO(x, _fieldEntity.IsMovable(nextSquare, _dateEntity.value));
                 })
                 .ToArray();
 
