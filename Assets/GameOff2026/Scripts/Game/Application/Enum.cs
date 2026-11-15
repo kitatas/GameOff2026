@@ -36,12 +36,8 @@ namespace GameOff2026.Game.Application
     public enum FieldType
     {
         None = 0,
-        Ground = 1,
-        GroundDoor = 2,
-        GroundWall = 3,
+        Empty = 1,
         Treasure = 4,
-        Wall = 5,
-        WallDoor = 6,
         Block = 7,
         DayEnemy = 8,
         DayEnemyRoute = 9,

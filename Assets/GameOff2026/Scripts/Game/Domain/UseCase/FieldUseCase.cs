@@ -50,38 +50,6 @@ namespace GameOff2026.Game.Domain.UseCase
                 _fieldEntity.Add(fieldSquare);
             });
 
-            // 壁沿いマスの算出
-            const int length = FieldConfig.MAX_FILE * FieldConfig.MAX_RANK;
-            var groundWalls = _fieldEntity.fieldSquares
-                .AsValueEnumerable()
-                .Skip(length - FieldConfig.MAX_FILE)
-                .Take(FieldConfig.MAX_FILE)
-                .Select((v, i) => (fieldSquare: v, index: i + length - FieldConfig.MAX_FILE))
-                .Where(x => x.fieldSquare.field.type is FieldType.Ground)
-                .ToArray();
-
-            // 壁沿いマスからドア位置を決定
-            var groundDoor = groundWalls.GetRandom();
-            _fieldEntity.SetField(groundDoor.index, _fieldRepository.Find(FieldType.GroundDoor));
-
-            // その他は通常の壁沿いマスに
-            foreach (var groundWall in groundWalls)
-            {
-                if (groundWall.index == groundDoor.index) continue;
-                _fieldEntity.SetField(groundWall.index, _fieldRepository.Find(FieldType.GroundWall));
-            }
-
-            // 壁
-            for (int i = length; i < length + FieldConfig.MAX_FILE; i++)
-            {
-                var fieldSquare = _fieldEntity.fieldSquares[i - FieldConfig.MAX_FILE];
-                var fieldType = fieldSquare.field.type is FieldType.GroundDoor ? FieldType.WallDoor : FieldType.Wall;
-                var field = _fieldRepository.Find(fieldType);
-                var wallSquare =
-                    FieldSquareVO.Create(i % FieldConfig.MAX_FILE + 1, i / FieldConfig.MAX_FILE + 1, field);
-                _fieldEntity.Add(wallSquare);
-            }
-
             return PublishRenderAsync(token);
         }
 

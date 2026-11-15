@@ -101,15 +101,13 @@ namespace GameOff2026.Game.Application
     {
         public readonly FieldType type;
         public readonly int treasureNum;
-        public readonly bool isGoal;
 
-        public EventResultVO(FieldType type, int treasureNum, bool isGoal)
+        public EventResultVO(FieldType type, int treasureNum)
         {
             if (type is FieldType.None) throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD);
 
             this.type = type;
             this.treasureNum = treasureNum;
-            this.isGoal = isGoal;
         }
     }
 

@@ -34,10 +34,8 @@ namespace GameOff2026.Game.Domain.UseCase
             var (fieldSquare, index) = _fieldEntity.Find(_playerEntity.square);
             await (fieldSquare.field.type switch
             {
-                FieldType.Ground => UniTask.Yield(token),
-                FieldType.GroundDoor => UniTask.Yield(token),
-                FieldType.GroundWall => UniTask.Yield(token),
-                FieldType.Treasure => OverrideFieldSquareAsync(index, FieldType.Ground, token),
+                FieldType.Empty => UniTask.Yield(token),
+                FieldType.Treasure => OverrideFieldSquareAsync(index, FieldType.Empty, token),
                 FieldType.DayEnemyRoute => UniTask.Yield(token),
                 FieldType.NightEnemy => UniTask.Yield(token),
                 FieldType.NightEnemyRoute => UniTask.Yield(token),
@@ -59,8 +57,7 @@ namespace GameOff2026.Game.Domain.UseCase
         {
             return new EventResultVO(
                 type,
-                type is FieldType.Treasure ? 1 : 0,
-                type is FieldType.GroundDoor && _treasureEntity.value > 0
+                type is FieldType.Treasure ? 1 : 0
             );
         }
     }
