@@ -60,6 +60,8 @@ namespace GameOff2026.Game.Domain.UseCase
             var enemies = _enemyEntity.Get(DateType.Night);
             foreach (var enemySquare in enemies)
             {
+                if (enemySquare == null) continue;
+
                 var type = _dateEntity.value switch
                 {
                     DateType.Day => FieldType.EnemyRouteDeactive,

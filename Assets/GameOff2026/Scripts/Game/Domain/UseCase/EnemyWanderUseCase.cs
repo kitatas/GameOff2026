@@ -28,6 +28,8 @@ namespace GameOff2026.Game.Domain.UseCase
             for (int i = 0; i < enemies.Length; i++)
             {
                 var enemySquare = enemies[i];
+                if (enemySquare == null) continue;
+
                 var routeSquares = enemySquare.Arounds()
                     .AsValueEnumerable()
                     .Where(x => _fieldEntity.IsEnemyRouteActive(x))
