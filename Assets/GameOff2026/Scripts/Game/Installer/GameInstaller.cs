@@ -86,7 +86,6 @@ namespace GameOff2026.Game.Installer
             // View
             builder.RegisterComponentInHierarchy<DateShiftButtonView>();
             builder.RegisterComponentInHierarchy<DateView>();
-            builder.RegisterComponentInHierarchy<DoorView>();
             builder.RegisterComponentInHierarchy<FieldView>();
             builder.RegisterComponentInHierarchy<MovementView>();
             builder.RegisterComponentInHierarchy<PlayerView>();
