@@ -39,6 +39,7 @@ namespace GameOff2026.Game.Domain.UseCase
                 FieldType.GroundWall => UniTask.Yield(token),
                 FieldType.Treasure => OverrideFieldSquareAsync(index, FieldType.Ground, token),
                 FieldType.DayEnemyRoute => UniTask.Yield(token),
+                FieldType.NightEnemy => UniTask.Yield(token),
                 FieldType.NightEnemyRoute => UniTask.Yield(token),
                 _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD),
             });
