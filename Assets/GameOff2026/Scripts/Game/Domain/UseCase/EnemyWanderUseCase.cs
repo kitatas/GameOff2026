@@ -28,18 +28,17 @@ namespace GameOff2026.Game.Domain.UseCase
             for (int i = 0; i < enemies.Length; i++)
             {
                 var enemySquare = enemies[i];
-                var routeFields = _fieldEntity.fieldSquares
+                var routeSquares = enemySquare.Arounds()
                     .AsValueEnumerable()
-                    .Where(x => x.field.type is FieldType.EnemyRouteActive)
-                    .Where(x => enemySquare.Arounds().AsValueEnumerable().Any(y => y.IsEqual(x.square)))
+                    .Where(x => _fieldEntity.IsEnemyRouteActive(x))
                     .ToArray();
 
-                if (routeFields.Length == 0) continue;
+                if (routeSquares.Length == 0) continue;
 
                 // Route to Enemy
-                var routeField = routeFields.GetRandom();
-                _enemyEntity.Set(_dateEntity.value, i, routeField.square);
-                Replace(routeField.square, _dateEntity.value.ToEnemy());
+                var square = routeSquares.GetRandom();
+                _enemyEntity.Set(_dateEntity.value, i, square);
+                Replace(square, _dateEntity.value.ToEnemy());
 
                 // Enemy to Route
                 Replace(enemySquare, FieldType.EnemyRouteActive);

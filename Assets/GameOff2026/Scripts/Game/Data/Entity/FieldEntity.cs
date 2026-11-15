@@ -60,5 +60,12 @@ namespace GameOff2026.Game.Data.Entity
                 _ => true,
             };
         }
+
+        public bool IsEnemyRouteActive(SquareVO square)
+        {
+            var (fieldSquare, _) = Find(square);
+            if (fieldSquare == null) return false;
+            return fieldSquare.field.type is FieldType.EnemyRouteActive;
+        }
     }
 }
