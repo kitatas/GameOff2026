@@ -54,8 +54,8 @@ namespace GameOff2026.Game.Presentation.State
 
         private async UniTask<GameState> ExecShiftAsync(CancellationToken token)
         {
+            await _dateUseCase.ShiftAsync(token);
             await (
-                _dateUseCase.ShiftAsync(token),
                 _fieldUseCase.ShiftAsync(token)
             );
             return GameState.Input;

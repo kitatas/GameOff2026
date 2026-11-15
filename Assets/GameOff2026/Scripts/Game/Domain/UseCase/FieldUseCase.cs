@@ -1,6 +1,6 @@
-using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using GameOff2026.Common.Application;
 using GameOff2026.Game.Application;
 using GameOff2026.Game.Data.Entity;
 using GameOff2026.Game.Domain.Ports;
@@ -40,12 +40,7 @@ namespace GameOff2026.Game.Domain.UseCase
 
             var patterns = _fieldPatternRepository.GetRandom4(_dateEntity.value);
             _fieldPatternEntity.SetUp(patterns);
-            BuildField((file, rank, field) =>
-            {
-                var fieldSquare = FieldSquareVO.Create(file + 1, rank + 1, field);
-                if (field.type.IsEnemy()) SetEnemy(file, rank, fieldSquare);
-                _fieldEntity.Add(fieldSquare);
-            });
+            BuildField();
 
             return PublishRenderAsync(token);
         }
@@ -62,6 +57,21 @@ namespace GameOff2026.Game.Domain.UseCase
                 _fieldEntity.SetField(i, field);
             }
 
+            var enemies = _enemyEntity.Get(DateType.Night);
+            foreach (var enemySquare in enemies)
+            {
+                var type = _dateEntity.value switch
+                {
+                    DateType.Day => FieldType.EnemyRouteDeactive,
+                    DateType.Night => FieldType.EnemyNight,
+                    _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_DATE)
+                };
+
+                var (_, index) = _fieldEntity.Find(enemySquare);
+                var field = _fieldRepository.Find(type);
+                _fieldEntity.SetField(index, field);
+            }
+
             return PublishRenderAsync(token);
         }
 
@@ -72,7 +82,7 @@ namespace GameOff2026.Game.Domain.UseCase
             return patternRankIndex + patternOffset;
         }
 
-        private void BuildField(Action<int, int, FieldVO> action)
+        private void BuildField()
         {
             for (int rank = 0; rank < FieldConfig.MAX_RANK; rank++)
             {
@@ -82,15 +92,21 @@ namespace GameOff2026.Game.Domain.UseCase
                     var pattern = _fieldPatternEntity.Get(CalcPatternIndex(file, rank));
                     var type = pattern.types[(rank % FieldConfig.HALF_RANK) + typeOffset];
 
+                    var isHide = _dateEntity.value is DateType.Day && type is FieldType.EnemyNight;
+                    type = isHide ? FieldType.EnemyRouteDeactive : type;
+
                     var field = _fieldRepository.Find(type);
-                    action?.Invoke(file, rank, field);
+                    var fieldSquare = FieldSquareVO.Create(file + 1, rank + 1, field);
+                    if (field.type.IsEnemy() || isHide) SetEnemy(file, rank, fieldSquare, isHide);
+                    _fieldEntity.Add(fieldSquare);
                 }
             }
         }
 
-        private void SetEnemy(int file, int rank, FieldSquareVO fieldSquare)
+        private void SetEnemy(int file, int rank, FieldSquareVO fieldSquare, bool isHide)
         {
-            _enemyEntity.Set(fieldSquare.field.type.ToDate(), CalcPatternIndex(file, rank), fieldSquare.square);
+            var date = isHide ? DateType.Night : fieldSquare.field.type.ToDate();
+            _enemyEntity.Set(date, CalcPatternIndex(file, rank), fieldSquare.square);
         }
 
         public UniTask PublishRenderAsync(CancellationToken token)
