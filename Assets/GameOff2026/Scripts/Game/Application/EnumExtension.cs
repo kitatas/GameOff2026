@@ -107,5 +107,15 @@ namespace GameOff2026.Game.Application
                 _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD),
             };
         }
+
+        public static DateType ToDate(this FieldType self)
+        {
+            return self switch
+            {
+                FieldType.EnemyDay => DateType.Day,
+                FieldType.EnemyNight => DateType.Night,
+                _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD),
+            };
+        }
     }
 }

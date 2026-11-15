@@ -43,7 +43,7 @@ namespace GameOff2026.Game.Domain.UseCase
             BuildField((file, rank, field) =>
             {
                 var fieldSquare = FieldSquareVO.Create(file + 1, rank + 1, field);
-                if (field.type.IsEnemy()) SetEnemy(file, rank, fieldSquare.square);
+                if (field.type.IsEnemy()) SetEnemy(file, rank, fieldSquare);
                 _fieldEntity.Add(fieldSquare);
             });
 
@@ -88,9 +88,9 @@ namespace GameOff2026.Game.Domain.UseCase
             }
         }
 
-        private void SetEnemy(int file, int rank, SquareVO square)
+        private void SetEnemy(int file, int rank, FieldSquareVO fieldSquare)
         {
-            _enemyEntity.Set(_dateEntity.value, CalcPatternIndex(file, rank), square);
+            _enemyEntity.Set(fieldSquare.field.type.ToDate(), CalcPatternIndex(file, rank), fieldSquare.square);
         }
 
         public UniTask PublishRenderAsync(CancellationToken token)
