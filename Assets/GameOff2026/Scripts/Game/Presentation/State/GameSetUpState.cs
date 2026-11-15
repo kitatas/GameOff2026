@@ -7,11 +7,13 @@ namespace GameOff2026.Game.Presentation.State
 {
     public sealed class GameSetUpState : BaseGameState
     {
+        private readonly DayUseCase _dayUseCase;
         private readonly FieldUseCase _fieldUseCase;
         private readonly TreasureUseCase _treasureUseCase;
 
-        public GameSetUpState(FieldUseCase fieldUseCase, TreasureUseCase treasureUseCase)
+        public GameSetUpState(DayUseCase dayUseCase, FieldUseCase fieldUseCase, TreasureUseCase treasureUseCase)
         {
+            _dayUseCase = dayUseCase;
             _fieldUseCase = fieldUseCase;
             _treasureUseCase = treasureUseCase;
         }
@@ -20,6 +22,7 @@ namespace GameOff2026.Game.Presentation.State
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
+            _dayUseCase.SetUp();
             _treasureUseCase.SetUp();
             await _fieldUseCase.BuildFieldAsync(token);
             return GameState.Input;
