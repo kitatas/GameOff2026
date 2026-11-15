@@ -26,10 +26,10 @@ namespace GameOff2026.Tests.EditMode.Game.Application
         [TestCase(1, FieldType.Empty)]
         [TestCase(4, FieldType.Treasure)]
         [TestCase(7, FieldType.Block)]
-        [TestCase(8, FieldType.DayEnemy)]
-        [TestCase(9, FieldType.DayEnemyRoute)]
-        [TestCase(10, FieldType.NightEnemy)]
-        [TestCase(11, FieldType.NightEnemyRoute)]
+        [TestCase(8, FieldType.EnemyDay)]
+        [TestCase(9, FieldType.EnemyNight)]
+        [TestCase(10, FieldType.EnemyRouteActive)]
+        [TestCase(11, FieldType.EnemyRouteDeactive)]
         public void ToFieldType_ValidValue_ReturnsMatchingEnum(int value, FieldType expected)
         {
             Assert.AreEqual(expected, value.ToFieldType());
@@ -110,18 +110,18 @@ namespace GameOff2026.Tests.EditMode.Game.Application
             Assert.Throws<QuitExceptionVO>(() => DateType.None.Shift());
         }
 
-        [TestCase(FieldType.DayEnemy, true)]
-        [TestCase(FieldType.NightEnemy, true)]
-        [TestCase(FieldType.DayEnemyRoute, false)]
-        [TestCase(FieldType.NightEnemyRoute, false)]
+        [TestCase(FieldType.EnemyDay, true)]
+        [TestCase(FieldType.EnemyNight, true)]
+        [TestCase(FieldType.EnemyRouteActive, false)]
+        [TestCase(FieldType.EnemyRouteDeactive, false)]
         [TestCase(FieldType.Empty, false)]
         public void IsEnemy_FieldType_ReturnsWhetherTypeIsEnemy(FieldType fieldType, bool expected)
         {
             Assert.AreEqual(expected, fieldType.IsEnemy());
         }
 
-        [TestCase(DateType.Day, FieldType.DayEnemy)]
-        [TestCase(DateType.Night, FieldType.NightEnemy)]
+        [TestCase(DateType.Day, FieldType.EnemyDay)]
+        [TestCase(DateType.Night, FieldType.EnemyNight)]
         public void ToEnemy_ValidDate_ReturnsMatchingEnemy(DateType date, FieldType expected)
         {
             Assert.AreEqual(expected, date.ToEnemy());
@@ -133,17 +133,38 @@ namespace GameOff2026.Tests.EditMode.Game.Application
             Assert.Throws<QuitExceptionVO>(() => DateType.None.ToEnemy());
         }
 
-        [TestCase(DateType.Day, FieldType.DayEnemyRoute)]
-        [TestCase(DateType.Night, FieldType.NightEnemyRoute)]
-        public void ToEnemyRoute_ValidDate_ReturnsMatchingRoute(DateType date, FieldType expected)
+        [TestCase(FieldType.EnemyRouteActive, true)]
+        [TestCase(FieldType.EnemyRouteDeactive, true)]
+        [TestCase(FieldType.Empty, false)]
+        public void IsRoute_FieldType_ReturnsWhetherTypeIsRoute(FieldType fieldType, bool expected)
         {
-            Assert.AreEqual(expected, date.ToEnemyRoute());
+            Assert.AreEqual(expected, fieldType.IsRoute());
+        }
+
+        [TestCase(FieldType.EnemyRouteActive, FieldType.EnemyRouteDeactive)]
+        [TestCase(FieldType.EnemyRouteDeactive, FieldType.EnemyRouteActive)]
+        public void ShiftRoute_RouteType_ReturnsOppositeRoute(FieldType fieldType, FieldType expected)
+        {
+            Assert.AreEqual(expected, fieldType.ShiftRoute());
         }
 
         [Test]
-        public void ToEnemyRoute_InvalidDate_ThrowsQuitException()
+        public void ShiftRoute_NonRouteType_ThrowsQuitException()
         {
-            Assert.Throws<QuitExceptionVO>(() => DateType.None.ToEnemyRoute());
+            Assert.Throws<QuitExceptionVO>(() => FieldType.Empty.ShiftRoute());
+        }
+
+        [TestCase(FieldType.EnemyDay, DateType.Day)]
+        [TestCase(FieldType.EnemyNight, DateType.Night)]
+        public void ToDate_EnemyType_ReturnsMatchingDate(FieldType fieldType, DateType expected)
+        {
+            Assert.AreEqual(expected, fieldType.ToDate());
+        }
+
+        [Test]
+        public void ToDate_NonEnemyType_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() => FieldType.Empty.ToDate());
         }
 
         [Test]

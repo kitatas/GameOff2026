@@ -109,8 +109,9 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             Assert.AreEqual(source.Token, _eventResultPublisher.tokens[0]);
         }
 
-        [TestCase(FieldType.DayEnemyRoute)]
-        [TestCase(FieldType.NightEnemyRoute)]
+        [TestCase(FieldType.EnemyRouteActive)]
+        [TestCase(FieldType.EnemyRouteDeactive)]
+        [TestCase(FieldType.EnemyNight)]
         public async Task ApplyAsync_EnemyRouteSquare_PublishesNonGoalResult(FieldType fieldType)
         {
             var square = new SquareVO(2, 3);

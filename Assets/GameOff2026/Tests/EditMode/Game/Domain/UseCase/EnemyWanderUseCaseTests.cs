@@ -33,8 +33,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _fieldDataAssets = new List<FieldData>();
             foreach (var type in new[]
                      {
-                         FieldType.Empty, FieldType.Treasure, FieldType.Block, FieldType.DayEnemy,
-                         FieldType.DayEnemyRoute, FieldType.NightEnemy, FieldType.NightEnemyRoute,
+                         FieldType.Empty, FieldType.Treasure, FieldType.Block, FieldType.EnemyDay,
+                         FieldType.EnemyNight, FieldType.EnemyRouteActive, FieldType.EnemyRouteDeactive,
                      })
             {
                 _fieldDataAssets.Add(CreateFieldData(type));
@@ -56,10 +56,10 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             UnityEngine.Object.DestroyImmediate(_fieldTable);
         }
 
-        [TestCase(DateType.Day, FieldType.DayEnemy, FieldType.DayEnemyRoute)]
-        [TestCase(DateType.Night, FieldType.NightEnemy, FieldType.NightEnemyRoute)]
+        [TestCase(DateType.Day, FieldType.EnemyDay)]
+        [TestCase(DateType.Night, FieldType.EnemyNight)]
         public void Wander_EnemyAdjacentToMatchingRoute_MovesEnemyAndSwapsFieldTypes(
-            DateType date, FieldType enemyType, FieldType routeType)
+            DateType date, FieldType enemyType)
         {
             _dateEntity.Set(date);
             var enemySquares = new[]
@@ -78,16 +78,36 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
 
             var routeSquare = new SquareVO(2, 1);
             _fieldEntity.Add(new FieldSquareVO(routeSquare,
-                new FieldVO(routeType, TestSpriteFactory.Valid, 1.0f)));
+                new FieldVO(FieldType.EnemyRouteActive, TestSpriteFactory.Valid, 1.0f)));
 
             _useCase.Wander();
 
-            Assert.AreSame(routeSquare, _enemyEntity.Get(date)[0]);
+            Assert.IsTrue(routeSquare.IsEqual(_enemyEntity.Get(date)[0]));
             Assert.AreSame(enemySquares[1], _enemyEntity.Get(date)[1]);
             Assert.AreSame(enemySquares[2], _enemyEntity.Get(date)[2]);
             Assert.AreSame(enemySquares[3], _enemyEntity.Get(date)[3]);
             Assert.AreEqual(enemyType, _fieldEntity.Find(routeSquare).fieldSquare.field.type);
-            Assert.AreEqual(routeType, _fieldEntity.Find(enemySquares[0]).fieldSquare.field.type);
+            Assert.AreEqual(FieldType.EnemyRouteActive, _fieldEntity.Find(enemySquares[0]).fieldSquare.field.type);
+        }
+
+        [Test]
+        public void Wander_EnemyAdjacentOnlyToInactiveRoute_DoesNotMove()
+        {
+            _dateEntity.Set(DateType.Day);
+            var enemySquare = new SquareVO(1, 1);
+            var inactiveRouteSquare = new SquareVO(2, 1);
+            _enemyEntity.Set(DateType.Day, 0, enemySquare);
+            _fieldEntity.Add(new FieldSquareVO(enemySquare,
+                new FieldVO(FieldType.EnemyDay, TestSpriteFactory.Valid, 1.0f)));
+            _fieldEntity.Add(new FieldSquareVO(inactiveRouteSquare,
+                new FieldVO(FieldType.EnemyRouteDeactive, TestSpriteFactory.Valid, 1.0f)));
+
+            _useCase.Wander();
+
+            Assert.AreSame(enemySquare, _enemyEntity.Get(DateType.Day)[0]);
+            Assert.AreEqual(FieldType.EnemyDay, _fieldEntity.Find(enemySquare).fieldSquare.field.type);
+            Assert.AreEqual(FieldType.EnemyRouteDeactive,
+                _fieldEntity.Find(inactiveRouteSquare).fieldSquare.field.type);
         }
 
         private FieldData CreateFieldData(FieldType type)

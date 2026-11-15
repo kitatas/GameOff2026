@@ -98,19 +98,47 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
         public void IsMovable_DayEnemySquare_ReturnsFalse()
         {
             var entity = new FieldEntity();
-            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.DayEnemy, TestSpriteFactory.Valid, 1.0f)));
+            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.EnemyDay, TestSpriteFactory.Valid, 1.0f)));
 
             Assert.IsFalse(entity.IsMovable(new SquareVO(2, 3), DateType.Day));
         }
 
-        [TestCase(FieldType.DayEnemyRoute)]
-        [TestCase(FieldType.NightEnemyRoute)]
+        [TestCase(FieldType.EnemyRouteActive)]
+        [TestCase(FieldType.EnemyRouteDeactive)]
         public void IsMovable_EnemyRouteSquare_ReturnsTrue(FieldType fieldType)
         {
             var entity = new FieldEntity();
             entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(fieldType, TestSpriteFactory.Valid, 1.0f)));
 
             Assert.IsTrue(entity.IsMovable(new SquareVO(2, 3), DateType.Day));
+        }
+
+        [Test]
+        public void IsEnemyRouteActive_ActiveRoute_ReturnsTrue()
+        {
+            var entity = new FieldEntity();
+            entity.Add(FieldSquareVO.Create(2, 3,
+                new FieldVO(FieldType.EnemyRouteActive, TestSpriteFactory.Valid, 1.0f)));
+
+            Assert.IsTrue(entity.IsEnemyRouteActive(new SquareVO(2, 3)));
+        }
+
+        [TestCase(FieldType.EnemyRouteDeactive)]
+        [TestCase(FieldType.Empty)]
+        public void IsEnemyRouteActive_NonActiveRoute_ReturnsFalse(FieldType fieldType)
+        {
+            var entity = new FieldEntity();
+            entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(fieldType, TestSpriteFactory.Valid, 1.0f)));
+
+            Assert.IsFalse(entity.IsEnemyRouteActive(new SquareVO(2, 3)));
+        }
+
+        [Test]
+        public void IsEnemyRouteActive_MissingSquare_ReturnsFalse()
+        {
+            var entity = new FieldEntity();
+
+            Assert.IsFalse(entity.IsEnemyRouteActive(new SquareVO(2, 3)));
         }
     }
 }

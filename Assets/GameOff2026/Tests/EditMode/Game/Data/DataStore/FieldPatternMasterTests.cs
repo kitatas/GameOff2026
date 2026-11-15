@@ -24,8 +24,8 @@ namespace GameOff2026.Tests.EditMode.Game.Data.DataStore
             CollectionAssert.AreEqual(new[]
             {
                 FieldType.Empty, FieldType.Treasure, FieldType.Block,
-                FieldType.Treasure, FieldType.DayEnemy, FieldType.DayEnemyRoute,
-                FieldType.NightEnemy, FieldType.NightEnemyRoute, FieldType.Empty,
+                FieldType.Treasure, FieldType.EnemyDay, FieldType.EnemyNight,
+                FieldType.EnemyRouteActive, FieldType.EnemyRouteDeactive, FieldType.Empty,
             }, pattern.types);
             Assert.AreEqual(Rotation.Angle0, pattern.rotation);
         }

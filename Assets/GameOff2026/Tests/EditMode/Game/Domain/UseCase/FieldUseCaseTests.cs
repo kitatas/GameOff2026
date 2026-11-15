@@ -43,8 +43,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _fieldDataAssets = new List<FieldData>();
             foreach (var type in new[]
                      {
-                         FieldType.Empty, FieldType.Treasure, FieldType.Block, FieldType.DayEnemy,
-                         FieldType.DayEnemyRoute, FieldType.NightEnemy, FieldType.NightEnemyRoute,
+                         FieldType.Empty, FieldType.Treasure, FieldType.Block, FieldType.EnemyDay,
+                         FieldType.EnemyNight, FieldType.EnemyRouteActive, FieldType.EnemyRouteDeactive,
                      })
             {
                 _fieldDataAssets.Add(CreateFieldData(type));
@@ -103,50 +103,56 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 Assert.AreEqual(i / FieldConfig.MAX_FILE + 1, squares[i].square.rank);
             }
 
-            AssertEnemyPositionsTracked(squares, DateType.Day);
+            AssertEnemyPositionsTracked(squares, DateType.Day, FieldType.EnemyDay);
+            AssertEnemyPositionsTracked(squares, DateType.Night, FieldType.EnemyRouteDeactive);
         }
 
         [Test]
-        public async Task ShiftAsync_AfterBuildingDayField_ShiftsPatternsAndRebuildsField()
+        public async Task ShiftAsync_DayDate_ShiftsRoutesAndKeepsNightEnemiesHidden()
         {
-            _dateEntity.Reset();
+            _dateEntity.Set(DateType.Day);
+            var routeSquare = new SquareVO(1, 1);
+            var nightEnemySquare = new SquareVO(2, 1);
+            _fieldEntity.Add(new FieldSquareVO(routeSquare,
+                new FieldVO(FieldType.EnemyRouteActive, TestSpriteFactory.Valid, 1.0f)));
+            _fieldEntity.Add(new FieldSquareVO(nightEnemySquare,
+                new FieldVO(FieldType.EnemyRouteDeactive, TestSpriteFactory.Valid, 1.0f)));
+            _enemyEntity.Set(DateType.Night, 0, nightEnemySquare);
             using var source = new CancellationTokenSource();
-            await _useCase.BuildFieldAsync(source.Token).AsTask();
-            var dayPatterns = new FieldPatternVO[FieldConfig.LOT_PATTERN_COUNT];
-            for (var i = 0; i < dayPatterns.Length; i++)
-            {
-                dayPatterns[i] = _fieldPatternEntity.Get(i);
-            }
 
-            _dateEntity.Shift();
             await _useCase.ShiftAsync(source.Token).AsTask();
 
-            for (var i = 0; i < dayPatterns.Length; i++)
-            {
-                var nightPattern = _fieldPatternEntity.Get(i);
-                Assert.AreEqual(dayPatterns[i].id, nightPattern.id);
-                Assert.AreEqual(DateType.Night, nightPattern.date);
-                Assert.AreEqual(dayPatterns[i].rotation, nightPattern.rotation);
-            }
-
-            var squares = _fieldEntity.fieldSquares;
-            Assert.AreEqual(FieldConfig.MAX_FILE * FieldConfig.MAX_RANK, squares.Length);
-            Assert.AreEqual(2, _publisher.PublishCount);
+            Assert.AreEqual(FieldType.EnemyRouteDeactive,
+                _fieldEntity.Find(routeSquare).fieldSquare.field.type);
+            Assert.AreEqual(FieldType.EnemyRouteDeactive,
+                _fieldEntity.Find(nightEnemySquare).fieldSquare.field.type);
+            Assert.AreEqual(1, _publisher.PublishCount);
+            Assert.AreEqual(source.Token, _publisher.tokens[0]);
             Assert.AreEqual(RenderType.Refresh, _publisher.LastPublished.type);
-            for (var rank = 0; rank < FieldConfig.MAX_RANK; rank++)
-            {
-                for (var file = 0; file < FieldConfig.MAX_FILE; file++)
-                {
-                    var patternIndex = rank / FieldConfig.HALF_RANK +
-                                       (file / FieldConfig.HALF_FILE) * (FieldConfig.MAX_FILE / FieldConfig.HALF_FILE);
-                    var typeIndex = rank % FieldConfig.HALF_RANK +
-                                    (file % FieldConfig.HALF_FILE) * FieldConfig.HALF_RANK;
-                    Assert.AreEqual(_fieldPatternEntity.Get(patternIndex).types[typeIndex],
-                        squares[rank * FieldConfig.MAX_FILE + file].field.type);
-                }
-            }
+        }
 
-            AssertEnemyPositionsTracked(squares, DateType.Night);
+        [Test]
+        public async Task ShiftAsync_NightDate_ShiftsRoutesAndRevealsNightEnemies()
+        {
+            _dateEntity.Set(DateType.Night);
+            var routeSquare = new SquareVO(1, 1);
+            var nightEnemySquare = new SquareVO(2, 1);
+            _fieldEntity.Add(new FieldSquareVO(routeSquare,
+                new FieldVO(FieldType.EnemyRouteDeactive, TestSpriteFactory.Valid, 1.0f)));
+            _fieldEntity.Add(new FieldSquareVO(nightEnemySquare,
+                new FieldVO(FieldType.EnemyRouteActive, TestSpriteFactory.Valid, 1.0f)));
+            _enemyEntity.Set(DateType.Night, 0, nightEnemySquare);
+            using var source = new CancellationTokenSource();
+
+            await _useCase.ShiftAsync(source.Token).AsTask();
+
+            Assert.AreEqual(FieldType.EnemyRouteActive,
+                _fieldEntity.Find(routeSquare).fieldSquare.field.type);
+            Assert.AreEqual(FieldType.EnemyNight,
+                _fieldEntity.Find(nightEnemySquare).fieldSquare.field.type);
+            Assert.AreEqual(1, _publisher.PublishCount);
+            Assert.AreEqual(source.Token, _publisher.tokens[0]);
+            Assert.AreEqual(RenderType.Refresh, _publisher.LastPublished.type);
         }
 
         [Test]
@@ -184,7 +190,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             return fieldData;
         }
 
-        private void AssertEnemyPositionsTracked(FieldSquareVO[] squares, DateType date)
+        private void AssertEnemyPositionsTracked(FieldSquareVO[] squares, DateType date, FieldType fieldType)
         {
             var enemies = _enemyEntity.Get(date);
             for (var i = 0; i < enemies.Length; i++)
@@ -194,7 +200,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 var found = false;
                 foreach (var fieldSquare in squares)
                 {
-                    if (!fieldSquare.field.type.IsEnemy() || !fieldSquare.square.IsEqual(enemies[i])) continue;
+                    if (fieldSquare.field.type != fieldType || !fieldSquare.square.IsEqual(enemies[i])) continue;
 
                     var file = fieldSquare.square.file - 1;
                     var rank = fieldSquare.square.rank - 1;

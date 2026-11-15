@@ -27,9 +27,9 @@ namespace GameOff2026.Tests.EditMode.Game.Application
             CollectionAssert.AreEqual(
                 new[]
                 {
-                    FieldType.Block, FieldType.NightEnemy, FieldType.Treasure,
-                    FieldType.Treasure, FieldType.DayEnemyRoute, FieldType.Empty,
-                    FieldType.Empty, FieldType.DayEnemy, FieldType.NightEnemyRoute
+                    FieldType.Block, FieldType.EnemyRouteActive, FieldType.Treasure,
+                    FieldType.Treasure, FieldType.EnemyNight, FieldType.Empty,
+                    FieldType.Empty, FieldType.EnemyDay, FieldType.EnemyRouteDeactive
                 },
                 pattern.types);
         }
