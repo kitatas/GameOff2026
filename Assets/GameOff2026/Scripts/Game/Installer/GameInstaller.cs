@@ -53,6 +53,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<EnemyWanderUseCase>(Lifetime.Scoped);
             builder.Register<EventUseCase>(Lifetime.Scoped);
             builder.Register<FieldUseCase>(Lifetime.Scoped);
+            builder.Register<FinishUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
             builder.Register<InputUseCase>(Lifetime.Scoped);
             builder.Register<MovementUseCase>(Lifetime.Scoped);
@@ -73,6 +74,7 @@ namespace GameOff2026.Game.Installer
                 entryPoints.Add<DayPresenter>();
                 entryPoints.Add<EventPresenter>();
                 entryPoints.Add<FieldPresenter>();
+                entryPoints.Add<FinishPresenter>();
                 entryPoints.Add<GameStatePresenter>();
                 entryPoints.Add<InputPresenter>();
                 entryPoints.Add<MovementPresenter>();
@@ -84,15 +86,18 @@ namespace GameOff2026.Game.Installer
             builder.Register<DateFacade>(Lifetime.Scoped);
             builder.Register<DayFacade>(Lifetime.Scoped);
             builder.Register<FieldFacade>(Lifetime.Scoped);
+            builder.Register<FinishFacade>(Lifetime.Scoped);
             builder.Register<InputFacade>(Lifetime.Scoped);
             builder.Register<MovementFacade>(Lifetime.Scoped);
             builder.Register<PlayerFacade>(Lifetime.Scoped);
             builder.Register<TreasureFacade>(Lifetime.Scoped);
 
             // View
+            builder.RegisterComponentInHierarchy<ClearView>();
             builder.RegisterComponentInHierarchy<DateShiftButtonView>();
             builder.RegisterComponentInHierarchy<DateView>();
             builder.RegisterComponentInHierarchy<DayView>();
+            builder.RegisterComponentInHierarchy<FailView>();
             builder.RegisterComponentInHierarchy<FieldView>();
             builder.RegisterComponentInHierarchy<MovementView>();
             builder.RegisterComponentInHierarchy<PlayerView>();
