@@ -1,0 +1,45 @@
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using GameOff2026.Common.Application;
+using GameOff2026.Common.Utility;
+using GameOff2026.Game.Application;
+using GameOff2026.Game.Domain.UseCase;
+
+namespace GameOff2026.Game.Presentation.State
+{
+    public sealed class GameFailState : BaseGameState
+    {
+        private readonly FinishUseCase _finishUseCase;
+
+        public GameFailState(FinishUseCase finishUseCase)
+        {
+            _finishUseCase = finishUseCase;
+        }
+
+        public override GameState state => GameState.Fail;
+
+        public override async UniTask InitAsync(CancellationToken token)
+        {
+            await (
+                _finishUseCase.InitAsync(FinishType.Fail, token)
+            );
+        }
+
+        public override async UniTask<GameState> TickAsync(CancellationToken token)
+        {
+            await _finishUseCase.FadeAsync(FinishType.Fail, Fade.In, token);
+            await UniTaskHelper.DelayAsync(1.0f, token);
+            await _finishUseCase.FadeAsync(FinishType.Fail, Fade.Out, token);
+
+            // TODO:
+            return GameState.None;
+        }
+
+        public override async UniTask ForceExitAsync(CancellationToken token)
+        {
+            await (
+                _finishUseCase.FadeAsync(FinishType.Fail, Fade.Out, token)
+            );
+        }
+    }
+}

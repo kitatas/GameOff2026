@@ -27,7 +27,7 @@ namespace GameOff2026.Game.Presentation.State
             await _fieldUseCase.PublishRenderAsync(token);
 
             return _playerUseCase.IsEncounterEnemy()
-                ? GameState.None
+                ? GameState.Fail
                 : GameState.Input;
         }
     }

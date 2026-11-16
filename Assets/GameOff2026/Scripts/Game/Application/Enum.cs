@@ -8,6 +8,7 @@ namespace GameOff2026.Game.Application
         Input = 3,
         Event = 4,
         Wander = 5,
+        Fail = 6,
     }
 
     public enum InputType
