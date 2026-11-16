@@ -185,4 +185,25 @@ namespace GameOff2026.Game.Application
             this.direction = direction;
         }
     }
+
+    public sealed class FinishTransitionVO
+    {
+        public readonly FinishType type;
+        public readonly TransitionVO transition;
+
+        public FinishTransitionVO(FinishType type, TransitionVO transition)
+        {
+            if (type is FinishType.None)
+                throw new QuitExceptionVO(ExceptionConfig.INVALID_FINISH);
+
+            this.type = type;
+            this.transition = transition;
+        }
+
+        public static FinishTransitionVO Create(FinishType type, Fade fade, float duration)
+        {
+            var transition = new TransitionVO(fade, duration);
+            return new FinishTransitionVO(type, transition);
+        }
+    }
 }

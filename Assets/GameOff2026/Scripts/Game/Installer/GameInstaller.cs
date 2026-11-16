@@ -39,6 +39,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<DatePorts>(Lifetime.Scoped);
             builder.Register<EventPorts>(Lifetime.Scoped);
             builder.Register<FieldPorts>(Lifetime.Scoped);
+            builder.Register<FinishPorts>(Lifetime.Scoped);
             builder.Register<GameStatePorts>(Lifetime.Scoped);
             builder.Register<MovementPorts>(Lifetime.Scoped);
 

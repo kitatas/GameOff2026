@@ -59,4 +59,11 @@ namespace GameOff2026.Game.Application
         None = 0,
         Refresh = 1,
     }
+
+    public enum FinishType
+    {
+        None = 0,
+        Clear = 1,
+        Fail = 2,
+    }
 }
