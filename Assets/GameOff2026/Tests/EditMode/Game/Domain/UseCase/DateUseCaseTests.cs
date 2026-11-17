@@ -35,9 +35,9 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
 
             await _useCase.InitAsync(source.Token).AsTask();
 
-            Assert.AreEqual(DateType.Day, _dateEntity.value);
+            Assert.AreEqual(DateType.Night, _dateEntity.value);
             Assert.AreEqual(1, _publisher.PublishCount);
-            Assert.AreEqual(DateType.Day, _publisher.LastPublished.date);
+            Assert.AreEqual(DateType.Night, _publisher.LastPublished.date);
             Assert.AreEqual(Fade.InOut, _publisher.LastPublished.transition.fade);
             Assert.AreEqual(0.0f, _publisher.LastPublished.transition.duration);
             Assert.AreEqual(source.Token, _publisher.tokens[0]);

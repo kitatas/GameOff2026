@@ -14,7 +14,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
 
             entity.Reset();
 
-            Assert.AreEqual(1, entity.value);
+            Assert.AreEqual(0, entity.value);
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
 
             entity.Increment();
 
-            Assert.AreEqual(2, entity.value);
+            Assert.AreEqual(1, entity.value);
         }
     }
 }

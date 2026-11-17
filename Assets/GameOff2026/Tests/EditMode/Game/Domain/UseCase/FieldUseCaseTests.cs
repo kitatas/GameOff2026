@@ -181,6 +181,24 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             Assert.AreSame(_subscriber, _useCase.renderField);
         }
 
+        [Test]
+        public void IsEmptyTreasure_FieldHasNoTreasure_ReturnsTrue()
+        {
+            _fieldEntity.Add(FieldSquareVO.Create(1, 1,
+                new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)));
+
+            Assert.IsTrue(_useCase.IsEmptyTreasure());
+        }
+
+        [Test]
+        public void IsEmptyTreasure_FieldHasTreasure_ReturnsFalse()
+        {
+            _fieldEntity.Add(FieldSquareVO.Create(1, 1,
+                new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f)));
+
+            Assert.IsFalse(_useCase.IsEmptyTreasure());
+        }
+
         private FieldData CreateFieldData(FieldType type)
         {
             var fieldData = ScriptableObject.CreateInstance<FieldData>();

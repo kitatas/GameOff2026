@@ -29,41 +29,41 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         }
 
         [Test]
-        public void SetUp_ResetsDayAndPublishesDayOne()
+        public void Init_ResetsDayAndPublishesDayOne()
         {
             _dayEntity.Set(5);
             using var day = _useCase.day;
 
-            _useCase.SetUp();
+            _useCase.Init();
 
-            Assert.AreEqual(1, _dayEntity.value);
-            Assert.AreEqual(1, ((IReadOnlyBindableReactiveProperty<int>)day).Value);
+            Assert.AreEqual(0, _dayEntity.value);
+            Assert.AreEqual(0, ((IReadOnlyBindableReactiveProperty<int>)day).Value);
         }
 
         [Test]
         public void Dawn_DayDate_IncrementsAndPublishesDay()
         {
             _dateEntity.Set(DateType.Day);
-            _useCase.SetUp();
-            using var day = _useCase.day;
-
-            _useCase.Dawn();
-
-            Assert.AreEqual(2, _dayEntity.value);
-            Assert.AreEqual(2, ((IReadOnlyBindableReactiveProperty<int>)day).Value);
-        }
-
-        [Test]
-        public void Dawn_NightDate_DoesNotChangeOrPublishDay()
-        {
-            _dateEntity.Set(DateType.Night);
-            _useCase.SetUp();
+            _useCase.Init();
             using var day = _useCase.day;
 
             _useCase.Dawn();
 
             Assert.AreEqual(1, _dayEntity.value);
             Assert.AreEqual(1, ((IReadOnlyBindableReactiveProperty<int>)day).Value);
+        }
+
+        [Test]
+        public void Dawn_NightDate_DoesNotChangeOrPublishDay()
+        {
+            _dateEntity.Set(DateType.Night);
+            _useCase.Init();
+            using var day = _useCase.day;
+
+            _useCase.Dawn();
+
+            Assert.AreEqual(0, _dayEntity.value);
+            Assert.AreEqual(0, ((IReadOnlyBindableReactiveProperty<int>)day).Value);
         }
 
         [TestCase(DateType.Day, 7, false)]

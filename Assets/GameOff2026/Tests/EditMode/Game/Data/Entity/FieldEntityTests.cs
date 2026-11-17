@@ -140,5 +140,28 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
 
             Assert.IsFalse(entity.IsEnemyRouteActive(new SquareVO(2, 3)));
         }
+
+        [Test]
+        public void GetCount_TreasureAndOtherTypes_ReturnsMatchingCount()
+        {
+            var entity = new FieldEntity();
+            entity.Add(FieldSquareVO.Create(1, 1, new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f)));
+            entity.Add(FieldSquareVO.Create(2, 1, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)));
+            entity.Add(FieldSquareVO.Create(3, 1, new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f)));
+
+            Assert.AreEqual(2, entity.GetCount(FieldType.Treasure));
+            Assert.AreEqual(1, entity.GetCount(FieldType.Empty));
+            Assert.AreEqual(0, entity.GetCount(FieldType.Block));
+        }
+
+        [Test]
+        public void GetCount_AfterClear_ReturnsZero()
+        {
+            var entity = new FieldEntity();
+            entity.Add(FieldSquareVO.Create(1, 1, new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f)));
+            entity.Clear();
+
+            Assert.AreEqual(0, entity.GetCount(FieldType.Treasure));
+        }
     }
 }
