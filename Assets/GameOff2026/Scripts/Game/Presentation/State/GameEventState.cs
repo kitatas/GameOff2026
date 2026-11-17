@@ -26,7 +26,7 @@ namespace GameOff2026.Game.Presentation.State
             await _fieldUseCase.PublishRenderAsync(token);
 
             return _staminaUseCase.IsEmpty()
-                ? GameState.None
+                ? GameState.Next
                 : GameState.Wander;
         }
     }

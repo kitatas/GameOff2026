@@ -68,6 +68,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<BaseGameState, GameFailState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameInitState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameInputState>(Lifetime.Scoped);
+            builder.Register<BaseGameState, GameNextState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameSetUpState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameWanderState>(Lifetime.Scoped);
 
