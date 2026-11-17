@@ -20,7 +20,7 @@ namespace GameOff2026.Game.Domain.UseCase
 
         public ReadOnlyReactiveProperty<int> day => _day.ToReadOnlyReactiveProperty();
 
-        public void SetUp()
+        public void Init()
         {
             _dayEntity.Reset();
             _day.Value = _dayEntity.value;

@@ -28,13 +28,6 @@ namespace GameOff2026.Game.Presentation.State
 
         public override GameState state => GameState.Input;
 
-        public override async UniTask InitAsync(CancellationToken token)
-        {
-            await (
-                _dateUseCase.InitAsync(token)
-            );
-        }
-
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
             await _movementUseCase.PublishMovableDirectionsAsync(token);

@@ -23,7 +23,7 @@ namespace GameOff2026.Game.Domain.UseCase
 
         public UniTask InitAsync(CancellationToken token)
         {
-            _dateEntity.Set(DateType.Day);
+            _dateEntity.Set(DateType.Night);
             var transition = DateTransitionVO.Create(_dateEntity.value, Fade.InOut, 0.0f);
             return _datePorts.PublishDateTransitionAsync(transition, token);
         }

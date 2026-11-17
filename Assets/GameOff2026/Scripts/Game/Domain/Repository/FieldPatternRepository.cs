@@ -22,7 +22,7 @@ namespace GameOff2026.Game.Domain.Repository
         {
             var targets = _fieldPatternMasterTable.All
                 .AsValueEnumerable()
-                .Where(x => x.Date == DateType.Day.ToInt32())
+                .Where(x => x.Date == date.ToInt32())
                 .ToArray();
 
             return Enumerable.Range(0, FieldConfig.LOT_PATTERN_COUNT)
@@ -33,7 +33,7 @@ namespace GameOff2026.Game.Domain.Repository
 
         public FieldPatternVO Get(int id, DateType date, Rotation rotation)
         {
-            return _fieldPatternMasterTable.TryFindByIdAndDate((id, DateType.Day.ToInt32()), out var master)
+            return _fieldPatternMasterTable.TryFindByIdAndDate((id, date.ToInt32()), out var master)
                 ? master.ToVO(rotation)
                 : throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD_PATTERN);
         }
