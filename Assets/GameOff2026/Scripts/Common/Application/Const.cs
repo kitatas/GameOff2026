@@ -38,4 +38,9 @@ namespace GameOff2026.Common.Application
         public const string NOT_FOUND_SCENE = "NOT_FOUND_SCENE";
         public const string NOT_FOUND_STATE = "NOT_FOUND_STATE";
     }
+
+    public sealed class UiConfig
+    {
+        public const float TWEEN_DURATION = 0.25f;
+    }
 }

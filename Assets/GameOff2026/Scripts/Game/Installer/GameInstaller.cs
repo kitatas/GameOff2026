@@ -60,6 +60,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<InputUseCase>(Lifetime.Scoped);
             builder.Register<MovementUseCase>(Lifetime.Scoped);
             builder.Register<PlayerUseCase>(Lifetime.Scoped);
+            builder.Register<StaminaUseCase>(Lifetime.Scoped);
             builder.Register<TreasureUseCase>(Lifetime.Scoped);
 
             // State
@@ -82,6 +83,7 @@ namespace GameOff2026.Game.Installer
                 entryPoints.Add<InputPresenter>();
                 entryPoints.Add<MovementPresenter>();
                 entryPoints.Add<PlayerPresenter>();
+                entryPoints.Add<StaminaPresenter>();
                 entryPoints.Add<TreasurePresenter>();
             });
 
@@ -93,6 +95,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<InputFacade>(Lifetime.Scoped);
             builder.Register<MovementFacade>(Lifetime.Scoped);
             builder.Register<PlayerFacade>(Lifetime.Scoped);
+            builder.Register<StaminaFacade>(Lifetime.Scoped);
             builder.Register<TreasureFacade>(Lifetime.Scoped);
 
             // View
@@ -104,6 +107,7 @@ namespace GameOff2026.Game.Installer
             builder.RegisterComponentInHierarchy<FieldView>();
             builder.RegisterComponentInHierarchy<MovementView>();
             builder.RegisterComponentInHierarchy<PlayerView>();
+            builder.RegisterComponentInHierarchy<StaminaView>();
             builder.RegisterComponentInHierarchy<TreasureView>();
         }
     }
