@@ -9,11 +9,13 @@ namespace GameOff2026.Game.Presentation.State
     {
         private readonly EventUseCase _eventUseCase;
         private readonly FieldUseCase _fieldUseCase;
+        private readonly StaminaUseCase _staminaUseCase;
 
-        public GameEventState(EventUseCase eventUseCase, FieldUseCase fieldUseCase)
+        public GameEventState(EventUseCase eventUseCase, FieldUseCase fieldUseCase, StaminaUseCase staminaUseCase)
         {
             _eventUseCase = eventUseCase;
             _fieldUseCase = fieldUseCase;
+            _staminaUseCase = staminaUseCase;
         }
 
         public override GameState state => GameState.Event;
@@ -23,7 +25,9 @@ namespace GameOff2026.Game.Presentation.State
             var result = await _eventUseCase.ApplyAsync(token);
             await _fieldUseCase.PublishRenderAsync(token);
 
-            return GameState.Wander;
+            return _staminaUseCase.IsEmpty()
+                ? GameState.None
+                : GameState.Wander;
         }
     }
 }

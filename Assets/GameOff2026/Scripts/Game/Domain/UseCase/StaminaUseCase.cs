@@ -44,6 +44,11 @@ namespace GameOff2026.Game.Domain.UseCase
             _stamina.Value = _staminaEntity.value;
         }
 
+        public bool IsEmpty()
+        {
+            return _staminaEntity.IsEmpty();
+        }
+
         void IDisposable.Dispose()
         {
             _stamina?.Dispose();
