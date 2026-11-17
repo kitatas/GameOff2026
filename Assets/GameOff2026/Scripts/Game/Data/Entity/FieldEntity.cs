@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using GameOff2026.Common.Application;
 using GameOff2026.Game.Application;
 using UniEx;
+using ZLinq;
 
 namespace GameOff2026.Game.Data.Entity
 {
@@ -66,6 +67,13 @@ namespace GameOff2026.Game.Data.Entity
             var (fieldSquare, _) = Find(square);
             if (fieldSquare == null) return false;
             return fieldSquare.field.type is FieldType.EnemyRouteActive;
+        }
+
+        public int GetCount(FieldType type)
+        {
+            return _fieldSquares
+                .AsValueEnumerable()
+                .Count(x => x.field.type == type);
         }
     }
 }

@@ -111,6 +111,11 @@ namespace GameOff2026.Game.Domain.UseCase
             _enemyEntity.Set(date, CalcPatternIndex(file, rank), fieldSquare.square);
         }
 
+        public bool IsEmptyTreasure()
+        {
+            return _fieldEntity.GetCount(FieldType.Treasure) == 0;
+        }
+
         public UniTask PublishRenderAsync(CancellationToken token)
         {
             var renderFieldSquare = new RenderFieldSquareVO(RenderType.Refresh, _fieldEntity.fieldSquares);
