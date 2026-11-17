@@ -32,7 +32,9 @@ namespace GameOff2026.Game.Installer
             builder.Register<FieldEntity>(Lifetime.Scoped);
             builder.Register<FieldPatternEntity>(Lifetime.Scoped);
             builder.Register<GameStateEntity>(Lifetime.Scoped);
+            builder.Register<MaxStaminaEntity>(Lifetime.Scoped);
             builder.Register<PlayerEntity>(Lifetime.Scoped);
+            builder.Register<StaminaEntity>(Lifetime.Scoped);
             builder.Register<TreasureEntity>(Lifetime.Scoped);
 
             // Ports

@@ -30,6 +30,8 @@ namespace GameOff2026.Game.Application
             Direction.Left,
             Direction.Right,
         };
+
+        public const int MAX_STAMINA = 10;
     }
 
     public sealed class TreasureConfig
