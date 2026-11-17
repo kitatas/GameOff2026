@@ -13,15 +13,17 @@ namespace GameOff2026.Game.Presentation.State
         private readonly FieldUseCase _fieldUseCase;
         private readonly InputUseCase _inputUseCase;
         private readonly MovementUseCase _movementUseCase;
+        private readonly StaminaUseCase _staminaUseCase;
 
         public GameInputState(DateUseCase dateUseCase, DayUseCase dayUseCase, FieldUseCase fieldUseCase,
-            InputUseCase inputUseCase, MovementUseCase movementUseCase)
+            InputUseCase inputUseCase, MovementUseCase movementUseCase, StaminaUseCase staminaUseCase)
         {
             _dateUseCase = dateUseCase;
             _dayUseCase = dayUseCase;
             _fieldUseCase = fieldUseCase;
             _inputUseCase = inputUseCase;
             _movementUseCase = movementUseCase;
+            _staminaUseCase = staminaUseCase;
         }
 
         public override GameState state => GameState.Input;
@@ -48,6 +50,7 @@ namespace GameOff2026.Game.Presentation.State
 
         private async UniTask<GameState> ExecMoveAsync(Direction direction, CancellationToken token)
         {
+            _staminaUseCase.Decrease();
             await (
                 _movementUseCase.MoveAsync(direction, token)
             );
