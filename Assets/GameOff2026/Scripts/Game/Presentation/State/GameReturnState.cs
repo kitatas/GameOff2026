@@ -4,9 +4,9 @@ using GameOff2026.Game.Application;
 
 namespace GameOff2026.Game.Presentation.State
 {
-    public sealed class GameNextState : BaseGameState
+    public sealed class GameReturnState : BaseGameState
     {
-        public override GameState state => GameState.Next;
+        public override GameState state => GameState.Return;
 
         public override UniTask<GameState> TickAsync(CancellationToken token)
         {
