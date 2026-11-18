@@ -7,31 +7,17 @@ namespace GameOff2026.Game.Presentation.State
 {
     public sealed class GameSetUpState : BaseGameState
     {
-        private readonly DateUseCase _dateUseCase;
-        private readonly DayUseCase _dayUseCase;
         private readonly FieldUseCase _fieldUseCase;
-        private readonly StaminaUseCase _staminaUseCase;
-        private readonly TreasureUseCase _treasureUseCase;
 
-        public GameSetUpState(DateUseCase dateUseCase, DayUseCase dayUseCase, FieldUseCase fieldUseCase,
-            StaminaUseCase staminaUseCase, TreasureUseCase treasureUseCase)
+        public GameSetUpState(FieldUseCase fieldUseCase)
         {
-            _dateUseCase = dateUseCase;
-            _dayUseCase = dayUseCase;
             _fieldUseCase = fieldUseCase;
-            _staminaUseCase = staminaUseCase;
-            _treasureUseCase = treasureUseCase;
         }
 
         public override GameState state => GameState.SetUp;
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
-            await _dateUseCase.ShiftAsync(token);
-
-            _dayUseCase.Dawn();
-            _staminaUseCase.SetUp();
-            _treasureUseCase.SetUp();
             await _fieldUseCase.BuildFieldAsync(token);
             return GameState.Input;
         }
