@@ -9,17 +9,20 @@ namespace GameOff2026.Game.Presentation.State
     {
         private readonly DateUseCase _dateUseCase;
         private readonly DayUseCase _dayUseCase;
+        private readonly MoneyUseCase _moneyUseCase;
 
-        public GameInitState(DateUseCase dateUseCase, DayUseCase dayUseCase)
+        public GameInitState(DateUseCase dateUseCase, DayUseCase dayUseCase, MoneyUseCase moneyUseCase)
         {
             _dateUseCase = dateUseCase;
             _dayUseCase = dayUseCase;
+            _moneyUseCase = moneyUseCase;
         }
 
         public override GameState state => GameState.Init;
 
         public override async UniTask EnterAsync(CancellationToken token)
         {
+            _moneyUseCase.Init();
             _dayUseCase.Init();
             await _dateUseCase.InitAsync(token);
         }
