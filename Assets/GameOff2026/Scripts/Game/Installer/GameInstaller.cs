@@ -31,6 +31,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<EnemyEntity>(Lifetime.Scoped);
             builder.Register<FieldEntity>(Lifetime.Scoped);
             builder.Register<FieldPatternEntity>(Lifetime.Scoped);
+            builder.Register<FloorEntity>(Lifetime.Scoped);
             builder.Register<GameStateEntity>(Lifetime.Scoped);
             builder.Register<MaxStaminaEntity>(Lifetime.Scoped);
             builder.Register<MoneyEntity>(Lifetime.Scoped);
