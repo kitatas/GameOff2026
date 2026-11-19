@@ -234,4 +234,20 @@ namespace GameOff2026.Game.Application
             return new HudRootTransitionVO(transition);
         }
     }
+
+    public sealed class TapScreenTransitionVO
+    {
+        public readonly TransitionVO transition;
+
+        public TapScreenTransitionVO(TransitionVO transition)
+        {
+            this.transition = transition;
+        }
+
+        public static TapScreenTransitionVO Create(Fade fade, float duration)
+        {
+            var transition = new TransitionVO(fade, duration);
+            return new TapScreenTransitionVO(transition);
+        }
+    }
 }

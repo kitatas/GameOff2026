@@ -47,6 +47,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<GameStatePorts>(Lifetime.Scoped);
             builder.Register<HudRootPorts>(Lifetime.Scoped);
             builder.Register<MovementPorts>(Lifetime.Scoped);
+            builder.Register<TapScreenPorts>(Lifetime.Scoped);
 
             // Repository
             builder.Register<FieldPatternRepository>(Lifetime.Scoped);
