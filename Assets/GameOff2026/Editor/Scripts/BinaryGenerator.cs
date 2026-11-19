@@ -26,7 +26,8 @@ namespace GameOff2026.Editor
 
             var databaseBuilder = new DatabaseBuilder();
             databaseBuilder
-                .Append(DeserializeJson<FieldPatternMaster>("field_pattern"));
+                .Append(DeserializeJson<FieldPatternMaster>("field_pattern"))
+                .Append(DeserializeJson<TreasurePriceMaster>("treasure_price"));
 
             const string path = "Assets/Externals/Binary/MasterMemory.bytes";
             var directory = Path.GetDirectoryName(path);

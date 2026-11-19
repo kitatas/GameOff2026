@@ -206,4 +206,16 @@ namespace GameOff2026.Game.Application
             return new FinishTransitionVO(type, transition);
         }
     }
+
+    public sealed class TreasurePriceVO
+    {
+        public readonly int floor;
+        public readonly int price;
+
+        public TreasurePriceVO(int floor, int price)
+        {
+            this.floor = floor;
+            this.price = price;
+        }
+    }
 }
