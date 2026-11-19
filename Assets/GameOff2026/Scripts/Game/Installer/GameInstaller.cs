@@ -50,6 +50,7 @@ namespace GameOff2026.Game.Installer
             // Repository
             builder.Register<FieldPatternRepository>(Lifetime.Scoped);
             builder.Register<FieldRepository>(Lifetime.Scoped);
+            builder.Register<TreasurePriceRepository>(Lifetime.Scoped);
 
             // UseCase
             builder.Register<DateUseCase>(Lifetime.Scoped);

@@ -1,5 +1,7 @@
 using System;
+using GameOff2026.Game.Application;
 using GameOff2026.Game.Data.Entity;
+using GameOff2026.Game.Domain.Repository;
 using R3;
 
 namespace GameOff2026.Game.Domain.UseCase
@@ -7,11 +9,13 @@ namespace GameOff2026.Game.Domain.UseCase
     public sealed class FloorUseCase : IDisposable
     {
         private readonly FloorEntity _floorEntity;
+        private readonly TreasurePriceRepository _treasurePriceRepository;
         private readonly ReactiveProperty<int> _floor;
 
-        public FloorUseCase(FloorEntity floorEntity)
+        public FloorUseCase(FloorEntity floorEntity, TreasurePriceRepository treasurePriceRepository)
         {
             _floorEntity = floorEntity;
+            _treasurePriceRepository = treasurePriceRepository;
             _floor = new ReactiveProperty<int>();
         }
 
@@ -27,6 +31,11 @@ namespace GameOff2026.Game.Domain.UseCase
         {
             _floorEntity.Increment();
             _floor.Value = _floorEntity.value;
+        }
+
+        public TreasurePriceVO GetTreasurePrice()
+        {
+            return _treasurePriceRepository.Find(_floorEntity.value);
         }
 
         void IDisposable.Dispose()
