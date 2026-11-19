@@ -13,16 +13,14 @@ namespace GameOff2026.Game.Domain.UseCase
     {
         private readonly FieldEntity _fieldEntity;
         private readonly PlayerEntity _playerEntity;
-        private readonly TreasureEntity _treasureEntity;
         private readonly EventPorts _eventPorts;
         private readonly FieldRepository _fieldRepository;
 
-        public EventUseCase(FieldEntity fieldEntity, PlayerEntity playerEntity, TreasureEntity treasureEntity,
-            EventPorts eventPorts, FieldRepository fieldRepository)
+        public EventUseCase(FieldEntity fieldEntity, PlayerEntity playerEntity, EventPorts eventPorts,
+            FieldRepository fieldRepository)
         {
             _fieldEntity = fieldEntity;
             _playerEntity = playerEntity;
-            _treasureEntity = treasureEntity;
             _eventPorts = eventPorts;
             _fieldRepository = fieldRepository;
         }
@@ -53,7 +51,7 @@ namespace GameOff2026.Game.Domain.UseCase
             return UniTask.Yield(token);
         }
 
-        private EventResultVO BuildEventResult(FieldType type)
+        private static EventResultVO BuildEventResult(FieldType type)
         {
             return new EventResultVO(
                 type,
