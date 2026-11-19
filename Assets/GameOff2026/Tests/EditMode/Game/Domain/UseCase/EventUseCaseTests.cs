@@ -45,7 +45,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _eventResultSubscriber = new FakeAsyncSubscriber<EventResultVO>();
             _eventResultPublisher = new FakeAsyncPublisher<EventResultVO>();
             var eventPorts = new EventPorts(_eventResultSubscriber, _eventResultPublisher);
-            _useCase = new EventUseCase(_fieldEntity, _playerEntity, _treasureEntity, eventPorts, repository);
+            _useCase = new EventUseCase(_fieldEntity, _playerEntity, eventPorts, repository);
         }
 
         [TearDown]
