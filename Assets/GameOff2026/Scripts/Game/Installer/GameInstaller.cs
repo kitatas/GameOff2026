@@ -62,6 +62,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<FinishUseCase>(Lifetime.Scoped);
             builder.Register<FloorUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
+            builder.Register<HudRootUseCase>(Lifetime.Scoped);
             builder.Register<InputUseCase>(Lifetime.Scoped);
             builder.Register<MoneyUseCase>(Lifetime.Scoped);
             builder.Register<MovementUseCase>(Lifetime.Scoped);
@@ -88,6 +89,7 @@ namespace GameOff2026.Game.Installer
                 entryPoints.Add<FinishPresenter>();
                 entryPoints.Add<FloorPresenter>();
                 entryPoints.Add<GameStatePresenter>();
+                entryPoints.Add<HudRootPresenter>();
                 entryPoints.Add<InputPresenter>();
                 entryPoints.Add<MoneyPresenter>();
                 entryPoints.Add<MovementPresenter>();
@@ -102,6 +104,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<FieldFacade>(Lifetime.Scoped);
             builder.Register<FinishFacade>(Lifetime.Scoped);
             builder.Register<FloorFacade>(Lifetime.Scoped);
+            builder.Register<HudRootFacade>(Lifetime.Scoped);
             builder.Register<InputFacade>(Lifetime.Scoped);
             builder.Register<MoneyFacade>(Lifetime.Scoped);
             builder.Register<MovementFacade>(Lifetime.Scoped);
@@ -117,6 +120,7 @@ namespace GameOff2026.Game.Installer
             builder.RegisterComponentInHierarchy<FailView>();
             builder.RegisterComponentInHierarchy<FieldView>();
             builder.RegisterComponentInHierarchy<FloorView>();
+            builder.RegisterComponentInHierarchy<HudRootView>();
             builder.RegisterComponentInHierarchy<MoneyView>();
             builder.RegisterComponentInHierarchy<MovementView>();
             builder.RegisterComponentInHierarchy<PlayerView>();
