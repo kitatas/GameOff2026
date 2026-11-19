@@ -13,15 +13,17 @@ namespace GameOff2026.Game.Presentation.State
         private readonly FloorUseCase _floorUseCase;
         private readonly HudRootUseCase _hudRootUseCase;
         private readonly MoneyUseCase _moneyUseCase;
+        private readonly TapScreenUseCase _tapScreenUseCase;
 
         public GameInitState(DateUseCase dateUseCase, DayUseCase dayUseCase, FloorUseCase floorUseCase,
-            HudRootUseCase hudRootUseCase, MoneyUseCase moneyUseCase)
+            HudRootUseCase hudRootUseCase, MoneyUseCase moneyUseCase, TapScreenUseCase tapScreenUseCase)
         {
             _dateUseCase = dateUseCase;
             _dayUseCase = dayUseCase;
             _floorUseCase = floorUseCase;
             _hudRootUseCase = hudRootUseCase;
             _moneyUseCase = moneyUseCase;
+            _tapScreenUseCase = tapScreenUseCase;
         }
 
         public override GameState state => GameState.Init;
@@ -41,20 +43,22 @@ namespace GameOff2026.Game.Presentation.State
 
             await (
                 _dateUseCase.InitAsync(token),
-                _hudRootUseCase.FadeAsync(Fade.Out, token)
+                _hudRootUseCase.FadeAsync(Fade.Out, token),
+                _tapScreenUseCase.FadeAsync(Fade.In, token)
             );
         }
 
-        public override UniTask<GameState> TickAsync(CancellationToken token)
+        public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
-            // TODO
-            return UniTask.FromResult(GameState.Return);
+            await _tapScreenUseCase.WaitForTapScreenAsync(token);
+            return GameState.Return;
         }
 
         public override async UniTask ExitAsync(CancellationToken token)
         {
             await (
-                _hudRootUseCase.FadeAsync(Fade.In, token)
+                _hudRootUseCase.FadeAsync(Fade.In, token),
+                _tapScreenUseCase.FadeAsync(Fade.Out, token)
             );
         }
     }
