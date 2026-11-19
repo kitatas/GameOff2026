@@ -218,4 +218,20 @@ namespace GameOff2026.Game.Application
             this.price = price;
         }
     }
+
+    public sealed class HudRootTransitionVO
+    {
+        public readonly TransitionVO transition;
+
+        public HudRootTransitionVO(TransitionVO transition)
+        {
+            this.transition = transition;
+        }
+
+        public static HudRootTransitionVO Create(Fade fade, float duration)
+        {
+            var transition = new TransitionVO(fade, duration);
+            return new HudRootTransitionVO(transition);
+        }
+    }
 }

@@ -53,4 +53,9 @@ namespace GameOff2026.Game.Application
     {
         public const float FADE_DURATION = 0.25f;
     }
+
+    public sealed class HudRootConfig
+    {
+        public const float FADE_DURATION = 0.25f;
+    }
 }
