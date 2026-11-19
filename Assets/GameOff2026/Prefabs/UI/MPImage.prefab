@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2111522704642716037}
   - component: {fileID: 7315940669954360764}
   - component: {fileID: 7953019212332052993}
+  - component: {fileID: 89070179876908382}
   m_Layer: 0
   m_Name: MPImage
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MPUIKit::MPUIKIT.MPImage
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -75,13 +76,13 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
-  m_DrawShape: 0
+  m_DrawShape: 3
   m_ImageType: 0
   m_MaterialMode: 0
   m_StrokeWidth: 0
   m_OutlineWidth: 0
   m_OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-  m_FalloffDistance: 0.5
+  m_FalloffDistance: 0
   m_ConstrainRotation: 1
   m_ShapeRotation: 0
   m_FlipHorizontal: 0
@@ -91,7 +92,7 @@ MonoBehaviour:
     m_UniformCornerRadius: 0
   m_Rectangle:
     m_CornerRadius: {x: 0, y: 0, z: 0, w: 0}
-    m_UniformCornerRadius: 0
+    m_UniformCornerRadius: 1
   m_ChamferBox:
     m_ChamferSize: 0
   m_Parallelogram:
@@ -156,3 +157,18 @@ MonoBehaviour:
     - {r: 0, g: 0, b: 0, a: 0}
     - {r: 0, g: 0, b: 0, a: 0}
     m_Rotation: 0
+--- !u!114 &89070179876908382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6227159758254357049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e1d633c6a85e040a3eeb66ccca5432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: uPalette::uPalette.Runtime.Core.Synchronizer.Color.GraphicColorSynchronizer
+  _entryId:
+    _value: 9dee98fd-8b56-491b-a75d-1ff41e917a01
+  _component: {fileID: 7953019212332052993}
