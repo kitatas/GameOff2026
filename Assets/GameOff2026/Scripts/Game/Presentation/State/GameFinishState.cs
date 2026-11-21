@@ -1,0 +1,16 @@
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using GameOff2026.Game.Application;
+
+namespace GameOff2026.Game.Presentation.State
+{
+    public sealed class GameFinishState : BaseGameState
+    {
+        public override GameState state => GameState.Finish;
+
+        public override UniTask<GameState> TickAsync(CancellationToken token)
+        {
+            return UniTask.FromResult(GameState.Init);
+        }
+    }
+}

@@ -11,6 +11,7 @@ namespace GameOff2026.Game.Application
         Fail = 6,
         Return = 7,
         Send = 8,
+        Finish = 9,
     }
 
     public enum InputType
