@@ -47,7 +47,7 @@ namespace GameOff2026.Game.Presentation.State
             await (
                 _movementUseCase.MoveAsync(direction, token)
             );
-            return GameState.Event;
+            return GameState.Wander;
         }
 
         private async UniTask<GameState> ExecShiftAsync(CancellationToken token)
@@ -56,8 +56,6 @@ namespace GameOff2026.Game.Presentation.State
             await (
                 _fieldUseCase.ShiftAsync(token)
             );
-
-            if (_dayUseCase.IsMaxDay()) return GameState.Clear;
 
             _dayUseCase.Dawn();
             return GameState.Input;

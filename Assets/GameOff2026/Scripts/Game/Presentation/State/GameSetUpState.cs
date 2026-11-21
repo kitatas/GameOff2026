@@ -19,7 +19,7 @@ namespace GameOff2026.Game.Presentation.State
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
             await _fieldUseCase.BuildFieldAsync(token);
-            return GameState.Input;
+            return GameState.Event;
         }
     }
 }
