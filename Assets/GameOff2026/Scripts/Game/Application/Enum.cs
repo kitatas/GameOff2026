@@ -71,4 +71,9 @@ namespace GameOff2026.Game.Application
         Clear = 1,
         Fail = 2,
     }
+
+    public enum GameModalType
+    {
+        None = 0,
+    }
 }

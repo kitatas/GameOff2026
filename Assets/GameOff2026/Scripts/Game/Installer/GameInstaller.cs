@@ -1,3 +1,4 @@
+using GameOff2026.Common.Utility;
 using GameOff2026.Game.Data.DataStore;
 using GameOff2026.Game.Data.Entity;
 using GameOff2026.Game.Domain.Ports;
@@ -8,6 +9,7 @@ using GameOff2026.Game.Presentation.Presenter;
 using GameOff2026.Game.Presentation.State;
 using GameOff2026.Game.Presentation.View;
 using GameOff2026.Game.Presentation.View.Button;
+using GameOff2026.Game.Presentation.View.Modal;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -32,6 +34,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<FieldEntity>(Lifetime.Scoped);
             builder.Register<FieldPatternEntity>(Lifetime.Scoped);
             builder.Register<FloorEntity>(Lifetime.Scoped);
+            builder.Register<GameModalEntity>(Lifetime.Scoped);
             builder.Register<GameStateEntity>(Lifetime.Scoped);
             builder.Register<MaxStaminaEntity>(Lifetime.Scoped);
             builder.Register<MoneyEntity>(Lifetime.Scoped);
@@ -44,6 +47,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<EventPorts>(Lifetime.Scoped);
             builder.Register<FieldPorts>(Lifetime.Scoped);
             builder.Register<FinishPorts>(Lifetime.Scoped);
+            builder.Register<GameModalPorts>(Lifetime.Scoped);
             builder.Register<GameStatePorts>(Lifetime.Scoped);
             builder.Register<HudRootPorts>(Lifetime.Scoped);
             builder.Register<MovementPorts>(Lifetime.Scoped);
@@ -62,6 +66,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<FieldUseCase>(Lifetime.Scoped);
             builder.Register<FinishUseCase>(Lifetime.Scoped);
             builder.Register<FloorUseCase>(Lifetime.Scoped);
+            builder.Register<GameModalUseCase>(Lifetime.Scoped);
             builder.Register<GameStateUseCase>(Lifetime.Scoped);
             builder.Register<HudRootUseCase>(Lifetime.Scoped);
             builder.Register<InputUseCase>(Lifetime.Scoped);
@@ -93,6 +98,7 @@ namespace GameOff2026.Game.Installer
                 entryPoints.Add<FieldPresenter>();
                 entryPoints.Add<FinishPresenter>();
                 entryPoints.Add<FloorPresenter>();
+                entryPoints.Add<GameModalPresenter>();
                 entryPoints.Add<GameStatePresenter>();
                 entryPoints.Add<HudRootPresenter>();
                 entryPoints.Add<InputPresenter>();
@@ -110,6 +116,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<FieldFacade>(Lifetime.Scoped);
             builder.Register<FinishFacade>(Lifetime.Scoped);
             builder.Register<FloorFacade>(Lifetime.Scoped);
+            builder.Register<GameModalFacade>(Lifetime.Scoped);
             builder.Register<HudRootFacade>(Lifetime.Scoped);
             builder.Register<InputFacade>(Lifetime.Scoped);
             builder.Register<MoneyFacade>(Lifetime.Scoped);
@@ -120,6 +127,8 @@ namespace GameOff2026.Game.Installer
             builder.Register<TreasureFacade>(Lifetime.Scoped);
 
             // View
+            builder.RegisterFindObjectsByType<GameModalButtonView>();
+            builder.RegisterFindObjectsByType<BaseGameModalView>();
             builder.RegisterComponentInHierarchy<ClearView>();
             builder.RegisterComponentInHierarchy<DateShiftButtonView>();
             builder.RegisterComponentInHierarchy<DateView>();

@@ -29,6 +29,7 @@ namespace GameOff2026.Common.Application
         public const string INVALID_FIELD_LENGTH = "INVALID_FIELD_LENGTH";
         public const string INVALID_FIELD_PATTERN = "INVALID_FIELD_PATTERN";
         public const string INVALID_FINISH = "INVALID_FINISH";
+        public const string INVALID_GAME_MODAL = "INVALID_GAME_MODAL";
         public const string INVALID_INPUT = "INVALID_INPUT";
         public const string INVALID_MODAL = "INVALID_MODAL";
         public const string INVALID_RENDER = "INVALID_RENDER";

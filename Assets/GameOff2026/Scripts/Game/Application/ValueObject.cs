@@ -250,4 +250,34 @@ namespace GameOff2026.Game.Application
             return new TapScreenTransitionVO(transition);
         }
     }
+    
+    public sealed class GameModalVO : BaseModalVO<GameModalType>
+    {
+        public GameModalVO(GameModalType type, Fade fade) : base(type, fade)
+        {
+            if (type is GameModalType.None)
+                throw new QuitExceptionVO(ExceptionConfig.INVALID_GAME_MODAL);
+        }
+    }
+
+    public sealed class GameModalTransitionVO : BaseModalTransitionVO<GameModalType>
+    {
+        public GameModalTransitionVO(GameModalType type, TransitionVO transition) : base(type, transition)
+        {
+            if (type is GameModalType.None)
+                throw new QuitExceptionVO(ExceptionConfig.INVALID_GAME_MODAL);
+        }
+
+        public static GameModalTransitionVO Create(GameModalType type, Fade fade, float duration)
+        {
+            var transition = new TransitionVO(fade, duration);
+            return new GameModalTransitionVO(type, transition);
+        }
+
+        public static GameModalTransitionVO Create(GameModalVO gameModal, float duration)
+        {
+            var transition = new TransitionVO(gameModal.fade, duration);
+            return new GameModalTransitionVO(gameModal.type, transition);
+        }
+    }
 }
