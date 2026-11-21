@@ -10,6 +10,7 @@ namespace GameOff2026.Game.Application
         Wander = 5,
         Fail = 6,
         Return = 7,
+        Send = 8,
     }
 
     public enum InputType
