@@ -2,6 +2,7 @@
     "name": "Common.Presentation.View",
     "rootNamespace": "",
     "references": [
+        "GUID:5866b7176a79446e997d71e22dc6d4bf",
         "GUID:671b35fac570649e2afb0048ad22bca6",
         "GUID:77221876cc6b8244180b96e320b1bcd4",
         "GUID:827f47054e407413e9663c748e13f0a6",

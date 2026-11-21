@@ -103,4 +103,31 @@ namespace GameOff2026.Common.Application
             this.exception = exception;
         }
     }
+
+    public abstract class BaseModalVO<T> where T : Enum
+    {
+        public readonly T type;
+        public readonly Fade fade;
+
+        protected BaseModalVO(T type, Fade fade)
+        {
+            if (fade is Fade.None)
+                throw new QuitExceptionVO(ExceptionConfig.INVALID_FADE);
+
+            this.type = type;
+            this.fade = fade;
+        }
+    }
+
+    public abstract class BaseModalTransitionVO<T> where T : Enum
+    {
+        public readonly T type;
+        public readonly TransitionVO transition;
+
+        protected BaseModalTransitionVO(T type, TransitionVO transition)
+        {
+            this.type = type;
+            this.transition = transition;
+        }
+    }
 }
