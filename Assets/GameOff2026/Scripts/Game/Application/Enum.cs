@@ -75,5 +75,6 @@ namespace GameOff2026.Game.Application
     public enum GameModalType
     {
         None = 0,
+        Menu = 1,
     }
 }
