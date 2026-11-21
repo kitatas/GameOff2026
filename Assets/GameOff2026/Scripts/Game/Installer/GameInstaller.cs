@@ -73,6 +73,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<TreasureUseCase>(Lifetime.Scoped);
 
             // State
+            builder.Register<BaseGameState, GameClearState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameEventState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameFailState>(Lifetime.Scoped);
             builder.Register<BaseGameState, GameFinishState>(Lifetime.Scoped);

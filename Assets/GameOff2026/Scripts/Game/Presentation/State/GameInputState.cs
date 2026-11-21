@@ -57,8 +57,7 @@ namespace GameOff2026.Game.Presentation.State
                 _fieldUseCase.ShiftAsync(token)
             );
 
-            // TODO: Finish
-            if (_dayUseCase.IsMaxDay()) return GameState.None;
+            if (_dayUseCase.IsMaxDay()) return GameState.Clear;
 
             _dayUseCase.Dawn();
             return GameState.Input;

@@ -12,6 +12,7 @@ namespace GameOff2026.Game.Application
         Return = 7,
         Send = 8,
         Finish = 9,
+        Clear = 10,
     }
 
     public enum InputType
