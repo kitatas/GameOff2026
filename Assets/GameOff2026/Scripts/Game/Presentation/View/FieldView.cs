@@ -13,7 +13,7 @@ namespace GameOff2026.Game.Presentation.View
             var sequence = DOTween.Sequence();
             for (int i = 0; i < squareViews.Length; i++)
             {
-                sequence.Join(squareViews[i].Render(squares[i].field.sprite));
+                sequence.Join(squareViews[i].Render(squares[i]));
             }
 
             return sequence;
