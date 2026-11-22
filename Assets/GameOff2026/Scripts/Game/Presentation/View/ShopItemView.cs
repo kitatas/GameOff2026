@@ -24,7 +24,9 @@ namespace GameOff2026.Game.Presentation.View
             price.text = ZString.Format("${0}", shop.shopItem.price);
             uniqLabel.SetActive(shop.shopItem.isUniq);
 
+            // 在庫があり、所持金が足りているか
             var canBuy = !shop.shopItem.isUniq || shop.purchasedItem.count == 0;
+            canBuy = canBuy && shop.isEnoughMoney;
             button.SetInteractable(canBuy);
         }
 

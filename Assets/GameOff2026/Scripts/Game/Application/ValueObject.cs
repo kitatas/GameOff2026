@@ -315,11 +315,13 @@ namespace GameOff2026.Game.Application
     {
         public readonly ShopItemVO shopItem;
         public readonly PurchasedItemVO purchasedItem;
+        public readonly bool isEnoughMoney;
 
-        public ShopVO(ShopItemVO shopItem, PurchasedItemVO purchasedItem)
+        public ShopVO(ShopItemVO shopItem, PurchasedItemVO purchasedItem, bool isEnoughMoney)
         {
             this.shopItem = shopItem;
             this.purchasedItem = purchasedItem;
+            this.isEnoughMoney = isEnoughMoney;
         }
     }
 }

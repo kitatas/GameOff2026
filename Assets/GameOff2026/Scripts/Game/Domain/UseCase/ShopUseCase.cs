@@ -11,13 +11,15 @@ namespace GameOff2026.Game.Domain.UseCase
 {
     public sealed class ShopUseCase
     {
+        private readonly MoneyEntity _moneyEntity;
         private readonly PurchasedItemEntity _purchasedItemEntity;
         private readonly ShopPorts _shopPorts;
         private readonly ShopItemRepository _shopItemRepository;
 
-        public ShopUseCase(PurchasedItemEntity purchasedItemEntity, ShopPorts shopPorts,
+        public ShopUseCase(MoneyEntity moneyEntity, PurchasedItemEntity purchasedItemEntity, ShopPorts shopPorts,
             ShopItemRepository shopItemRepository)
         {
+            _moneyEntity = moneyEntity;
             _purchasedItemEntity = purchasedItemEntity;
             _shopPorts = shopPorts;
             _shopItemRepository = shopItemRepository;
@@ -29,7 +31,7 @@ namespace GameOff2026.Game.Domain.UseCase
         {
             var vos = _shopItemRepository.GetAll()
                 .AsValueEnumerable()
-                .Select(x => new ShopVO(x, _purchasedItemEntity.Get(x.id)))
+                .Select(x => new ShopVO(x, _purchasedItemEntity.Get(x.id), _moneyEntity.IsEnough(x.price)))
                 .ToArray();
 
             return _shopPorts.PublishShopsAsync(vos, token);
