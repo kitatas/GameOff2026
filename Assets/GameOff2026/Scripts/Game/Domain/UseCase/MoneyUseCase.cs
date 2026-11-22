@@ -29,6 +29,12 @@ namespace GameOff2026.Game.Domain.UseCase
             _money.Value = _moneyEntity.value;
         }
 
+        public void Pay(int value)
+        {
+            _moneyEntity.Subtract(value);
+            _money.Value = _moneyEntity.value;
+        }
+
         void IDisposable.Dispose()
         {
             _money?.Dispose();

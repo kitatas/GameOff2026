@@ -6,6 +6,7 @@ namespace GameOff2026.Game.Data.Entity
     {
         public void Add(int x) => Set(value + x);
         public void Reset() => Set(0);
+        public void Subtract(int x) => Set(value - x);
         public bool IsEnough(int x) => value >= x;
     }
 }

@@ -37,9 +37,10 @@ namespace GameOff2026.Game.Domain.UseCase
             return _shopPorts.PublishShopsAsync(vos, token);
         }
 
-        public void Buy(int id)
+        public ShopItemVO Buy(int id)
         {
             _purchasedItemEntity.Add(id);
+            return _shopItemRepository.Find(id);
         }
     }
 }

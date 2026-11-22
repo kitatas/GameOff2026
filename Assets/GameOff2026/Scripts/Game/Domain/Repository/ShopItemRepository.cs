@@ -1,3 +1,4 @@
+using GameOff2026.Common.Application;
 using GameOff2026.Game.Application;
 using GameOff2026.Game.Data.DataStore;
 using GameOff2026.Game.Data.DataStore.Tables;
@@ -12,6 +13,13 @@ namespace GameOff2026.Game.Domain.Repository
         public ShopItemRepository(MemoryDatabase memoryDatabase)
         {
             _shopItemMasterTable = memoryDatabase.ShopItemMasterTable;
+        }
+
+        public ShopItemVO Find(int id)
+        {
+            return _shopItemMasterTable.TryFindById(id, out var master)
+                ? master.ToVO()
+                : throw new QuitExceptionVO(ExceptionConfig.NOT_FOUND_SHOP_ITEM);
         }
 
         public ShopItemVO[] GetAll()

@@ -9,12 +9,14 @@ namespace GameOff2026.Game.Presentation.Presenter
 {
     public sealed class ShopPresenter : IStartable, IDisposable
     {
+        private readonly MoneyUseCase _moneyUseCase;
         private readonly ShopUseCase _shopUseCase;
         private readonly ShopFacade _shopFacade;
         private readonly CompositeDisposable _disposable;
 
-        public ShopPresenter(ShopUseCase shopUseCase, ShopFacade shopFacade)
+        public ShopPresenter(MoneyUseCase moneyUseCase, ShopUseCase shopUseCase, ShopFacade shopFacade)
         {
+            _moneyUseCase = moneyUseCase;
             _shopUseCase = shopUseCase;
             _shopFacade = shopFacade;
             _disposable = new CompositeDisposable();
@@ -27,7 +29,11 @@ namespace GameOff2026.Game.Presentation.Presenter
                 .AddTo(_disposable);
 
             _shopFacade.OnClickBuyAsObservable()
-                .Subscribe(_shopUseCase.Buy)
+                .Subscribe(x =>
+                {
+                    var shopItem = _shopUseCase.Buy(x);
+                    _moneyUseCase.Pay(shopItem.price);
+                })
                 .AddTo(_disposable);
         }
 
