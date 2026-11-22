@@ -73,12 +73,12 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             {
                 _enemyEntity.Set(date, i, enemySquares[i]);
                 _fieldEntity.Add(new FieldSquareVO(enemySquares[i],
-                    new FieldVO(enemyType, TestSpriteFactory.Valid, 1.0f)));
+                    new FieldVO(enemyType, TestSpriteFactory.Valid, 1.0f), Direction.None));
             }
 
             var routeSquare = new SquareVO(2, 1);
             _fieldEntity.Add(new FieldSquareVO(routeSquare,
-                new FieldVO(FieldType.EnemyRouteActive, TestSpriteFactory.Valid, 1.0f)));
+                new FieldVO(FieldType.EnemyRouteActive, TestSpriteFactory.Valid, 1.0f), Direction.None));
 
             _useCase.Wander();
 
@@ -88,6 +88,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             Assert.AreSame(enemySquares[3], _enemyEntity.Get(date)[3]);
             Assert.AreEqual(enemyType, _fieldEntity.Find(routeSquare).fieldSquare.field.type);
             Assert.AreEqual(FieldType.EnemyRouteActive, _fieldEntity.Find(enemySquares[0]).fieldSquare.field.type);
+            Assert.AreEqual(Direction.Right, _fieldEntity.Find(routeSquare).fieldSquare.direction);
+            Assert.AreEqual(Direction.None, _fieldEntity.Find(enemySquares[0]).fieldSquare.direction);
         }
 
         [Test]
@@ -98,9 +100,9 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             var inactiveRouteSquare = new SquareVO(2, 1);
             _enemyEntity.Set(DateType.Day, 0, enemySquare);
             _fieldEntity.Add(new FieldSquareVO(enemySquare,
-                new FieldVO(FieldType.EnemyDay, TestSpriteFactory.Valid, 1.0f)));
+                new FieldVO(FieldType.EnemyDay, TestSpriteFactory.Valid, 1.0f), Direction.None));
             _fieldEntity.Add(new FieldSquareVO(inactiveRouteSquare,
-                new FieldVO(FieldType.EnemyRouteDeactive, TestSpriteFactory.Valid, 1.0f)));
+                new FieldVO(FieldType.EnemyRouteDeactive, TestSpriteFactory.Valid, 1.0f), Direction.None));
 
             _useCase.Wander();
 

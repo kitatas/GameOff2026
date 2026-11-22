@@ -52,11 +52,12 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             var replacementField = new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f);
             entity.Add(originalFieldSquare);
 
-            entity.SetField(0, replacementField);
+            entity.SetField(0, replacementField, Direction.Right);
 
             Assert.AreEqual(1, entity.fieldSquares.Length);
             Assert.AreSame(originalFieldSquare.square, entity.fieldSquares[0].square);
             Assert.AreSame(replacementField, entity.fieldSquares[0].field);
+            Assert.AreEqual(Direction.Right, entity.fieldSquares[0].direction);
         }
 
         [Test]
@@ -65,7 +66,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             var entity = new FieldEntity();
 
             Assert.Throws<QuitExceptionVO>(() =>
-                entity.SetField(0, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f)));
+                entity.SetField(0, new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f), Direction.None));
         }
 
         [Test]
@@ -162,6 +163,29 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             entity.Clear();
 
             Assert.AreEqual(0, entity.GetCount(FieldType.Treasure));
+        }
+
+        [Test]
+        public void OverwriteDirection_AllFieldSquares_UpdatesDirectionAndPreservesSquareAndField()
+        {
+            var entity = new FieldEntity();
+            var firstSquare = new SquareVO(1, 1);
+            var secondSquare = new SquareVO(2, 1);
+            var firstField = new FieldVO(FieldType.Empty, TestSpriteFactory.Valid, 1.0f);
+            var secondField = new FieldVO(FieldType.Treasure, TestSpriteFactory.Valid, 1.0f);
+            entity.Add(new FieldSquareVO(firstSquare, firstField, Direction.Left));
+            entity.Add(new FieldSquareVO(secondSquare, secondField, Direction.Right));
+
+            entity.OverwriteDirection(Direction.Up);
+
+            var squares = entity.fieldSquares;
+            Assert.AreEqual(2, squares.Length);
+            Assert.AreSame(firstSquare, squares[0].square);
+            Assert.AreSame(firstField, squares[0].field);
+            Assert.AreEqual(Direction.Up, squares[0].direction);
+            Assert.AreSame(secondSquare, squares[1].square);
+            Assert.AreSame(secondField, squares[1].field);
+            Assert.AreEqual(Direction.Up, squares[1].direction);
         }
     }
 }

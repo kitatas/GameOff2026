@@ -94,7 +94,14 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             Assert.AreEqual(squares.Length, renderMessage.squares.Length);
             for (var i = 0; i < squares.Length; i++)
             {
-                Assert.AreSame(squares[i], renderMessage.squares[i]);
+                Assert.AreEqual(squares[i].square.file, renderMessage.squares[i].square.file,
+                    $"Rendered file mismatch at index {i}.");
+                Assert.AreEqual(squares[i].square.rank, renderMessage.squares[i].square.rank,
+                    $"Rendered rank mismatch at index {i}.");
+                Assert.AreSame(squares[i].field, renderMessage.squares[i].field,
+                    $"Rendered field mismatch at index {i}.");
+                Assert.AreEqual(squares[i].direction, renderMessage.squares[i].direction,
+                    $"Rendered direction mismatch at index {i}.");
             }
 
             for (var i = 0; i < FieldConfig.MAX_FILE * FieldConfig.MAX_RANK; i++)
@@ -114,9 +121,9 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             var routeSquare = new SquareVO(1, 1);
             var nightEnemySquare = new SquareVO(2, 1);
             _fieldEntity.Add(new FieldSquareVO(routeSquare,
-                new FieldVO(FieldType.EnemyRouteActive, TestSpriteFactory.Valid, 1.0f)));
+                new FieldVO(FieldType.EnemyRouteActive, TestSpriteFactory.Valid, 1.0f), Direction.None));
             _fieldEntity.Add(new FieldSquareVO(nightEnemySquare,
-                new FieldVO(FieldType.EnemyRouteDeactive, TestSpriteFactory.Valid, 1.0f)));
+                new FieldVO(FieldType.EnemyRouteDeactive, TestSpriteFactory.Valid, 1.0f), Direction.None));
             _enemyEntity.Set(DateType.Night, 0, nightEnemySquare);
             using var source = new CancellationTokenSource();
 
@@ -126,6 +133,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 _fieldEntity.Find(routeSquare).fieldSquare.field.type);
             Assert.AreEqual(FieldType.EnemyRouteDeactive,
                 _fieldEntity.Find(nightEnemySquare).fieldSquare.field.type);
+            Assert.AreEqual(Direction.None, _fieldEntity.Find(routeSquare).fieldSquare.direction);
+            Assert.AreEqual(Direction.None, _fieldEntity.Find(nightEnemySquare).fieldSquare.direction);
             Assert.AreEqual(1, _publisher.PublishCount);
             Assert.AreEqual(source.Token, _publisher.tokens[0]);
             Assert.AreEqual(RenderType.Refresh, _publisher.LastPublished.type);
@@ -138,9 +147,9 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             var routeSquare = new SquareVO(1, 1);
             var nightEnemySquare = new SquareVO(2, 1);
             _fieldEntity.Add(new FieldSquareVO(routeSquare,
-                new FieldVO(FieldType.EnemyRouteDeactive, TestSpriteFactory.Valid, 1.0f)));
+                new FieldVO(FieldType.EnemyRouteDeactive, TestSpriteFactory.Valid, 1.0f), Direction.None));
             _fieldEntity.Add(new FieldSquareVO(nightEnemySquare,
-                new FieldVO(FieldType.EnemyRouteActive, TestSpriteFactory.Valid, 1.0f)));
+                new FieldVO(FieldType.EnemyRouteActive, TestSpriteFactory.Valid, 1.0f), Direction.None));
             _enemyEntity.Set(DateType.Night, 0, nightEnemySquare);
             using var source = new CancellationTokenSource();
 
@@ -150,6 +159,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 _fieldEntity.Find(routeSquare).fieldSquare.field.type);
             Assert.AreEqual(FieldType.EnemyNight,
                 _fieldEntity.Find(nightEnemySquare).fieldSquare.field.type);
+            Assert.AreEqual(Direction.None, _fieldEntity.Find(routeSquare).fieldSquare.direction);
+            Assert.AreEqual(Direction.None, _fieldEntity.Find(nightEnemySquare).fieldSquare.direction);
             Assert.AreEqual(1, _publisher.PublishCount);
             Assert.AreEqual(source.Token, _publisher.tokens[0]);
             Assert.AreEqual(RenderType.Refresh, _publisher.LastPublished.type);
