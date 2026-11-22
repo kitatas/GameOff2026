@@ -35,6 +35,14 @@ namespace GameOff2026.Game.Domain.UseCase
             }
         }
 
+        public bool IsFirstTime()
+        {
+            return
+                _dateEntity.value is DateType.Day &&
+                _dayEntity.value == 1;
+        }
+
+
         public bool IsMaxDay()
         {
             return
