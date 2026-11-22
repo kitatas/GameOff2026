@@ -1,0 +1,22 @@
+using System.Collections.Generic;
+using GameOff2026.Game.Application;
+
+namespace GameOff2026.Game.Data.Entity
+{
+    public sealed class PurchasedItemEntity
+    {
+        private readonly Dictionary<int, PurchasedItemVO> _purchasedItemMap;
+
+        public PurchasedItemEntity()
+        {
+            _purchasedItemMap = new Dictionary<int, PurchasedItemVO>();
+        }
+
+        public PurchasedItemVO Get(int id)
+        {
+            return _purchasedItemMap.TryGetValue(id, out var purchasedItemVO)
+                ? purchasedItemVO
+                : new PurchasedItemVO(id, 0);
+        }
+    }
+}

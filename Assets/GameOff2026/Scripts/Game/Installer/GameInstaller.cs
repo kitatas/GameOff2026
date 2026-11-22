@@ -39,6 +39,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<MaxStaminaEntity>(Lifetime.Scoped);
             builder.Register<MoneyEntity>(Lifetime.Scoped);
             builder.Register<PlayerEntity>(Lifetime.Scoped);
+            builder.Register<PurchasedItemEntity>(Lifetime.Scoped);
             builder.Register<StaminaEntity>(Lifetime.Scoped);
             builder.Register<TreasureEntity>(Lifetime.Scoped);
 
@@ -51,11 +52,13 @@ namespace GameOff2026.Game.Installer
             builder.Register<GameStatePorts>(Lifetime.Scoped);
             builder.Register<HudRootPorts>(Lifetime.Scoped);
             builder.Register<MovementPorts>(Lifetime.Scoped);
+            builder.Register<ShopPorts>(Lifetime.Scoped);
             builder.Register<TapScreenPorts>(Lifetime.Scoped);
 
             // Repository
             builder.Register<FieldPatternRepository>(Lifetime.Scoped);
             builder.Register<FieldRepository>(Lifetime.Scoped);
+            builder.Register<ShopItemRepository>(Lifetime.Scoped);
             builder.Register<TreasurePriceRepository>(Lifetime.Scoped);
 
             // UseCase

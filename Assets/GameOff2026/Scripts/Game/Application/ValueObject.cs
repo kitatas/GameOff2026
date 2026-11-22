@@ -298,4 +298,28 @@ namespace GameOff2026.Game.Application
             this.isUniq = isUniq;
         }
     }
+
+    public sealed class PurchasedItemVO
+    {
+        public readonly int id;
+        public readonly int count;
+
+        public PurchasedItemVO(int id, int count)
+        {
+            this.id = id;
+            this.count = count;
+        }
+    }
+
+    public sealed class ShopVO
+    {
+        public readonly ShopItemVO shopItem;
+        public readonly PurchasedItemVO purchasedItem;
+
+        public ShopVO(ShopItemVO shopItem, PurchasedItemVO purchasedItem)
+        {
+            this.shopItem = shopItem;
+            this.purchasedItem = purchasedItem;
+        }
+    }
 }
