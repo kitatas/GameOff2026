@@ -75,5 +75,13 @@ namespace GameOff2026.Game.Data.Entity
                 .AsValueEnumerable()
                 .Count(x => x.field.type == type);
         }
+
+        public void OverwriteDirection(Direction direction)
+        {
+            for (int i = 0; i < _fieldSquares.Count; i++)
+            {
+                _fieldSquares[i] = new FieldSquareVO(_fieldSquares[i].square, _fieldSquares[i].field, direction);
+            }
+        }
     }
 }

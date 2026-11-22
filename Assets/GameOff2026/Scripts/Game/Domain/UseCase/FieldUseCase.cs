@@ -116,10 +116,11 @@ namespace GameOff2026.Game.Domain.UseCase
             return _fieldEntity.GetCount(FieldType.Treasure) == 0;
         }
 
-        public UniTask PublishRenderAsync(CancellationToken token)
+        public async UniTask PublishRenderAsync(CancellationToken token)
         {
             var renderFieldSquare = new RenderFieldSquareVO(RenderType.Refresh, _fieldEntity.fieldSquares);
-            return _fieldPorts.PublishRenderFieldSquareAsync(renderFieldSquare, token);
+            await _fieldPorts.PublishRenderFieldSquareAsync(renderFieldSquare, token);
+            _fieldEntity.OverwriteDirection(Direction.None);
         }
     }
 }
