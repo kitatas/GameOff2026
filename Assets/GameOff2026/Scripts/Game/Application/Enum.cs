@@ -13,6 +13,7 @@ namespace GameOff2026.Game.Application
         Send = 8,
         Finish = 9,
         Clear = 10,
+        Shop = 11,
     }
 
     public enum InputType
