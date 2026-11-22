@@ -54,7 +54,7 @@ namespace GameOff2026.Game.Domain.UseCase
 
                 var type = fieldSquare.field.type.ShiftRoute();
                 var field = _fieldRepository.Find(type);
-                _fieldEntity.SetField(i, field);
+                _fieldEntity.SetField(i, field, Direction.None);
             }
 
             var enemies = _enemyEntity.Get(DateType.Night);
@@ -71,7 +71,7 @@ namespace GameOff2026.Game.Domain.UseCase
 
                 var (_, index) = _fieldEntity.Find(enemySquare);
                 var field = _fieldRepository.Find(type);
-                _fieldEntity.SetField(index, field);
+                _fieldEntity.SetField(index, field, Direction.None);
             }
 
             return PublishRenderAsync(token);

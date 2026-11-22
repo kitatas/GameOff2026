@@ -20,11 +20,11 @@ namespace GameOff2026.Game.Data.Entity
             _fieldSquares.Clear();
         }
 
-        public void SetField(int index, FieldVO field)
+        public void SetField(int index, FieldVO field, Direction direction)
         {
             if (_fieldSquares.TryGetValue(index, out var fieldSquare))
             {
-                _fieldSquares[index] = new FieldSquareVO(fieldSquare.square, field);
+                _fieldSquares[index] = new FieldSquareVO(fieldSquare.square, field, direction);
             }
             else
             {

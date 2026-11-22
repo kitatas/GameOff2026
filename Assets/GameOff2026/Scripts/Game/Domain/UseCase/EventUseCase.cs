@@ -47,7 +47,7 @@ namespace GameOff2026.Game.Domain.UseCase
 
         private UniTask OverrideFieldSquareAsync(int index, FieldType type, CancellationToken token)
         {
-            _fieldEntity.SetField(index, _fieldRepository.Find(type));
+            _fieldEntity.SetField(index, _fieldRepository.Find(type), Direction.None);
             return UniTask.Yield(token);
         }
 

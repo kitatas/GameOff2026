@@ -56,16 +56,18 @@ namespace GameOff2026.Game.Application
     {
         public readonly SquareVO square;
         public readonly FieldVO field;
+        public readonly Direction direction;
 
-        public FieldSquareVO(SquareVO square, FieldVO field)
+        public FieldSquareVO(SquareVO square, FieldVO field, Direction direction)
         {
             this.square = square;
             this.field = field;
+            this.direction = direction;
         }
 
         public static FieldSquareVO Create(int file, int rank, FieldVO field)
         {
-            return new FieldSquareVO(new SquareVO(file, rank), field);
+            return new FieldSquareVO(new SquareVO(file, rank), field, Direction.None);
         }
     }
 

@@ -40,18 +40,28 @@ namespace GameOff2026.Game.Domain.UseCase
                 // Route to Enemy
                 var square = routeSquares.GetRandom();
                 _enemyEntity.Set(_dateEntity.value, i, square);
-                Replace(square, _dateEntity.value.ToEnemy());
+                Replace(square, _dateEntity.value.ToEnemy(), CalcDirection(square, enemySquare));
 
                 // Enemy to Route
-                Replace(enemySquare, FieldType.EnemyRouteActive);
+                Replace(enemySquare, FieldType.EnemyRouteActive, Direction.None);
             }
         }
 
-        private void Replace(SquareVO square, FieldType type)
+        private void Replace(SquareVO square, FieldType type, Direction direction)
         {
             var (fieldSquare, index) = _fieldEntity.Find(square);
             var field = _fieldRepository.Find(type);
-            _fieldEntity.SetField(index, field);
+            _fieldEntity.SetField(index, field, direction);
+        }
+
+        private static Direction CalcDirection(SquareVO square, SquareVO enemySquare)
+        {
+            var dir = new SquareVO(square.file - enemySquare.file, square.rank - enemySquare.rank);
+            if (dir.IsEqual(Direction.Up.ToSquareVO())) return Direction.Up;
+            if (dir.IsEqual(Direction.Down.ToSquareVO())) return Direction.Down;
+            if (dir.IsEqual(Direction.Left.ToSquareVO())) return Direction.Left;
+            if (dir.IsEqual(Direction.Right.ToSquareVO())) return Direction.Right;
+            return Direction.None;
         }
     }
 }
