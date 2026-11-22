@@ -2,6 +2,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using GameOff2026.Game.Application;
 using GameOff2026.Game.Presentation.View;
+using R3;
 
 namespace GameOff2026.Game.Presentation.Facade
 {
@@ -18,6 +19,11 @@ namespace GameOff2026.Game.Presentation.Facade
         {
             _shopView.Render(shops);
             return UniTask.Yield(token);
+        }
+
+        public Observable<int> OnClickBuyAsObservable()
+        {
+            return _shopView.OnClickAnyBuyAsObservable();
         }
     }
 }

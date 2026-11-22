@@ -18,5 +18,17 @@ namespace GameOff2026.Game.Data.Entity
                 ? purchasedItemVO
                 : new PurchasedItemVO(id, 0);
         }
+
+        public void Add(int id)
+        {
+            if (_purchasedItemMap.TryGetValue(id, out var item))
+            {
+                _purchasedItemMap[id] = new PurchasedItemVO(id, item.count + 1);
+            }
+            else
+            {
+                _purchasedItemMap[id] = new PurchasedItemVO(id, 1);
+            }
+        }
     }
 }

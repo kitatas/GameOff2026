@@ -1,4 +1,6 @@
+using System.Linq;
 using GameOff2026.Game.Application;
+using R3;
 using UnityEngine;
 
 namespace GameOff2026.Game.Presentation.View
@@ -13,6 +15,13 @@ namespace GameOff2026.Game.Presentation.View
             {
                 shopItemViews[i].Render(shops[i]);
             }
+        }
+
+        public Observable<int> OnClickAnyBuyAsObservable()
+        {
+            return shopItemViews
+                .Select(x => x.OnClickBuyAsObservable())
+                .Merge();
         }
     }
 }

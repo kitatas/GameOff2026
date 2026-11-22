@@ -25,6 +25,10 @@ namespace GameOff2026.Game.Presentation.Presenter
             _shopUseCase.shops
                 .Subscribe(_shopFacade.RenderAsync)
                 .AddTo(_disposable);
+
+            _shopFacade.OnClickBuyAsObservable()
+                .Subscribe(_shopUseCase.Buy)
+                .AddTo(_disposable);
         }
 
         void IDisposable.Dispose()
