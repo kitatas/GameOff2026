@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using GameOff2026.Game.Domain.UseCase;
 using GameOff2026.Game.Presentation.Facade;
 using MessagePipe;
@@ -12,6 +14,7 @@ namespace GameOff2026.Game.Presentation.Presenter
         private readonly MoneyUseCase _moneyUseCase;
         private readonly ShopUseCase _shopUseCase;
         private readonly ShopFacade _shopFacade;
+        private readonly CancellationTokenSource _tokenSource;
         private readonly CompositeDisposable _disposable;
 
         public ShopPresenter(MoneyUseCase moneyUseCase, ShopUseCase shopUseCase, ShopFacade shopFacade)
@@ -19,6 +22,7 @@ namespace GameOff2026.Game.Presentation.Presenter
             _moneyUseCase = moneyUseCase;
             _shopUseCase = shopUseCase;
             _shopFacade = shopFacade;
+            _tokenSource = new CancellationTokenSource();
             _disposable = new CompositeDisposable();
         }
 
@@ -33,12 +37,15 @@ namespace GameOff2026.Game.Presentation.Presenter
                 {
                     var shopItem = _shopUseCase.Buy(x);
                     _moneyUseCase.Pay(shopItem.price);
+                    _shopUseCase.PublishShopsAsync(_tokenSource.Token).Forget();
                 })
                 .AddTo(_disposable);
         }
 
         void IDisposable.Dispose()
         {
+            _tokenSource?.Cancel();
+            _tokenSource?.Dispose();
             _disposable?.Dispose();
         }
     }
