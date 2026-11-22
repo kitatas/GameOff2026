@@ -20,7 +20,7 @@ namespace GameOff2026.Common.Presentation.View.Modal
             FadeOut(0.0f);
         }
 
-        public Tween FadeIn(float duration)
+        public virtual Tween FadeIn(float duration)
         {
             _tween?.Kill();
             PreFadeIn();
@@ -36,7 +36,7 @@ namespace GameOff2026.Common.Presentation.View.Modal
                 .SetLink(gameObject);
         }
 
-        public Tween FadeOut(float duration)
+        public virtual Tween FadeOut(float duration)
         {
             _tween?.Kill();
             PreFadeOut();

@@ -10,6 +10,8 @@ namespace GameOff2026.Common.Presentation.View.Button
         public Observable<Unit> click => button
             .OnClickAsObservable();
 
+        public UnityEngine.UI.Button.ButtonClickedEvent onClick => button.onClick;
+
         public bool isInitialized { get; private set; } = false;
 
         public void Init()

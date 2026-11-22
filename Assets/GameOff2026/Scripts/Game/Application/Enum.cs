@@ -77,5 +77,6 @@ namespace GameOff2026.Game.Application
     {
         None = 0,
         Menu = 1,
+        Shop = 2,
     }
 }
