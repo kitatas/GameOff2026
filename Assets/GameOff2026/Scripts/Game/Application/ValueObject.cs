@@ -250,7 +250,7 @@ namespace GameOff2026.Game.Application
             return new TapScreenTransitionVO(transition);
         }
     }
-    
+
     public sealed class GameModalVO : BaseModalVO<GameModalType>
     {
         public GameModalVO(GameModalType type, Fade fade) : base(type, fade)
@@ -278,6 +278,24 @@ namespace GameOff2026.Game.Application
         {
             var transition = new TransitionVO(gameModal.fade, duration);
             return new GameModalTransitionVO(gameModal.type, transition);
+        }
+    }
+
+    public sealed class ShopItemVO
+    {
+        public readonly int id;
+        public readonly string name;
+        public readonly string description;
+        public readonly int price;
+        public readonly bool isUniq;
+
+        public ShopItemVO(int id, string name, string description, int price, bool isUniq)
+        {
+            this.id = id;
+            this.name = name;
+            this.description = description;
+            this.price = price;
+            this.isUniq = isUniq;
         }
     }
 }
