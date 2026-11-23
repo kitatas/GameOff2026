@@ -32,8 +32,8 @@ namespace GameOff2026.Game.Presentation.Presenter
                 {
                     _treasureUseCase.Add(x.treasureNum);
 
-                    var treasurePrice = _floorUseCase.GetTreasurePrice();
-                    _moneyUseCase.Add(treasurePrice.price * x.treasureNum);
+                    var price = _floorUseCase.GetTreasurePrice();
+                    _moneyUseCase.Add(price * x.treasureNum);
 
                     return UniTask.CompletedTask;
                 }, x => x.treasureNum > 0)
