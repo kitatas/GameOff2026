@@ -7,10 +7,12 @@ namespace GameOff2026.Game.Domain.UseCase
     public sealed class ItemUseCase
     {
         private readonly MaxStaminaEntity _maxStaminaEntity;
+        private readonly PriceRateEntity _priceRateEntity;
 
-        public ItemUseCase(MaxStaminaEntity maxStaminaEntity)
+        public ItemUseCase(MaxStaminaEntity maxStaminaEntity, PriceRateEntity priceRateEntity)
         {
             _maxStaminaEntity = maxStaminaEntity;
+            _priceRateEntity = priceRateEntity;
         }
 
         public void ApplyEffect(ShopItemVO shopItem)
@@ -19,6 +21,9 @@ namespace GameOff2026.Game.Domain.UseCase
             {
                 case ShopItemId.MaxStamina:
                     _maxStaminaEntity.Add(shopItem.effectValue);
+                    break;
+                case ShopItemId.TreasurePriceRate:
+                    _priceRateEntity.Add(shopItem.effectValue);
                     break;
                 default:
                     throw new QuitExceptionVO(ExceptionConfig.INVALID_SHOP_ITEM_ID);
