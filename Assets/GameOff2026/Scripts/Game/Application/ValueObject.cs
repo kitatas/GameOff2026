@@ -290,14 +290,16 @@ namespace GameOff2026.Game.Application
         public readonly string description;
         public readonly int price;
         public readonly bool isUniq;
+        public readonly int effectValue;
 
-        public ShopItemVO(int id, string name, string description, int price, bool isUniq)
+        public ShopItemVO(int id, string name, string description, int price, bool isUniq, int effectValue)
         {
             this.id = id;
             this.name = name;
             this.description = description;
             this.price = price;
             this.isUniq = isUniq;
+            this.effectValue = effectValue;
         }
     }
 

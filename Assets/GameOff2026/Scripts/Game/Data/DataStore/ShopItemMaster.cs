@@ -12,16 +12,18 @@ namespace GameOff2026.Game.Data.DataStore
         public string Description { get; }
         public int Price { get; }
         public bool IsUniq { get; }
+        public int EffectValue { get; }
 
-        public ShopItemMaster(int id, string name, string description, int price, bool isUniq)
+        public ShopItemMaster(int id, string name, string description, int price, bool isUniq, int effectValue)
         {
             Id = id;
             Name = name;
             Description = description;
             Price = price;
             IsUniq = isUniq;
+            EffectValue = effectValue;
         }
 
-        public ShopItemVO ToVO() => new(Id, Name, Description, Price, IsUniq);
+        public ShopItemVO ToVO() => new(Id, Name, Description, Price, IsUniq, EffectValue);
     }
 }
