@@ -20,6 +20,13 @@ namespace GameOff2026.Game.Application
                 : throw new QuitExceptionVO(ExceptionConfig.INVALID_FIELD);
         }
 
+        public static ShopItemId ToShopItemId(this int self)
+        {
+            return FastEnum.IsDefined<ShopItemId>(self)
+                ? (ShopItemId)self
+                : throw new QuitExceptionVO(ExceptionConfig.INVALID_SHOP_ITEM_ID);
+        }
+
         public static Vector2Int ToVector2(this Direction self)
         {
             return self switch

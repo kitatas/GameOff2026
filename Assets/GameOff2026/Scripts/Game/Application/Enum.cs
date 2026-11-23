@@ -79,4 +79,10 @@ namespace GameOff2026.Game.Application
         Menu = 1,
         Shop = 2,
     }
+
+    public enum ShopItemId
+    {
+        None = 0,
+        MaxStamina = 1,
+    }
 }

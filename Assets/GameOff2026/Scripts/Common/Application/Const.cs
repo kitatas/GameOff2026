@@ -34,6 +34,7 @@ namespace GameOff2026.Common.Application
         public const string INVALID_MODAL = "INVALID_MODAL";
         public const string INVALID_RENDER = "INVALID_RENDER";
         public const string INVALID_ROTATION = "INVALID_ROTATION";
+        public const string INVALID_SHOP_ITEM_ID = "INVALID_SHOP_ITEM_ID";
         public const string INVALID_WEIGHT = "INVALID_WEIGHT";
         public const string NOT_FOUND_DIRECTION = "NOT_FOUND_DIRECTION";
         public const string NOT_FOUND_LOAD = "NOT_FOUND_LOAD";

@@ -4,5 +4,6 @@ namespace GameOff2026.Game.Data.Entity
 {
     public sealed class MaxStaminaEntity : BaseEntity<int>
     {
+        public void Add(int x) => Set(value + x);
     }
 }
