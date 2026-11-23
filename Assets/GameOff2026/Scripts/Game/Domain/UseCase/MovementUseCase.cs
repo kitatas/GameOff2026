@@ -29,6 +29,13 @@ namespace GameOff2026.Game.Domain.UseCase
 
         public IAsyncSubscriber<MovableDirectionVO[]> movableDirections => _movementPorts.movableDirectionsSubscriber;
 
+        public UniTask SetUpAsync(CancellationToken token)
+        {
+            _playerEntity.SetSquare(new SquareVO(FieldConfig.MIN_FILE, FieldConfig.MAX_RANK));
+            var move = new MovementVO(_playerEntity.square, 0.0f);
+            return _movementPorts.PublishMovementAsync(move, token);
+        }
+
         public UniTask PublishMovableDirectionsAsync(CancellationToken token)
         {
             var directions = PlayerConfig.DIRECTIONS
@@ -43,13 +50,13 @@ namespace GameOff2026.Game.Domain.UseCase
             return _movementPorts.PublishMovableDirectionsAsync(directions, token);
         }
 
-        public async UniTask MoveAsync(Direction direction, CancellationToken token)
+        public UniTask MoveAsync(Direction direction, CancellationToken token)
         {
             var nextSquare = _playerEntity.square.AddDirection(direction);
             _playerEntity.SetSquare(nextSquare);
 
             var move = new MovementVO(_playerEntity.square, PlayerConfig.MOVE_DURATION);
-            await _movementPorts.PublishMovementAsync(move, token);
+            return _movementPorts.PublishMovementAsync(move, token);
         }
     }
 }
