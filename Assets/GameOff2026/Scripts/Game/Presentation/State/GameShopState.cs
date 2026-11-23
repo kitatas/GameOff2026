@@ -32,7 +32,7 @@ namespace GameOff2026.Game.Presentation.State
             var fadeOutModal = new GameModalVO(GameModalType.Shop, Fade.Out);
             await _gameModalUseCase.FadeAsync(fadeOutModal, token);
 
-            return GameState.SetUp;
+            return GameState.Return;
         }
     }
 }

@@ -31,9 +31,7 @@ namespace GameOff2026.Game.Presentation.State
             _staminaUseCase.SetUp();
             _treasureUseCase.SetUp();
 
-            return _dayUseCase.IsFirstTime()
-                ? GameState.SetUp
-                : GameState.Shop;
+            return GameState.SetUp;
         }
     }
 }

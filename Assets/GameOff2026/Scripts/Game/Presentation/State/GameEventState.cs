@@ -35,7 +35,7 @@ namespace GameOff2026.Game.Presentation.State
 
             return
                 _staminaUseCase.IsEmpty() ? 
-                    _dayUseCase.IsMaxDay() ? GameState.Clear : GameState.Return :
+                    _dayUseCase.IsMaxDay() ? GameState.Clear : GameState.Shop :
                 isEmptyTreasure ? GameState.SetUp :
                 GameState.Input;
         }
