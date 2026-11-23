@@ -28,20 +28,19 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         }
 
         [Test]
-        public void SetUp_AfterConstruction_SetsMaxAndStaminaToConfiguredValue()
+        public void Init_AfterConstruction_SetsMaxStaminaAndPublishesValue()
         {
-            _useCase.SetUp();
+            _useCase.Init();
 
             Assert.AreEqual(PlayerConfig.MAX_STAMINA, _maxStaminaEntity.value);
-            Assert.AreEqual(PlayerConfig.MAX_STAMINA, _staminaEntity.value);
-            Assert.AreEqual(PlayerConfig.MAX_STAMINA, _useCase.stamina.CurrentValue);
             Assert.AreEqual(PlayerConfig.MAX_STAMINA, _useCase.maxStamina.CurrentValue);
         }
 
         [Test]
-        public void Decrease_AfterSetUp_DecreasesStaminaAndPublishesValue()
+        public void Decrease_AfterRefresh_DecreasesStaminaAndPublishesValue()
         {
-            _useCase.SetUp();
+            _useCase.Init();
+            _useCase.Refresh();
 
             _useCase.Decrease();
 
@@ -52,7 +51,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         [Test]
         public void Refresh_AfterDecrease_RestoresMaxStamina()
         {
-            _useCase.SetUp();
+            _useCase.Init();
+            _useCase.Refresh();
             _useCase.Decrease();
 
             _useCase.Refresh();
@@ -64,16 +64,16 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         [Test]
         public void IsEmpty_AtZero_ReturnsTrue()
         {
-            _useCase.SetUp();
             _staminaEntity.Set(0);
 
             Assert.IsTrue(_useCase.IsEmpty());
         }
 
         [Test]
-        public void IsEmpty_AfterSetUp_ReturnsFalse()
+        public void IsEmpty_AfterRefresh_ReturnsFalse()
         {
-            _useCase.SetUp();
+            _useCase.Init();
+            _useCase.Refresh();
 
             Assert.IsFalse(_useCase.IsEmpty());
         }

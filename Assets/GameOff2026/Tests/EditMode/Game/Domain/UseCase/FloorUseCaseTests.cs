@@ -11,19 +11,22 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
     public sealed class FloorUseCaseTests
     {
         private FloorEntity _floorEntity;
+        private TreasurePriceRateEntity _treasurePriceRateEntity;
         private FloorUseCase _useCase;
 
         [SetUp]
         public void SetUp()
         {
             _floorEntity = new FloorEntity();
-            _useCase = new FloorUseCase(_floorEntity, CreateRepository());
+            _treasurePriceRateEntity = new TreasurePriceRateEntity();
+            _treasurePriceRateEntity.Set(100);
+            _useCase = new FloorUseCase(_floorEntity, _treasurePriceRateEntity, CreateRepository());
         }
 
         [TearDown]
         public void TearDown()
         {
-            ((IDisposable)_useCase).Dispose();
+            ((IDisposable)_useCase)?.Dispose();
         }
 
         [Test]
@@ -57,8 +60,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
 
             var result = _useCase.GetTreasurePrice();
 
-            Assert.AreEqual(2, result.floor);
-            Assert.AreEqual(200, result.price);
+            Assert.AreEqual(200, result);
         }
 
         private static TreasurePriceRepository CreateRepository()

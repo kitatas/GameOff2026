@@ -178,5 +178,19 @@ namespace GameOff2026.Tests.EditMode.Game.Application
             Assert.IsTrue(arounds[2].IsEqual(new SquareVO(2, 2)));
             Assert.IsTrue(arounds[3].IsEqual(new SquareVO(2, 4)));
         }
+
+        [TestCase(0, ShopItemId.None)]
+        [TestCase(1, ShopItemId.MaxStamina)]
+        [TestCase(2, ShopItemId.TreasurePriceRate)]
+        public void ToShopItemId_ValidValue_ReturnsMatchingEnum(int value, ShopItemId expected)
+        {
+            Assert.AreEqual(expected, value.ToShopItemId());
+        }
+
+        [Test]
+        public void ToShopItemId_UndefinedValue_ThrowsQuitException()
+        {
+            Assert.Throws<QuitExceptionVO>(() => 99.ToShopItemId());
+        }
     }
 }
