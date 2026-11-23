@@ -23,17 +23,16 @@ namespace GameOff2026.Game.Domain.UseCase
         public ReadOnlyReactiveProperty<int> stamina => _stamina.ToReadOnlyReactiveProperty();
         public ReadOnlyReactiveProperty<int> maxStamina => _maxStamina.ToReadOnlyReactiveProperty();
 
-        public void SetUp()
+        public void Init()
         {
             _maxStaminaEntity.Set(PlayerConfig.MAX_STAMINA);
             _maxStamina.Value = _maxStaminaEntity.value;
-
-            _staminaEntity.Set(_maxStaminaEntity.value);
-            _stamina.Value = _staminaEntity.value;
         }
 
         public void Refresh()
         {
+            _maxStamina.Value = _maxStaminaEntity.value;
+
             _staminaEntity.Set(_maxStaminaEntity.value);
             _stamina.Value = _staminaEntity.value;
         }

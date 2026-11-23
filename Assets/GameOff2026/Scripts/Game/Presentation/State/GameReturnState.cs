@@ -28,7 +28,7 @@ namespace GameOff2026.Game.Presentation.State
             await _dateUseCase.ShiftAsync(token);
 
             _dayUseCase.Dawn();
-            _staminaUseCase.SetUp();
+            _staminaUseCase.Refresh();
             _treasureUseCase.SetUp();
 
             return GameState.SetUp;
