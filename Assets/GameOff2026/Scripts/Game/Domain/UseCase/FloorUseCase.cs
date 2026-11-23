@@ -28,6 +28,8 @@ namespace GameOff2026.Game.Domain.UseCase
         {
             _floorEntity.Reset();
             _floor.Value = _floorEntity.value;
+
+            _treasurePriceRateEntity.Reset();
         }
 
         public void Increment()
