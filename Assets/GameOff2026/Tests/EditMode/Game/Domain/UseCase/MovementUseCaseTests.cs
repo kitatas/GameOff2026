@@ -109,5 +109,23 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             Assert.AreSame(_movementSubscriber, _useCase.movement);
             Assert.AreSame(_movableDirectionsSubscriber, _useCase.movableDirections);
         }
+
+        [Test]
+        public async Task SetUpAsync_AfterCurrentPlayerSquare_ResetsSquareAndPublishesMovement()
+        {
+            _playerEntity.SetSquare(new SquareVO(3, 2));
+            using var source = new CancellationTokenSource();
+
+            await _useCase.SetUpAsync(source.Token).AsTask();
+
+            Assert.AreEqual(FieldConfig.MIN_FILE, _playerEntity.square.file);
+            Assert.AreEqual(FieldConfig.MAX_RANK, _playerEntity.square.rank);
+            Assert.AreEqual(1, _movementPublisher.PublishCount);
+            Assert.AreEqual(FieldConfig.MIN_FILE, _movementPublisher.LastPublished.square.file);
+            Assert.AreEqual(FieldConfig.MAX_RANK, _movementPublisher.LastPublished.square.rank);
+            Assert.AreSame(_playerEntity.square, _movementPublisher.LastPublished.square);
+            Assert.AreEqual(0.0f, _movementPublisher.LastPublished.duration);
+            Assert.AreEqual(source.Token, _movementPublisher.tokens[0]);
+        }
     }
 }

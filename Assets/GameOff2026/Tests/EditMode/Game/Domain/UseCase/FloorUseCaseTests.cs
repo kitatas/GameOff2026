@@ -30,14 +30,16 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         }
 
         [Test]
-        public void Init_AfterEntityHasFloor_ResetsEntityAndPublishesFloorOne()
+        public void Init_AfterEntitiesHaveValues_ResetsFloorAndTreasurePriceRate()
         {
             _floorEntity.Set(5);
+            _treasurePriceRateEntity.Set(150);
 
             _useCase.Init();
 
             Assert.AreEqual(1, _floorEntity.value);
             Assert.AreEqual(1, _useCase.floor.CurrentValue);
+            Assert.AreEqual(100, _treasurePriceRateEntity.value);
         }
 
         [Test]

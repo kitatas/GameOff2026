@@ -27,6 +27,17 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             Assert.AreEqual(-50, entity.value);
             Assert.AreEqual(-0.5f, entity.rateValue);
         }
+
+        [Test]
+        public void Reset_AfterValueChanges_RestoresDefaultRate()
+        {
+            var entity = new TreasurePriceRateEntity();
+            entity.Set(150);
+
+            entity.Reset();
+
+            Assert.AreEqual(100, entity.value);
+            Assert.AreEqual(1.0f, entity.rateValue);
+        }
     }
 }
-
