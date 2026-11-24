@@ -1,0 +1,21 @@
+{
+    "name": "Boot.Presentation.Presenter",
+    "rootNamespace": "",
+    "references": [
+        "GUID:75f7802d5bff415c971103152305ff01",
+        "GUID:971a1a12b7ee4e98af6b744cf0b29310",
+        "GUID:fc320ce6ea0543599cfa498e0a7fda85",
+        "GUID:4bfb4324823a46ce9e2ef219590c604e",
+        "GUID:c6a31a526e3e4d2e88e75ae378347eef",
+        "GUID:e2b73bf1ea7746078819a2eef668d759"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

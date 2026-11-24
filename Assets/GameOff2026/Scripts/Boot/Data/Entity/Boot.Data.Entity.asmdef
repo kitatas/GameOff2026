@@ -1,0 +1,17 @@
+{
+    "name": "Boot.Data.Entity",
+    "rootNamespace": "",
+    "references": [
+        "GUID:71b7b8216b1d4703afa772f6709d64cb",
+        "GUID:4bfb4324823a46ce9e2ef219590c604e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

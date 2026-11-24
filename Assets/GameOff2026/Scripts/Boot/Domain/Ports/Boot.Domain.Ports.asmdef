@@ -1,0 +1,18 @@
+{
+    "name": "Boot.Domain.Ports",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e9777ebc7fc54db5a857c134c5676e9c",
+        "GUID:4bfb4324823a46ce9e2ef219590c604e",
+        "GUID:08b38f39e2d9e594389b7a4cf4c2c338"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,21 @@
+{
+    "name": "Boot.Installer",
+    "rootNamespace": "",
+    "references": [
+        "GUID:18924d0034b248dba67220b6d6d6ddfb",
+        "GUID:2ffa5809009a4814b8808a61ace118a0",
+        "GUID:c6a31a526e3e4d2e88e75ae378347eef",
+        "GUID:aa3d6591a3c0470caa2a83b174bf8e4c",
+        "GUID:e2b73bf1ea7746078819a2eef668d759",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
