@@ -4,6 +4,7 @@ namespace GameOff2026.Boot.Application
     {
         None = 0,
         Init = 1,
+        Splash = 2,
     }
 
     public enum SplashType
