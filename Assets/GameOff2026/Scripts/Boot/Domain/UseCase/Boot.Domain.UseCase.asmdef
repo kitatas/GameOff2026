@@ -2,12 +2,15 @@
     "name": "Boot.Domain.UseCase",
     "rootNamespace": "",
     "references": [
+        "GUID:5866b7176a79446e997d71e22dc6d4bf",
         "GUID:71b7b8216b1d4703afa772f6709d64cb",
         "GUID:e9777ebc7fc54db5a857c134c5676e9c",
         "GUID:75f7802d5bff415c971103152305ff01",
         "GUID:4bfb4324823a46ce9e2ef219590c604e",
         "GUID:18924d0034b248dba67220b6d6d6ddfb",
         "GUID:2ffa5809009a4814b8808a61ace118a0",
+        "GUID:3dece76f57754083ad6009e55d7505da",
+        "GUID:08b38f39e2d9e594389b7a4cf4c2c338",
         "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [],

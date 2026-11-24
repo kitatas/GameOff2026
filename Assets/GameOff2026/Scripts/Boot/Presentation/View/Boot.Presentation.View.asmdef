@@ -1,0 +1,18 @@
+{
+    "name": "Boot.Presentation.View",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4bfb4324823a46ce9e2ef219590c604e",
+        "GUID:671b35fac570649e2afb0048ad22bca6",
+        "GUID:77221876cc6b8244180b96e320b1bcd4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
