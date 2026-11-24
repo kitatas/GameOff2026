@@ -317,6 +317,15 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
+    "jp.keijiro.kino.post-processing.eight.universal": {
+      "version": "https://github.com/keijiro/KinoEightURP.git?path=Packages/jp.keijiro.kino.post-processing.eight.universal",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "17.0.0"
+      },
+      "hash": "a4a741ba25d3173e0836731d61a5d180715ec29f"
+    },
     "org.nuget.fastenum": {
       "version": "1.8.0",
       "depth": 0,

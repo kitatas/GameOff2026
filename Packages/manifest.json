@@ -23,6 +23,7 @@
     "com.unity.timeline": "1.8.13",
     "com.unity.ugui": "2.0.0",
     "jp.hadashikick.vcontainer": "1.19.0",
+    "jp.keijiro.kino.post-processing.eight.universal": "https://github.com/keijiro/KinoEightURP.git?path=Packages/jp.keijiro.kino.post-processing.eight.universal",
     "org.nuget.fastenum": "1.8.0",
     "org.nuget.mastermemory": "3.0.4",
     "org.nuget.microsoft.net.stringtools": "1.0.0",
