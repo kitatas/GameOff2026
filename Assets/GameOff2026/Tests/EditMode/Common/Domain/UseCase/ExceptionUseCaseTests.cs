@@ -174,5 +174,16 @@ namespace GameOff2026.Tests.EditMode.Common.Domain.UseCase
         {
             Assert.DoesNotThrow(() => _useCase.HandleDecision(Unit.Default));
         }
+
+        [Test]
+        public async Task InitAsync_Always_PublishesFadeOutWithZeroDuration()
+        {
+            await _useCase.InitAsync(CancellationToken.None).AsTask();
+
+            Assert.AreEqual(1, _notifyPublisher.PublishCount);
+            Assert.IsNull(_notifyPublisher.LastPublished.exception);
+            Assert.AreEqual(Fade.Out, _notifyPublisher.LastPublished.transition.fade);
+            Assert.AreEqual(0.0f, _notifyPublisher.LastPublished.transition.duration);
+        }
     }
 }

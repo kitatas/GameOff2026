@@ -32,7 +32,7 @@ namespace GameOff2026.Tests.EditMode.Common.Domain.UseCase
         [Test]
         public void LoadFade_ValidArguments_PublishesFadeLoadVO()
         {
-            _useCase.LoadFade(SceneName.Game, Fade.InOut);
+            _useCase.LoadFade(SceneName.Game);
 
             Assert.AreEqual(1, _received.Count);
             Assert.AreEqual(SceneName.Game, _received[0].sceneName);
@@ -43,7 +43,7 @@ namespace GameOff2026.Tests.EditMode.Common.Domain.UseCase
         [Test]
         public void LoadFade_ValidArguments_UsesConfiguredFadeDuration()
         {
-            _useCase.LoadFade(SceneName.Boot, Fade.In);
+            _useCase.LoadFade(SceneName.Boot);
 
             Assert.AreEqual(SceneConfig.FADE_DURATION, _received[0].transition.duration);
         }
@@ -51,8 +51,8 @@ namespace GameOff2026.Tests.EditMode.Common.Domain.UseCase
         [Test]
         public void LoadFade_CalledTwice_PublishesInOrder()
         {
-            _useCase.LoadFade(SceneName.Boot, Fade.In);
-            _useCase.LoadFade(SceneName.Game, Fade.Out);
+            _useCase.LoadFade(SceneName.Boot);
+            _useCase.LoadFade(SceneName.Game);
 
             Assert.AreEqual(2, _received.Count);
             Assert.AreEqual(SceneName.Boot, _received[0].sceneName);
@@ -64,7 +64,7 @@ namespace GameOff2026.Tests.EditMode.Common.Domain.UseCase
         {
             var useCase = new SceneUseCase();
 
-            Assert.DoesNotThrow(() => useCase.LoadFade(SceneName.Game, Fade.In));
+            Assert.DoesNotThrow(() => useCase.LoadFade(SceneName.Game));
 
             ((IDisposable)useCase).Dispose();
         }
@@ -72,15 +72,7 @@ namespace GameOff2026.Tests.EditMode.Common.Domain.UseCase
         [Test]
         public void LoadFade_SceneNameIsNone_ThrowsAndPublishesNothing()
         {
-            Assert.Catch<Exception>(() => _useCase.LoadFade(SceneName.None, Fade.In));
-
-            Assert.AreEqual(0, _received.Count);
-        }
-
-        [Test]
-        public void LoadFade_FadeIsNone_ThrowsAndPublishesNothing()
-        {
-            Assert.Catch<Exception>(() => _useCase.LoadFade(SceneName.Game, Fade.None));
+            Assert.Catch<Exception>(() => _useCase.LoadFade(SceneName.None));
 
             Assert.AreEqual(0, _received.Count);
         }

@@ -42,7 +42,7 @@ namespace GameOff2026.Tests.EditMode.Common.Application
         [Test]
         public void CreateFade_ValidValues_CreatesFadeLoadWithTransition()
         {
-            var vo = LoadVO.CreateFade(SceneName.Game, Fade.InOut, 0.25f);
+            var vo = LoadVO.CreateFade(SceneName.Game, 0.25f);
 
             Assert.AreEqual(SceneName.Game, vo.sceneName);
             Assert.AreEqual(LoadType.Fade, vo.loadType);
@@ -51,21 +51,15 @@ namespace GameOff2026.Tests.EditMode.Common.Application
         }
 
         [Test]
-        public void CreateFade_FadeIsNone_Throws()
-        {
-            Assert.Catch<Exception>(() => LoadVO.CreateFade(SceneName.Game, Fade.None, 0.25f));
-        }
-
-        [Test]
         public void CreateFade_DurationIsNegative_Throws()
         {
-            Assert.Catch<Exception>(() => LoadVO.CreateFade(SceneName.Game, Fade.In, -1.0f));
+            Assert.Catch<Exception>(() => LoadVO.CreateFade(SceneName.Game, -1.0f));
         }
 
         [Test]
         public void CreateFade_SceneNameIsNone_Throws()
         {
-            Assert.Catch<Exception>(() => LoadVO.CreateFade(SceneName.None, Fade.In, 0.25f));
+            Assert.Catch<Exception>(() => LoadVO.CreateFade(SceneName.None, 0.25f));
         }
     }
 }
