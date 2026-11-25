@@ -15,9 +15,9 @@ namespace GameOff2026.Common.Domain.UseCase
 
         public Observable<LoadVO> load => _load;
 
-        public void LoadFade(SceneName sceneName, Fade fade)
+        public void LoadFade(SceneName sceneName)
         {
-            _load?.OnNext(LoadVO.CreateFade(sceneName, fade, SceneConfig.FADE_DURATION));
+            _load?.OnNext(LoadVO.CreateFade(sceneName, SceneConfig.FADE_DURATION));
         }
 
         void IDisposable.Dispose()

@@ -34,9 +34,9 @@ namespace GameOff2026.Common.Application
             this.transition = transition;
         }
 
-        public static LoadVO CreateFade(SceneName sceneName, Fade fade, float duration)
+        public static LoadVO CreateFade(SceneName sceneName, float duration)
         {
-            var transition = new TransitionVO(fade, duration);
+            var transition = new TransitionVO(Fade.InOut, duration);
             return new LoadVO(sceneName, LoadType.Fade, transition);
         }
     }

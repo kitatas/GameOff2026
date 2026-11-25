@@ -27,21 +27,23 @@ namespace GameOff2026.Common.Presentation.Presenter
             _sceneUseCase.load
                 .SubscribeAwait(async (x, ct) =>
                 {
-                    if (x.loadType is LoadType.Fade) await FadeInAsync(x, ct);
+                    if (x.loadType is LoadType.Fade) await FadeInAsync(x.transition, ct);
                     await _sceneFacade.LoadSceneAsync(x.sceneName, ct);
-                    if (x.loadType is LoadType.Fade) await FadeOutAsync(x, ct);
+                    if (x.loadType is LoadType.Fade) await FadeOutAsync(x.transition, ct);
                 })
                 .AddTo(_disposable);
         }
 
-        private async UniTask FadeInAsync(LoadVO load, CancellationToken token)
+        private async UniTask FadeInAsync(TransitionVO transition, CancellationToken token)
         {
-            await _sceneFacade.FadeAsync(load, token);
+            var t = new TransitionVO(Fade.In, transition.duration);
+            await _sceneFacade.FadeAsync(t, token);
         }
 
-        private async UniTask FadeOutAsync(LoadVO load, CancellationToken token)
+        private async UniTask FadeOutAsync(TransitionVO transition, CancellationToken token)
         {
-            await _sceneFacade.FadeAsync(load, token);
+            var t = new TransitionVO(Fade.Out, transition.duration);
+            await _sceneFacade.FadeAsync(t, token);
         }
 
         void IDisposable.Dispose()

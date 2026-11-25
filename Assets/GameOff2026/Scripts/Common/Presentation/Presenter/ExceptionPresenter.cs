@@ -53,7 +53,7 @@ namespace GameOff2026.Common.Presentation.Presenter
 
         private UniTask HandleRebootActionAsync(CancellationToken token)
         {
-            _sceneUseCase.LoadFade(SceneName.Boot, Fade.InOut);
+            _sceneUseCase.LoadFade(SceneName.Boot);
             return UniTask.Yield(token);
         }
 

@@ -18,12 +18,12 @@ namespace GameOff2026.Common.Presentation.Facade
             _transitionView = transitionView;
         }
 
-        public UniTask FadeAsync(LoadVO load, CancellationToken token)
+        public UniTask FadeAsync(TransitionVO transition, CancellationToken token)
         {
-            var tween = load.transition.fade switch
+            var tween = transition.fade switch
             {
-                Fade.In => _transitionView.FadeIn(load.transition.duration),
-                Fade.Out => _transitionView.FadeOut(load.transition.duration),
+                Fade.In => _transitionView.FadeIn(transition.duration),
+                Fade.Out => _transitionView.FadeOut(transition.duration),
                 _ => throw new QuitExceptionVO(ExceptionConfig.INVALID_FADE),
             };
 
