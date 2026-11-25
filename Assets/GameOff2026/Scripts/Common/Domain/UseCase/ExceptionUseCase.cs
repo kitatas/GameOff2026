@@ -22,6 +22,11 @@ namespace GameOff2026.Common.Domain.UseCase
         public IAsyncSubscriber<ExceptionNotifyVO> exceptionNotify => _exceptionPorts.exceptionNotifySubscriber;
         public IAsyncSubscriber<ExceptionActionVO> exceptionAction => _exceptionPorts.exceptionActionSubscriber;
 
+        public UniTask InitAsync(CancellationToken token)
+        {
+            return FadeOutAsync(0.0f, token);
+        }
+
         public async UniTask ThrowAsync(ExceptionVO ex, CancellationToken token)
         {
             var notify = ExceptionNotifyVO.Create(ex, Fade.In, ExceptionConfig.FADE_DURATION);
