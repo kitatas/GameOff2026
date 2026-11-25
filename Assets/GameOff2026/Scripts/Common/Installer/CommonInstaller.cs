@@ -22,24 +22,29 @@ namespace GameOff2026.Common.Installer
 
             // Ports
             builder.Register<ExceptionPorts>(Lifetime.Singleton);
+            builder.Register<LoadingPorts>(Lifetime.Singleton);
 
             // UseCase
             builder.Register<ExceptionUseCase>(Lifetime.Singleton);
+            builder.Register<LoadingUseCase>(Lifetime.Singleton);
             builder.Register<SceneUseCase>(Lifetime.Singleton);
 
             // Presenter
             builder.UseEntryPoints(Lifetime.Singleton, entryPoints =>
             {
                 entryPoints.Add<ExceptionPresenter>();
+                entryPoints.Add<LoadingPresenter>();
                 entryPoints.Add<ScenePresenter>();
             });
 
             // Facade
             builder.Register<ExceptionFacade>(Lifetime.Singleton);
+            builder.Register<LoadingFacade>(Lifetime.Singleton);
             builder.Register<SceneFacade>(Lifetime.Singleton);
 
             // View
             builder.RegisterFindFirstObjectByType<ExceptionView>();
+            builder.RegisterFindFirstObjectByType<LoadingView>();
             builder.RegisterFindFirstObjectByType<TransitionView>();
         }
     }

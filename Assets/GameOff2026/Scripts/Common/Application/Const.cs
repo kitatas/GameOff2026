@@ -49,4 +49,11 @@ namespace GameOff2026.Common.Application
     {
         public const float TWEEN_DURATION = 0.25f;
     }
+
+    public sealed class LoadingConfig
+    {
+        public const float FADE_DURATION = 0.05f;
+        public const float TEXT_ANIMATION_INTERVAL = 0.05f;
+        public const float TEXT_ANIMATION_DURATION = 0.1f;
+    }
 }

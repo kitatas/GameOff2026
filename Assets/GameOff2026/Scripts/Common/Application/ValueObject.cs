@@ -130,4 +130,20 @@ namespace GameOff2026.Common.Application
             this.transition = transition;
         }
     }
+
+    public sealed class LoadingTransitionVO
+    {
+        public readonly TransitionVO transition;
+
+        public LoadingTransitionVO(TransitionVO transition)
+        {
+            this.transition = transition;
+        }
+
+        public static LoadingTransitionVO Create(Fade fade, float duration)
+        {
+            var transition = new TransitionVO(fade, duration);
+            return new LoadingTransitionVO(transition);
+        }
+    }
 }
