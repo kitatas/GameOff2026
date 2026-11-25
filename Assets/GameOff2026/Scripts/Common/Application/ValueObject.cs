@@ -166,4 +166,14 @@ namespace GameOff2026.Common.Application
             this.id = id;
         }
     }
+
+    public sealed class UserVO
+    {
+        public readonly LocalUserVO localUser;
+
+        public UserVO(LocalUserVO localUser)
+        {
+            this.localUser = localUser;
+        }
+    }
 }

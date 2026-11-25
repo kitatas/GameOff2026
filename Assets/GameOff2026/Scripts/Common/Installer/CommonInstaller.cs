@@ -20,6 +20,7 @@ namespace GameOff2026.Common.Installer
 
             // Entity
             builder.Register<RetryCountEntity>(Lifetime.Singleton);
+            builder.Register<UserEntity>(Lifetime.Singleton);
 
             // Ports
             builder.Register<ExceptionPorts>(Lifetime.Singleton);
