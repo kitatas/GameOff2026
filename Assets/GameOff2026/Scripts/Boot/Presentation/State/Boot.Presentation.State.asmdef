@@ -2,6 +2,7 @@
     "name": "Boot.Presentation.State",
     "rootNamespace": "",
     "references": [
+        "GUID:5866b7176a79446e997d71e22dc6d4bf",
         "GUID:75f7802d5bff415c971103152305ff01",
         "GUID:fc320ce6ea0543599cfa498e0a7fda85",
         "GUID:4bfb4324823a46ce9e2ef219590c604e",
