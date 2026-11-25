@@ -1,5 +1,6 @@
 using GameOff2026.Common.Data.Entity;
 using GameOff2026.Common.Domain.Ports;
+using GameOff2026.Common.Domain.Repository;
 using GameOff2026.Common.Domain.UseCase;
 using GameOff2026.Common.Presentation.Facade;
 using GameOff2026.Common.Presentation.Presenter;
@@ -23,6 +24,9 @@ namespace GameOff2026.Common.Installer
             // Ports
             builder.Register<ExceptionPorts>(Lifetime.Singleton);
             builder.Register<LoadingPorts>(Lifetime.Singleton);
+
+            // Repository
+            builder.Register<SaveRepository>(Lifetime.Singleton);
 
             // UseCase
             builder.Register<ExceptionUseCase>(Lifetime.Singleton);

@@ -56,4 +56,9 @@ namespace GameOff2026.Common.Application
         public const float TEXT_ANIMATION_INTERVAL = 0.05f;
         public const float TEXT_ANIMATION_DURATION = 0.1f;
     }
+
+    public sealed class SaveConfig
+    {
+        public const string ES3_KEY = "";
+    }
 }

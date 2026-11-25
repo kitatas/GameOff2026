@@ -146,4 +146,24 @@ namespace GameOff2026.Common.Application
             return new LoadingTransitionVO(transition);
         }
     }
+
+    public sealed class SaveVO
+    {
+        public readonly LocalUserVO user;
+
+        public SaveVO(LocalUserVO user)
+        {
+            this.user = user;
+        }
+    }
+
+    public sealed class LocalUserVO
+    {
+        public readonly string id;
+
+        public LocalUserVO(string id)
+        {
+            this.id = id;
+        }
+    }
 }
