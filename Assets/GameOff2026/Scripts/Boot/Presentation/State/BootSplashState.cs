@@ -25,7 +25,7 @@ namespace GameOff2026.Boot.Presentation.State
         {
             await _splashUseCase.SequentialRenderAsync(token);
 
-            return BootState.Load;
+            return BootState.Login;
         }
     }
 }
