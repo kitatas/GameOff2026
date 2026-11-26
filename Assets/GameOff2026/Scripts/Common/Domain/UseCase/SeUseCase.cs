@@ -22,7 +22,7 @@ namespace GameOff2026.Common.Domain.UseCase
         public override void SaveVolume()
         {
             var vo = new VolumeVO(thisVolumeValue, isThisMute.CurrentValue);
-            // TODO: _saveRepository.SaveSeVolume(vo);
+            _saveRepository.SaveSeVolume(vo);
         }
 
         public void PlayOneShots(SeType type, int loop, float delayRate)

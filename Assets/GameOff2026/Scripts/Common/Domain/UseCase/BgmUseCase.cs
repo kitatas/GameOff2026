@@ -35,7 +35,7 @@ namespace GameOff2026.Common.Domain.UseCase
         public override void SaveVolume()
         {
             var vo = new VolumeVO(thisVolumeValue, isThisMute.CurrentValue);
-            // TODO: _saveRepository.SaveBgmVolume(vo);
+            _saveRepository.SaveBgmVolume(vo);
         }
 
         protected override BgmSoundVO CreateSound(AudioVO<BgmType> audio, float delay)

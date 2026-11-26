@@ -47,9 +47,43 @@ namespace GameOff2026.Common.Domain.Repository
             return data;
         }
 
+        public void Delete()
+        {
+            var data = SaveDTO.Recreate(Load());
+            Save(data);
+        }
+
         private static void Save(SaveDTO data)
         {
             ES3.Save(SaveConfig.ES3_KEY, JsonUtility.ToJson(data));
+        }
+
+        public void SaveUser(LocalUserVO value)
+        {
+            var data = Load();
+            data.user = new LocalUserDTO(value);
+            Save(data);
+        }
+
+        public void SaveBgmVolume(VolumeVO value)
+        {
+            var data = Load();
+            data.bgmVolume = new VolumeDTO(value);
+            Save(data);
+        }
+
+        public void SaveSeVolume(VolumeVO value)
+        {
+            var data = Load();
+            data.seVolume = new VolumeDTO(value);
+            Save(data);
+        }
+
+        public void SaveMasterVolume(VolumeVO value)
+        {
+            var data = Load();
+            data.masterVolume = new VolumeDTO(value);
+            Save(data);
         }
     }
 }

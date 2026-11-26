@@ -91,7 +91,7 @@ namespace GameOff2026.Common.Domain.UseCase
         public void SaveMasterVolume()
         {
             var vo = new VolumeVO(_masterVolume.CurrentValue, _isMasterMute.CurrentValue);
-            // TODO: _saveRepository.SaveMasterVolume(vo);
+            _saveRepository.SaveMasterVolume(vo);
         }
 
         protected abstract TSoundVO CreateSound(AudioVO<TType> audio, float delay);
