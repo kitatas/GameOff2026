@@ -1,0 +1,233 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: LocaleTable_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 45bdbc2266be44766ab8b7c1286edb34, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 9922803654656
+    m_Localized: Played {0} times!!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209088
+    m_Localized: Reached a high score of {0}!!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209089
+    m_Localized: Cleared {0} times!!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209090
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209091
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209092
+    m_Localized: Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209093
+    m_Localized: Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209094
+    m_Localized: Account
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209095
+    m_Localized: Achievement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209096
+    m_Localized: Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209097
+    m_Localized: Help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209098
+    m_Localized: How To Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209099
+    m_Localized: Screen Guide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209100
+    m_Localized: Privacy Policy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209101
+    m_Localized: License
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209102
+    m_Localized: Credit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209103
+    m_Localized: Other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209104
+    m_Localized: Other Apps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209105
+    m_Localized: Display Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209106
+    m_Localized: Enter Name...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209107
+    m_Localized: Warning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209108
+    m_Localized: Delete Account
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209109
+    m_Localized: Ranking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403392
+    m_Localized: 'Are you sure you want to delete your account?
+
+      This action
+      cannot be undone.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403393
+    m_Localized: 'Your account has been deleted.
+
+      Restarting.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403394
+    m_Localized: Give Up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403395
+    m_Localized: Are you sure you want to give up?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403396
+    m_Localized: Run Abandoned.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403397
+    m_Localized: Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403398
+    m_Localized: Master
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403399
+    m_Localized: SE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403400
+    m_Localized: Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403401
+    m_Localized: Stamina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403402
+    m_Localized: Treasure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403403
+    m_Localized: Money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403404
+    m_Localized: Floor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403405
+    m_Localized: "* Enter a name using 3\u201325 alphanumeric characters.\n* Names
+      already in use cannot be selected."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403406
+    m_Localized: Error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403407
+    m_Localized: Notification
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403408
+    m_Localized: 'Launching in offline mode.
+
+      Some features will be restricted.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403409
+    m_Localized: 'The latest version is available.
+
+      Please update the game.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403410
+    m_Localized: Uniq
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403411
+    m_Localized: Rations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403412
+    m_Localized: Pendant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403413
+    m_Localized: Ring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403414
+    m_Localized: xxx
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403415
+    m_Localized: Max stamina +{0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403416
+    m_Localized: Increases money earned by {0}%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403417
+    m_Localized: Allows you to pass through wooden crates
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403418
+    m_Localized: xxxxx
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

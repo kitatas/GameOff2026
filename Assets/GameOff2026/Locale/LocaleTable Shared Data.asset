@@ -1,0 +1,228 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: LocaleTable Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: LocaleTable
+  m_TableCollectionNameGuidString: 45bdbc2266be44766ab8b7c1286edb34
+  m_Entries:
+  - m_Id: 9922803654656
+    m_Key: Achievement_Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209088
+    m_Key: Achievement_Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209089
+    m_Key: Achievement_Clear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209090
+    m_Key: Button_Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209091
+    m_Key: Button_Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209092
+    m_Key: Menu_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209093
+    m_Key: Menu_Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209094
+    m_Key: Menu_Account
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209095
+    m_Key: Menu_Achievement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209096
+    m_Key: Menu_Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209097
+    m_Key: Menu_Help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209098
+    m_Key: Menu_HowTo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209099
+    m_Key: Menu_Guide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209100
+    m_Key: Menu_Policy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209101
+    m_Key: Menu_License
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209102
+    m_Key: Menu_Credit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209103
+    m_Key: Menu_Other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209104
+    m_Key: Menu_OtherApps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209105
+    m_Key: Account_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209106
+    m_Key: Account_Enter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209107
+    m_Key: Account_Warning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209108
+    m_Key: Account_Delete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922837209109
+    m_Key: Ranking_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403392
+    m_Key: Delete_Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403393
+    m_Key: Delete_Complete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403394
+    m_Key: GiveUp_Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403395
+    m_Key: GiveUp_Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403396
+    m_Key: GiveUp_Complete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403397
+    m_Key: Sound_Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403398
+    m_Key: Sound_Master
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403399
+    m_Key: Sound_SE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403400
+    m_Key: Hud_Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403401
+    m_Key: Hud_Stamina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403402
+    m_Key: Hud_Treasure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403403
+    m_Key: Hud_Money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403404
+    m_Key: Hud_Floor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403405
+    m_Key: Name_Rule
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403406
+    m_Key: Modal_Error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403407
+    m_Key: Modal_Notification
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403408
+    m_Key: Notification_Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403409
+    m_Key: Notification_Update
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403410
+    m_Key: Item_Uniq
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403411
+    m_Key: Item_001_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403412
+    m_Key: Item_002_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403413
+    m_Key: Item_003_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403414
+    m_Key: Item_004_Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403415
+    m_Key: Item_001_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403416
+    m_Key: Item_002_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403417
+    m_Key: Item_003_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9922841403418
+    m_Key: Item_004_Description
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 1837187777266450563
+  references:
+    version: 2
+    RefIds:
+    - rid: 1837187777266450563
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1795710293548
