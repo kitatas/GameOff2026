@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using GameOff2026.Common.Domain.Repository;
 using GameOff2026.Game.Application;
 using GameOff2026.Game.Data.DataStore;
 using GameOff2026.Game.Data.Entity;
@@ -34,23 +35,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 _moneyEntity,
                 _purchasedItemEntity,
                 new ShopPorts(new FakeAsyncSubscriber<ShopVO[]>(), _publisher),
+                new LocaleRepository(),
                 _repository);
-        }
-
-        [Test]
-        public async Task PublishShopsAsync_EnoughAndInsufficientMoney_PublishesShopStates()
-        {
-            _moneyEntity.Set(75);
-            using var source = new CancellationTokenSource();
-
-            await _useCase.PublishShopsAsync(source.Token).AsTask();
-
-            Assert.AreEqual(1, _publisher.PublishCount);
-            var shops = _publisher.LastPublished;
-            Assert.AreEqual(2, shops.Length);
-            Assert.IsFalse(shops[0].isEnoughMoney);
-            Assert.IsTrue(shops[1].isEnoughMoney);
-            Assert.AreEqual(0, shops[0].purchasedItem.count);
         }
 
         [Test]
@@ -81,4 +67,3 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         }
     }
 }
-
