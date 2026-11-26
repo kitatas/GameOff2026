@@ -35,6 +35,7 @@ namespace GameOff2026.Boot.Installer
             // UseCase
             builder.Register<BootStateUseCase>(Lifetime.Scoped);
             builder.Register<LoginUseCase>(Lifetime.Scoped);
+            builder.Register<ResourceUseCase>(Lifetime.Scoped);
             builder.Register<SplashUseCase>(Lifetime.Scoped);
 
             // State
