@@ -37,10 +37,13 @@ namespace GameOff2026.Common.Application
         public const string INVALID_SHOP_ITEM_ID = "INVALID_SHOP_ITEM_ID";
         public const string INVALID_SPLASH = "INVALID_SPLASH";
         public const string INVALID_WEIGHT = "INVALID_WEIGHT";
+        public const string NOT_FOUND_BGM = "NOT_FOUND_BGM";
         public const string NOT_FOUND_DIRECTION = "NOT_FOUND_DIRECTION";
         public const string NOT_FOUND_LOAD = "NOT_FOUND_LOAD";
         public const string NOT_FOUND_LOCALE = "NOT_FOUND_LOCALE";
         public const string NOT_FOUND_SCENE = "NOT_FOUND_SCENE";
+        public const string NOT_FOUND_SE = "NOT_FOUND_SE";
+        public const string NOT_FOUND_SOUND_TYPE = "NOT_FOUND_SOUND_TYPE";
         public const string NOT_FOUND_STATE = "NOT_FOUND_STATE";
         public const string NOT_FOUND_SHOP_ITEM = "NOT_FOUND_SHOP_ITEM";
         public const string NOT_FOUND_TREASURE_PRICE = "NOT_FOUND_TREASURE_PRICE";

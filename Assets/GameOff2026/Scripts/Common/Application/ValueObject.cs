@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Text;
+using UnityEngine;
 
 namespace GameOff2026.Common.Application
 {
@@ -174,6 +175,87 @@ namespace GameOff2026.Common.Application
         public UserVO(LocalUserVO localUser)
         {
             this.localUser = localUser;
+        }
+    }
+
+    public abstract class AudioVO<T> where T : Enum
+    {
+        public readonly T type;
+        public readonly AudioClip clip;
+        public readonly string cue;
+
+        public AudioVO(T type, AudioClip clip)
+        {
+            this.type = type;
+            this.clip = clip;
+        }
+
+        public AudioVO(T type, string cue)
+        {
+            this.type = type;
+            this.cue = cue;
+        }
+    }
+
+    public sealed class BgmAudioVO : AudioVO<BgmType>
+    {
+        public BgmAudioVO(BgmType type, AudioClip clip) : base(type, clip)
+        {
+        }
+
+        public BgmAudioVO(BgmType type, string cue) : base(type, cue)
+        {
+        }
+    }
+
+    public sealed class SeAudioVO : AudioVO<SeType>
+    {
+        public SeAudioVO(SeType type, AudioClip clip) : base(type, clip)
+        {
+        }
+
+        public SeAudioVO(SeType type, string cue) : base(type, cue)
+        {
+        }
+    }
+
+    public abstract class SoundVO<T> where T : Enum
+    {
+        public readonly AudioVO<T> audio;
+        public readonly float delay;
+        public readonly bool isMute;
+
+        public SoundVO(AudioVO<T> audio, float delay, bool isMute)
+        {
+            this.audio = audio;
+            this.delay = delay;
+            this.isMute = isMute;
+        }
+    }
+
+    public sealed class BgmSoundVO : SoundVO<BgmType>
+    {
+        public BgmSoundVO(AudioVO<BgmType> audio, float delay, bool isMute) : base(audio, delay, isMute)
+        {
+        }
+    }
+
+    public sealed class SeSoundVO : SoundVO<SeType>
+    {
+        public SeSoundVO(AudioVO<SeType> audio, float delay, bool isMute) : base(audio, delay, isMute)
+        {
+        }
+    }
+
+    public sealed class VolumeVO
+    {
+        public readonly float value;
+        public readonly bool isMute;
+
+        public VolumeVO(float value, bool isMute)
+        {
+            this.value = value;
+            this.isMute = isMute;
         }
     }
 }
