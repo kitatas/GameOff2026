@@ -70,4 +70,9 @@ namespace GameOff2026.Common.Application
     {
         public const string TABLE_NAME = "LocaleTable";
     }
+
+    public sealed class SoundConfig
+    {
+        public const float INIT_VOLUME = 0.7f;
+    }
 }

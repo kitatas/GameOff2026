@@ -23,8 +23,7 @@ namespace GameOff2026.Common.Domain.UseCase
             CancellationToken token)
         {
             var saveData = await _saveRepository.LoadAsync(token);
-            return (new VolumeVO(0.0f, false), new VolumeVO(0.0f, false));
-            // TODO: return (saveData.bgmVolume, saveData.masterVolume);
+            return (saveData.bgmVolume, saveData.masterVolume);
         }
 
         public override void SwitchMasterMute()
