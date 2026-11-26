@@ -39,6 +39,7 @@ namespace GameOff2026.Common.Application
         public const string INVALID_WEIGHT = "INVALID_WEIGHT";
         public const string NOT_FOUND_DIRECTION = "NOT_FOUND_DIRECTION";
         public const string NOT_FOUND_LOAD = "NOT_FOUND_LOAD";
+        public const string NOT_FOUND_LOCALE = "NOT_FOUND_LOCALE";
         public const string NOT_FOUND_SCENE = "NOT_FOUND_SCENE";
         public const string NOT_FOUND_STATE = "NOT_FOUND_STATE";
         public const string NOT_FOUND_SHOP_ITEM = "NOT_FOUND_SHOP_ITEM";
@@ -60,5 +61,10 @@ namespace GameOff2026.Common.Application
     public sealed class SaveConfig
     {
         public const string ES3_KEY = "";
+    }
+
+    public sealed class LocaleConfig
+    {
+        public const string TABLE_NAME = "LocaleTable";
     }
 }

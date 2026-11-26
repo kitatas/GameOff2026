@@ -27,6 +27,7 @@ namespace GameOff2026.Common.Installer
             builder.Register<LoadingPorts>(Lifetime.Singleton);
 
             // Repository
+            builder.Register<LocaleRepository>(Lifetime.Singleton);
             builder.Register<SaveRepository>(Lifetime.Singleton);
 
             // UseCase
