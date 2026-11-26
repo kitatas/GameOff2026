@@ -1657,16 +1657,91 @@ PrefabInstance:
       propertyPath: m_text
       value: Close
       objectReference: {fileID: 0}
+    - target: {fileID: 8553601747747649887, guid: 004c87d4d13144a3aaa98e97c4bc2e81, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.49803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553601747747649887, guid: 004c87d4d13144a3aaa98e97c4bc2e81, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.79607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553601747747649887, guid: 004c87d4d13144a3aaa98e97c4bc2e81, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553601747747649887, guid: 004c87d4d13144a3aaa98e97c4bc2e81, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4286565308
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7832523997783594546, guid: 004c87d4d13144a3aaa98e97c4bc2e81, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1219427076445928780}
   m_SourcePrefab: {fileID: 100100000, guid: 004c87d4d13144a3aaa98e97c4bc2e81, type: 3}
+--- !u!1 &3364868151808761258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7832523997783594546, guid: 004c87d4d13144a3aaa98e97c4bc2e81, type: 3}
+  m_PrefabInstance: {fileID: 4756046201337088920}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1219427076445928780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364868151808761258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:45bdbc2266be44766ab8b7c1286edb34
+    m_TableEntryReference:
+      m_KeyId: 9922837209091
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3797838138146271943}
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!224 &3643948003262599841 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8111327854571886905, guid: 004c87d4d13144a3aaa98e97c4bc2e81, type: 3}
   m_PrefabInstance: {fileID: 4756046201337088920}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3797838138146271943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8553601747747649887, guid: 004c87d4d13144a3aaa98e97c4bc2e81, type: 3}
+  m_PrefabInstance: {fileID: 4756046201337088920}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364868151808761258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &8625752741140319541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1677,15 +1752,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1485231380947743293, guid: d3068677039b74b3fa4d20440b7cd751, type: 3}
       propertyPath: m_Color.b
-      value: 0.15686275
+      value: 0.08627451
       objectReference: {fileID: 0}
     - target: {fileID: 1485231380947743293, guid: d3068677039b74b3fa4d20440b7cd751, type: 3}
       propertyPath: m_Color.g
-      value: 0.29411766
+      value: 0.14901961
       objectReference: {fileID: 0}
     - target: {fileID: 1485231380947743293, guid: d3068677039b74b3fa4d20440b7cd751, type: 3}
       propertyPath: m_Color.r
-      value: 0.22352941
+      value: 0.105882354
       objectReference: {fileID: 0}
     - target: {fileID: 4674474655447871223, guid: d3068677039b74b3fa4d20440b7cd751, type: 3}
       propertyPath: m_Name
@@ -1811,7 +1886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: uPalette::uPalette.Runtime.Core.Synchronizer.Color.GraphicColorSynchronizer
   _entryId:
-    _value: 9dee98fd-8b56-491b-a75d-1ff41e917a01
+    _value: ea25c8b0-b582-485b-a007-427da451b879
   _component: {fileID: 7145047089861525256}
 --- !u!114 &7145047089861525256 stripped
 MonoBehaviour:
