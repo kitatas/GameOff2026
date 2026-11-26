@@ -301,6 +301,18 @@ namespace GameOff2026.Game.Application
             this.isUniq = isUniq;
             this.effectValue = effectValue;
         }
+
+        public static ShopItemVO Create(ShopItemVO shopItem, string name, string description)
+        {
+            return new ShopItemVO(
+                shopItem.id,
+                name,
+                description,
+                shopItem.price,
+                shopItem.isUniq,
+                shopItem.effectValue
+            );
+        }
     }
 
     public sealed class PurchasedItemVO
