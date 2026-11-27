@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Default Local Group
   m_GUID: 9aefc5ada764645d08c888b1b73f79a1
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 43b1f364e3bcf479ab9e173317bfaf95
+    m_Address: Assets/Externals/Sprites/UI/shop_item.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7c2b8784d75f54de7a5dc5b86a0fca1c, type: 2}
   m_SchemaSet:
