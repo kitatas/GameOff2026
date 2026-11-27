@@ -54,6 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6965429d5187465d95ff23a9d5b074c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Presentation.View::GameOff2026.Game.Presentation.View.ShopItemView
+  icon: {fileID: 868847971930389141}
   itemName: {fileID: 1600670295313189906}
   itemDescription: {fileID: 8935299455668867837}
   price: {fileID: 7556432278095700217}
