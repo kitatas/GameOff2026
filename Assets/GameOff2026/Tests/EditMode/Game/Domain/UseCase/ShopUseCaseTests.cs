@@ -1,4 +1,5 @@
-using System.Threading;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GameOff2026.Common.Domain.Repository;
@@ -18,6 +19,8 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
     {
         private MoneyEntity _moneyEntity;
         private PurchasedItemEntity _purchasedItemEntity;
+        private ShopPriceRateEntity _shopPriceRateEntity;
+        private LocaleRepository _localeRepository;
         private FakeAsyncPublisher<ShopVO[]> _publisher;
         private ShopItemRepository _repository;
         private ShopUseCase _useCase;
@@ -27,6 +30,9 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         {
             _moneyEntity = new MoneyEntity();
             _purchasedItemEntity = new PurchasedItemEntity();
+            _shopPriceRateEntity = new ShopPriceRateEntity();
+            _shopPriceRateEntity.Reset();
+            _localeRepository = new LocaleRepository();
             _publisher = new FakeAsyncPublisher<ShopVO[]>();
             _repository = CreateRepository(
                 new ShopItemMaster(1, "Sword", "Attack item", 100, true, 10),
@@ -34,8 +40,9 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _useCase = new ShopUseCase(
                 _moneyEntity,
                 _purchasedItemEntity,
+                _shopPriceRateEntity,
                 new ShopPorts(new FakeAsyncSubscriber<ShopVO[]>(), _publisher),
-                new LocaleRepository(),
+                _localeRepository,
                 _repository);
         }
 
@@ -57,6 +64,43 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
 
             Assert.AreEqual(2, result.id);
             Assert.AreEqual(2, _purchasedItemEntity.Get(2).count);
+        }
+
+        [Test]
+        public async Task PublishShopsAsync_WithRaisedPriceAndInsufficientMoney_PublishesCeiledPriceAndNotEnough()
+        {
+            _shopPriceRateEntity.Set(150);
+            _moneyEntity.Add(140);
+            SetLocale("Sword", "Attack item", "Attack by {0}");
+            SetLocale("Potion", "Stamina item", "Restore {0}");
+
+            await _useCase.PublishShopsAsync(default).AsTask();
+
+            Assert.AreEqual(1, _publisher.PublishCount);
+            var sword = System.Array.Find(_publisher.LastPublished, x => x.shopItem.id == 1);
+            Assert.AreEqual(150, sword.shopItem.price);
+            Assert.IsFalse(sword.isEnoughMoney);
+        }
+
+        [Test]
+        public void Init_AfterPurchases_ResetPurchasedItems()
+        {
+            _useCase.Buy(1);
+            _useCase.Buy(2);
+
+            _useCase.Init();
+
+            Assert.AreEqual(0, _purchasedItemEntity.Get(1).count);
+            Assert.AreEqual(0, _purchasedItemEntity.Get(2).count);
+        }
+
+        private void SetLocale(string key, string descriptionKey, string descriptionValue)
+        {
+            var localeMap = (Dictionary<string, string>)typeof(LocaleRepository)
+                .GetField("_localeMap", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(_localeRepository);
+            localeMap[key] = key;
+            localeMap[descriptionKey] = descriptionValue;
         }
 
         private static ShopItemRepository CreateRepository(params ShopItemMaster[] masters)

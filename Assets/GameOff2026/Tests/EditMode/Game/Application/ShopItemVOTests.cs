@@ -20,16 +20,16 @@ namespace GameOff2026.Tests.EditMode.Game.Application
         }
 
         [Test]
-        public void Create_WithLocalizedText_PreservesPriceAndEffectAndUsesText()
+        public void Create_WithLocalizedTextAndPrice_PreservesIdentityAndUsesProvidedValues()
         {
             var source = new ShopItemVO(2, "Potion", "Stamina item", 80, true, 20);
 
-            var result = ShopItemVO.Create(source, "薬", "スタミナを回復");
+            var result = ShopItemVO.Create(source, "薬", "スタミナを回復", 120);
 
             Assert.AreEqual(source.id, result.id);
             Assert.AreEqual("薬", result.name);
             Assert.AreEqual("スタミナを回復", result.description);
-            Assert.AreEqual(source.price, result.price);
+            Assert.AreEqual(120, result.price);
             Assert.AreEqual(source.isUniq, result.isUniq);
             Assert.AreEqual(source.effectValue, result.effectValue);
         }

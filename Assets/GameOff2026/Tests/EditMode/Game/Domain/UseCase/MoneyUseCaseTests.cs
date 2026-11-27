@@ -9,13 +9,15 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
     public sealed class MoneyUseCaseTests
     {
         private MoneyEntity _moneyEntity;
+        private ShopPriceRateEntity _shopPriceRateEntity;
         private MoneyUseCase _useCase;
 
         [SetUp]
         public void SetUp()
         {
             _moneyEntity = new MoneyEntity();
-            _useCase = new MoneyUseCase(_moneyEntity);
+            _shopPriceRateEntity = new ShopPriceRateEntity();
+            _useCase = new MoneyUseCase(_moneyEntity, _shopPriceRateEntity);
         }
 
         [TearDown]
@@ -25,13 +27,15 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         }
 
         [Test]
-        public void Init_AfterEntityHasMoney_ResetsEntityAndPublishesZero()
+        public void Init_AfterEntityHasMoney_ResetsEntityAndPriceRateAndPublishesZero()
         {
             _moneyEntity.Add(10);
+            _shopPriceRateEntity.Set(80);
 
             _useCase.Init();
 
             Assert.AreEqual(0, _moneyEntity.value);
+            Assert.AreEqual(100, _shopPriceRateEntity.value);
             Assert.AreEqual(0, _useCase.money.CurrentValue);
         }
 
@@ -45,6 +49,19 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
 
             Assert.AreEqual(15, _moneyEntity.value);
             Assert.AreEqual(15, _useCase.money.CurrentValue);
+        }
+
+        [Test]
+        public void Pay_WithShopDiscount_CeilsAndSubtractsDiscountedPayment()
+        {
+            _useCase.Init();
+            _useCase.Add(100);
+            _shopPriceRateEntity.Set(80);
+
+            _useCase.Pay(51);
+
+            Assert.AreEqual(59, _moneyEntity.value);
+            Assert.AreEqual(59, _useCase.money.CurrentValue);
         }
     }
 }

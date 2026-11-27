@@ -16,6 +16,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         private FieldEntity _fieldEntity;
         private DateEntity _dateEntity;
         private PlayerEntity _playerEntity;
+        private PurchasedItemEntity _purchasedItemEntity;
         private FakeAsyncPublisher<MovementVO> _movementPublisher;
         private FakeAsyncPublisher<MovableDirectionVO[]> _movableDirectionsPublisher;
         private FakeAsyncSubscriber<MovementVO> _movementSubscriber;
@@ -29,6 +30,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             _dateEntity = new DateEntity();
             _dateEntity.Reset();
             _playerEntity = new PlayerEntity();
+            _purchasedItemEntity = new PurchasedItemEntity();
             _movementPublisher = new FakeAsyncPublisher<MovementVO>();
             _movableDirectionsPublisher = new FakeAsyncPublisher<MovableDirectionVO[]>();
             _movementSubscriber = new FakeAsyncSubscriber<MovementVO>();
@@ -38,7 +40,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
                 _movableDirectionsSubscriber,
                 _movementPublisher,
                 _movableDirectionsPublisher);
-            _useCase = new MovementUseCase(_dateEntity, _fieldEntity, _playerEntity, ports);
+            _useCase = new MovementUseCase(_dateEntity, _fieldEntity, _playerEntity, _purchasedItemEntity, ports);
         }
 
         [TestCase(Direction.Up, 2, 4)]
@@ -126,6 +128,26 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
             Assert.AreSame(_playerEntity.square, _movementPublisher.LastPublished.square);
             Assert.AreEqual(0.0f, _movementPublisher.LastPublished.duration);
             Assert.AreEqual(source.Token, _movementPublisher.tokens[0]);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task PublishMovableDirectionsAsync_BlockAndThroughBlockItem_ReportsExpectedMovability(
+            bool hasThroughBlock)
+        {
+            _playerEntity.SetSquare(new SquareVO(1, 1));
+            _fieldEntity.Add(FieldSquareVO.Create(1, 2,
+                new FieldVO(FieldType.Block, TestSpriteFactory.Valid, 1.0f)));
+            if (hasThroughBlock)
+            {
+                _purchasedItemEntity.Add((int)ShopItemId.ThroughBlock);
+            }
+
+            await _useCase.PublishMovableDirectionsAsync(CancellationToken.None).AsTask();
+
+            var upDirection = System.Array.Find(_movableDirectionsPublisher.LastPublished,
+                x => x.direction == Direction.Up);
+            Assert.AreEqual(hasThroughBlock, upDirection.isMovable);
         }
     }
 }

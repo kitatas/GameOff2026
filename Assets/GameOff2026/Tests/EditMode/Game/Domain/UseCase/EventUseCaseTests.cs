@@ -132,6 +132,25 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         }
 
         [Test]
+        public async Task ApplyAsync_BlockSquare_PublishesNonGoalResultAndLeavesFieldUnchanged()
+        {
+            var square = new SquareVO(2, 3);
+            var fieldSquare = new FieldSquareVO(square,
+                new FieldVO(FieldType.Block, TestSpriteFactory.Valid, 1.0f), Direction.None);
+            _fieldEntity.Add(fieldSquare);
+            _playerEntity.SetSquare(square);
+            using var source = new CancellationTokenSource();
+
+            var result = await _useCase.ApplyAsync(source.Token).AsTask();
+
+            Assert.AreEqual(FieldType.Block, result.type);
+            Assert.AreEqual(0, result.treasureNum);
+            Assert.AreSame(fieldSquare, _fieldEntity.fieldSquares[0]);
+            Assert.AreSame(result, _eventResultPublisher.LastPublished);
+            Assert.AreEqual(source.Token, _eventResultPublisher.tokens[0]);
+        }
+
+        [Test]
         public void EventResultSubscriber_AfterConstruction_ExposesPortsSubscriber()
         {
             Assert.AreSame(_eventResultSubscriber, _useCase.eventResult);

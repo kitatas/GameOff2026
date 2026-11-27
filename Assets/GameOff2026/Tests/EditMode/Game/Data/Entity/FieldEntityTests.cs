@@ -27,8 +27,8 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
 
             Assert.AreEqual(1, entity.fieldSquares.Length);
             Assert.AreSame(fieldSquare, entity.fieldSquares[0]);
-            Assert.IsTrue(entity.IsMovable(new SquareVO(2, 3), DateType.Day));
-            Assert.IsFalse(entity.IsMovable(new SquareVO(3, 3), DateType.Day));
+            Assert.IsTrue(entity.IsMovable(new SquareVO(2, 3), DateType.Day, false));
+            Assert.IsFalse(entity.IsMovable(new SquareVO(3, 3), DateType.Day, false));
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             entity.Clear();
 
             Assert.IsEmpty(entity.fieldSquares);
-            Assert.IsFalse(entity.IsMovable(new SquareVO(2, 3), DateType.Day));
+            Assert.IsFalse(entity.IsMovable(new SquareVO(2, 3), DateType.Day, false));
         }
 
         [Test]
@@ -101,7 +101,19 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             var entity = new FieldEntity();
             entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(FieldType.EnemyDay, TestSpriteFactory.Valid, 1.0f)));
 
-            Assert.IsFalse(entity.IsMovable(new SquareVO(2, 3), DateType.Day));
+            Assert.IsFalse(entity.IsMovable(new SquareVO(2, 3), DateType.Day, false));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void IsMovable_BlockSquare_ReturnsThroughBlockState(bool hasThroughBlock)
+        {
+            var entity = new FieldEntity();
+            entity.Add(FieldSquareVO.Create(2, 3,
+                new FieldVO(FieldType.Block, TestSpriteFactory.Valid, 1.0f)));
+
+            Assert.AreEqual(hasThroughBlock,
+                entity.IsMovable(new SquareVO(2, 3), DateType.Day, hasThroughBlock));
         }
 
         [TestCase(FieldType.EnemyRouteActive)]
@@ -111,7 +123,7 @@ namespace GameOff2026.Tests.EditMode.Game.Data.Entity
             var entity = new FieldEntity();
             entity.Add(FieldSquareVO.Create(2, 3, new FieldVO(fieldType, TestSpriteFactory.Valid, 1.0f)));
 
-            Assert.IsTrue(entity.IsMovable(new SquareVO(2, 3), DateType.Day));
+            Assert.IsTrue(entity.IsMovable(new SquareVO(2, 3), DateType.Day, false));
         }
 
         [Test]

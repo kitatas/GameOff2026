@@ -10,6 +10,7 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
     public sealed class ItemUseCaseTests
     {
         private MaxStaminaEntity _maxStaminaEntity;
+        private ShopPriceRateEntity _shopPriceRateEntity;
         private TreasurePriceRateEntity _treasurePriceRateEntity;
         private ItemUseCase _useCase;
 
@@ -17,8 +18,10 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         public void SetUp()
         {
             _maxStaminaEntity = new MaxStaminaEntity();
+            _shopPriceRateEntity = new ShopPriceRateEntity();
+            _shopPriceRateEntity.Reset();
             _treasurePriceRateEntity = new TreasurePriceRateEntity();
-            _useCase = new ItemUseCase(_maxStaminaEntity, _treasurePriceRateEntity);
+            _useCase = new ItemUseCase(_maxStaminaEntity, _shopPriceRateEntity, _treasurePriceRateEntity);
         }
 
         [Test]
@@ -44,6 +47,17 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
         }
 
         [Test]
+        public void ApplyEffect_ShopPriceRateItem_SubtractsEffectFromShopPriceRate()
+        {
+            var item = new ShopItemVO((int)ShopItemId.ShopPriceRate, "Shop rate", "Description", 50, true, 20);
+
+            _useCase.ApplyEffect(item);
+
+            Assert.AreEqual(80, _shopPriceRateEntity.value);
+            Assert.AreEqual(0.8f, _shopPriceRateEntity.rateValue);
+        }
+
+        [Test]
         public void ApplyEffect_InvalidItemId_ThrowsInvalidShopItemException()
         {
             var item = new ShopItemVO((int)ShopItemId.None, "Invalid", "Description", 50, true, 10);
@@ -52,6 +66,17 @@ namespace GameOff2026.Tests.EditMode.Game.Domain.UseCase
 
             Assert.AreEqual(ExceptionConfig.INVALID_SHOP_ITEM_ID, exception.Message);
         }
+
+        [Test]
+        public void ApplyEffect_ThroughBlockItem_PreservesExistingEffects()
+        {
+            var item = new ShopItemVO((int)ShopItemId.ThroughBlock, "Through block", "Description", 50, true, 1);
+
+            _useCase.ApplyEffect(item);
+
+            Assert.AreEqual(0, _maxStaminaEntity.value);
+            Assert.AreEqual(0, _treasurePriceRateEntity.value);
+            Assert.AreEqual(100, _shopPriceRateEntity.value);
+        }
     }
 }
-
