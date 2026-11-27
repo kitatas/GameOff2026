@@ -40,6 +40,7 @@ namespace GameOff2026.Game.Installer
             builder.Register<MoneyEntity>(Lifetime.Scoped);
             builder.Register<PlayerEntity>(Lifetime.Scoped);
             builder.Register<PurchasedItemEntity>(Lifetime.Scoped);
+            builder.Register<ShopPriceRateEntity>(Lifetime.Scoped);
             builder.Register<StaminaEntity>(Lifetime.Scoped);
             builder.Register<TreasureEntity>(Lifetime.Scoped);
             builder.Register<TreasurePriceRateEntity>(Lifetime.Scoped);

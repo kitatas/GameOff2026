@@ -39,8 +39,9 @@ namespace GameOff2026.Game.Presentation.Presenter
                 .Subscribe(x =>
                 {
                     var shopItem = _shopUseCase.Buy(x);
-                    _itemUseCase.ApplyEffect(shopItem);
                     _moneyUseCase.Pay(shopItem.price);
+                    // 購入（お金消費）後に効果反映
+                    _itemUseCase.ApplyEffect(shopItem);
                     _shopUseCase.PublishShopsAsync(_tokenSource.Token).Forget();
                 })
                 .AddTo(_disposable);

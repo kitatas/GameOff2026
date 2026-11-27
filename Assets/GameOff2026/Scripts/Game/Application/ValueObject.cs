@@ -302,13 +302,13 @@ namespace GameOff2026.Game.Application
             this.effectValue = effectValue;
         }
 
-        public static ShopItemVO Create(ShopItemVO shopItem, string name, string description)
+        public static ShopItemVO Create(ShopItemVO shopItem, string name, string description, int price)
         {
             return new ShopItemVO(
                 shopItem.id,
                 name,
                 description,
-                shopItem.price,
+                price,
                 shopItem.isUniq,
                 shopItem.effectValue
             );

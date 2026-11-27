@@ -85,5 +85,6 @@ namespace GameOff2026.Game.Application
         None = 0,
         MaxStamina = 1,
         TreasurePriceRate = 2,
+        ShopPriceRate = 3,
     }
 }
