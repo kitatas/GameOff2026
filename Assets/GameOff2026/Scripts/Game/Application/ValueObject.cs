@@ -339,5 +339,8 @@ namespace GameOff2026.Game.Application
             this.purchasedItem = purchasedItem;
             this.isEnoughMoney = isEnoughMoney;
         }
+
+        public bool isSoldOut => shopItem.isUniq && purchasedItem.count > 0;
+        public bool canBuy => !isSoldOut && isEnoughMoney;
     }
 }

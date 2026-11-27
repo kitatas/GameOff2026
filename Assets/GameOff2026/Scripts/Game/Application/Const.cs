@@ -69,4 +69,9 @@ namespace GameOff2026.Game.Application
     {
         public const float FADE_DURATION = 0.25f;
     }
+
+    public sealed class ShopItemConfig
+    {
+        public const string IMG_PATH = "Assets/Externals/Sprites/UI/shop_item.png[shop_item_{0}]";
+    }
 }
