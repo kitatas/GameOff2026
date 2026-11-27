@@ -14,14 +14,16 @@ namespace GameOff2026.Game.Domain.UseCase
         private readonly DateEntity _dateEntity;
         private readonly FieldEntity _fieldEntity;
         private readonly PlayerEntity _playerEntity;
+        private readonly PurchasedItemEntity _purchasedItemEntity;
         private readonly MovementPorts _movementPorts;
 
         public MovementUseCase(DateEntity dateEntity, FieldEntity fieldEntity, PlayerEntity playerEntity,
-            MovementPorts movementPorts)
+            PurchasedItemEntity purchasedItemEntity, MovementPorts movementPorts)
         {
             _dateEntity = dateEntity;
             _fieldEntity = fieldEntity;
             _playerEntity = playerEntity;
+            _purchasedItemEntity = purchasedItemEntity;
             _movementPorts = movementPorts;
         }
 
@@ -38,12 +40,14 @@ namespace GameOff2026.Game.Domain.UseCase
 
         public UniTask PublishMovableDirectionsAsync(CancellationToken token)
         {
+            var hasThroughBlock = _purchasedItemEntity.Has(ShopItemId.ThroughBlock);
             var directions = PlayerConfig.DIRECTIONS
                 .AsValueEnumerable()
                 .Select(x =>
                 {
                     var nextSquare = _playerEntity.square.AddDirection(x);
-                    return new MovableDirectionVO(x, _fieldEntity.IsMovable(nextSquare, _dateEntity.value));
+                    var isMovable = _fieldEntity.IsMovable(nextSquare, _dateEntity.value, hasThroughBlock);
+                    return new MovableDirectionVO(x, isMovable);
                 })
                 .ToArray();
 

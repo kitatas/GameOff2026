@@ -45,7 +45,7 @@ namespace GameOff2026.Game.Domain.UseCase
                     var description = ZString.Format(_localeRepository.Get(x.description), x.effectValue);
                     var price = Mathf.CeilToInt(x.price * _shopPriceRateEntity.rateValue);
                     var shopItem = ShopItemVO.Create(x, name, description, price);
-                    return new ShopVO(shopItem, _purchasedItemEntity.Get(x.id), _moneyEntity.IsEnough(x.price));
+                    return new ShopVO(shopItem, _purchasedItemEntity.Get(x.id), _moneyEntity.IsEnough(shopItem.price));
                 })
                 .ToArray();
 

@@ -31,6 +31,8 @@ namespace GameOff2026.Game.Domain.UseCase
                 case ShopItemId.ShopPriceRate:
                     _shopPriceRateEntity.Subtract(shopItem.effectValue);
                     break;
+                case ShopItemId.ThroughBlock:
+                    break;
                 default:
                     throw new QuitExceptionVO(ExceptionConfig.INVALID_SHOP_ITEM_ID);
             }

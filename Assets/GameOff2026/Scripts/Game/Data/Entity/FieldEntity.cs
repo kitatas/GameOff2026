@@ -47,7 +47,7 @@ namespace GameOff2026.Game.Data.Entity
                 : (_fieldSquares[index], index);
         }
 
-        public bool IsMovable(SquareVO square, DateType dateType)
+        public bool IsMovable(SquareVO square, DateType dateType, bool hasThroughBlock)
         {
             var (fieldSquare, _) = Find(square);
             if (fieldSquare == null) return false;
@@ -55,7 +55,7 @@ namespace GameOff2026.Game.Data.Entity
             return fieldSquare.field.type switch
             {
                 // TODO: 移動不可の field type
-                FieldType.Block => false,
+                FieldType.Block => hasThroughBlock,
                 FieldType.EnemyDay => false,
                 FieldType.EnemyNight => dateType is not DateType.Night,
                 _ => true,
