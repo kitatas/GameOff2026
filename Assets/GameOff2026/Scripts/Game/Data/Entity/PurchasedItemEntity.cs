@@ -41,5 +41,10 @@ namespace GameOff2026.Game.Data.Entity
                 _purchasedItemMap[id] = new PurchasedItemVO(id, 1);
             }
         }
+
+        public void Clear()
+        {
+            _purchasedItemMap.Clear();
+        }
     }
 }

@@ -13,18 +13,20 @@ namespace GameOff2026.Game.Presentation.State
         private readonly FloorUseCase _floorUseCase;
         private readonly HudRootUseCase _hudRootUseCase;
         private readonly MoneyUseCase _moneyUseCase;
+        private readonly ShopUseCase _shopUseCase;
         private readonly StaminaUseCase _staminaUseCase;
         private readonly TapScreenUseCase _tapScreenUseCase;
 
         public GameInitState(DateUseCase dateUseCase, DayUseCase dayUseCase, FloorUseCase floorUseCase,
-            HudRootUseCase hudRootUseCase, MoneyUseCase moneyUseCase, StaminaUseCase staminaUseCase,
-            TapScreenUseCase tapScreenUseCase)
+            HudRootUseCase hudRootUseCase, MoneyUseCase moneyUseCase, ShopUseCase shopUseCase,
+            StaminaUseCase staminaUseCase, TapScreenUseCase tapScreenUseCase)
         {
             _dateUseCase = dateUseCase;
             _dayUseCase = dayUseCase;
             _floorUseCase = floorUseCase;
             _hudRootUseCase = hudRootUseCase;
             _moneyUseCase = moneyUseCase;
+            _shopUseCase = shopUseCase;
             _staminaUseCase = staminaUseCase;
             _tapScreenUseCase = tapScreenUseCase;
         }
@@ -43,6 +45,7 @@ namespace GameOff2026.Game.Presentation.State
             _floorUseCase.Init();
             _moneyUseCase.Init();
             _dayUseCase.Init();
+            _shopUseCase.Init();
             _staminaUseCase.Init();
 
             await (

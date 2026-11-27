@@ -35,6 +35,11 @@ namespace GameOff2026.Game.Domain.UseCase
 
         public IAsyncSubscriber<ShopVO[]> shops => _shopPorts.shopSubscriber;
 
+        public void Init()
+        {
+            _purchasedItemEntity.Clear();
+        }
+
         public UniTask PublishShopsAsync(CancellationToken token)
         {
             var vos = _shopItemRepository.GetAll()
